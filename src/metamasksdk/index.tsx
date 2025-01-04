@@ -1,22 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './index.css';
 import App from './App';
-import { MetaMaskProvider } from "@metamask/sdk-react";
+import { MetaMaskUIProvider } from "@metamask/sdk-react-ui";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+
 root.render(
   <React.StrictMode>
-    <MetaMaskProvider debug={false}
+    <MetaMaskUIProvider
+      debug={false}
       sdkOptions={{
         dappMetadata: {
-          name: "Any NFT App",
+          name: "Tokenize Anything",
           url: window.location.href,
         },
         infuraAPIKey: process.env.INFURA_API_KEY,
-        checkInstallationImmediately: false
+        // Other options.
       }}
     >
       <App />
-    </MetaMaskProvider>
+    </MetaMaskUIProvider>
   </React.StrictMode>
 );
