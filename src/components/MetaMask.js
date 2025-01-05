@@ -1,14 +1,11 @@
 import { useSDK } from "@metamask/sdk-react";
 import React, {useState} from 'react';
-import {ethers} from 'ethers';
 
 const MetaMask = () => {
-  const { sdk, connected, connecting, provider, chainId } = useSDK();
-  
   const [account, setAccount] = useState(null);
+  const { sdk, connected, connecting, provider, chainId } = useSDK(); 
   
-
-  const connect = async () => {
+  const connectWallet = async () => {
     try {
       const accounts = await sdk.connect();
       setAccount(accounts[0]);
@@ -19,7 +16,7 @@ const MetaMask = () => {
 
   return (
     <div>
-      <button>
+      <button onClick={(connectWallet)}>
         Connect to MetaMask
       </button>
       {connected && (

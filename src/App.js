@@ -1,5 +1,5 @@
 import './App.css';
-import MetaMask from './components/wallet/MetaMask.js'
+import MetaMask from './components/MetaMask.js'
 
 function App() {
   return (
