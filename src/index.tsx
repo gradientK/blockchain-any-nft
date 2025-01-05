@@ -4,9 +4,9 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import { WagmiProvider, useAccount } from "wagmi"
 import App from './App';
-import { config } from "./wallet/config.ts"
-import { Account } from "./wallet/account.tsx"
-import { WalletOptions } from "./wallet/wallet-options.tsx"
+import { config } from "./wagmi.ts"
+import { Account } from "./components/wallet/account.tsx"
+import { WalletOptions } from "./components/wallet/wallet-options.tsx"
 
 globalThis.Buffer = Buffer
 
