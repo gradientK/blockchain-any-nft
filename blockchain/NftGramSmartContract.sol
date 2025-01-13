@@ -18,6 +18,10 @@ contract NFTGram {
     address payable private contractOwner;
     string private baseURI;
 
+    // mint count
+    uint256 private totalMintable;
+    uint256 private mintedCount;
+
     // Price & fees
     uint256 private priceMin; // minimum price for nft sale, wei
     uint256 private royalty; // percentage, ex. 3 is 3%
@@ -58,6 +62,8 @@ contract NFTGram {
     constructor() {
         saleList.push(""); // init array[0] not for sale
         contractOwner = payable(msg.sender);
+        totalMintable = 10000000000;
+        mintedCount = 0;
         baseURI = "https://www.instagram.com/p/";
         priceMin = 1000;
         royalty = 3;
@@ -67,6 +73,7 @@ contract NFTGram {
      * Mint function. _salePrice of 0 will infer not for sale.
      */
     function mintNFT(string calldata _tokenId, uint256 _salePrice, string calldata _name, string calldata _description) public returns (bool) {
+        require(mintedCount < totalMintable, "Cannot mint, total NFTs allowed by contract reached");
         require(!nftMap[_tokenId].exists, "Token ID already exists, must be unique");
         require(bytes(_tokenId).length < 128, "Invalid token ID, too long");
         require(bytes(_name).length < 128, "Name is too long, should be less than 128 characters");
@@ -89,6 +96,7 @@ contract NFTGram {
             description: _description
         });
 
+        mintedCount++;
         ownershipMap[msg.sender].push(_tokenId);
         
         emit Minted(msg.sender, _tokenId);
@@ -194,13 +202,33 @@ contract NFTGram {
     }
 
     /**
-     * Get nft metadata by index in saleList.
+     * Get token ID by index in saleList.
      */
     function getForSaleByIndex(uint256 _index) public view returns (string memory) {
         require(_index != 0, "No NFT located in index 0, start at 1");
         require(_index < saleList.length, "Invalid index provided, not enough NFTs for sale");
         // gave up on making a dynamic sized array, waiting for Solidity update
         return saleList[_index];
+    }
+
+    /**
+     * Get token IDs in saleList by groups of ten.
+     * @param _groupOfTen 1 = get 1-10; 2 = get 11-20, 3 = get 21-30, etc.
+     */
+    function getForSaleByTens(uint256 _groupOfTen) public view returns (string[] memory){
+        require(_groupOfTen != 0, "Groups of ten start at 1");
+        uint256 endIndex = _groupOfTen * 10;
+        uint256 startIndex = endIndex - 9;
+        
+        string[] memory tenOnSale = new string[](10);
+        uint16 tmp = 0;
+        for (uint256 i = startIndex; i <= endIndex; i++) {
+            if (i < saleList.length) {
+                tenOnSale[tmp] = saleList[i];
+                tmp++;
+            }
+        }
+        return tenOnSale;
     }
 
     /**
@@ -278,7 +306,9 @@ contract NFTGram {
             removeForSaleData(_tokenId); // saleList
         }
         removeOwnership(_tokenId, msg.sender);            
+        
         delete nftMap[_tokenId];
+        mintedCount--;
         return true;
     }
 
@@ -365,6 +395,21 @@ contract NFTGram {
     function updateRoyalty(uint256 _newRoyalty) external {
         require(contractOwner == msg.sender, "Only owner may update Royalty");
         royalty = _newRoyalty;
+    }
+
+    /**
+     * Get number of NFTs minted in contract.
+     */
+    function getTotalMinted() external view returns (uint256) {
+        return mintedCount;
+    }
+
+    /**
+     * Increase total number of NFTs mintable within contract.
+     */
+    function increaseTotalMintable(uint256 _increaseAmount) external {
+        require(contractOwner == msg.sender, "Only owner may increase mintable allowed");
+        mintedCount += _increaseAmount;
     }
 
 }
