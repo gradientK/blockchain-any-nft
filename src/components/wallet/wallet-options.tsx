@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState, useEffect } from 'react'
 import { Connector, useConnect } from 'wagmi'
 
 export function WalletOptions() {
@@ -20,9 +20,9 @@ function WalletOption({
   connector: Connector
   onClick: () => void
 }) {
-  const [ready, setReady] = React.useState(false)
+  const [ready, setReady] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     ;(async () => {
       const provider = await connector.getProvider()
       setReady(!!provider)

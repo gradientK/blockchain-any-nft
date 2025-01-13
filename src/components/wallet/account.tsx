@@ -9,7 +9,7 @@ export function Account() {
   return (
     <div>
       {ensAvatar && <img alt="ENS Avatar" src={ensAvatar} />}
-      {address && <div>Wallet Address: {ensName ? `${ensName} (${address})` : address}</div>}
+      {address && <div>Wallet Connected: {ensName ? `${ensName} (${address})` : address}</div>}
       <button onClick={() => disconnect()}>Disconnect</button>
     </div>
   )
