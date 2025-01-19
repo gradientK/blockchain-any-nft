@@ -166,7 +166,7 @@ contract NFTGram {
     /**
      * Get nft metadata, return array
      */
-    function getMetadata(string calldata _tokenId) public view returns (string memory, string memory, string memory, uint256) {
+    function tokenURIArray(string calldata _tokenId) public view returns (string memory, string memory, string memory, uint256) {
         require(nftMap[_tokenId].exists, "NFT not found");
         
         string memory uri = string.concat(baseURI, _tokenId);
@@ -176,7 +176,7 @@ contract NFTGram {
     /**
      * Get nft metadata, return base64 string.
      */
-    function getMetadataBase64(string calldata _tokenId) public view returns (string memory) {
+    function tokenURI(string calldata _tokenId) public view returns (string memory) {
         require(nftMap[_tokenId].exists, "NFT not found");
  
         string memory uri = string.concat(baseURI, _tokenId);      
@@ -188,7 +188,7 @@ contract NFTGram {
             nftMap[_tokenId].description,
             '", "image": "', 
             uri,
-            '", "image": "', 
+            '", "price": "', 
             currentPrice,
             '"}')))));
     }
