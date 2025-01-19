@@ -406,9 +406,10 @@ contract NFTGram {
     /**
      * Increase total number of NFTs mintable within contract.
      */
-    function increaseTotalMintable(uint256 _increaseAmount) external {
+    function increaseTotalMintable(uint256 _increaseAmount) external returns (uint256) {
         require(contractOwner == msg.sender, "Only owner may increase mintable allowed");
-        mintedCount += _increaseAmount;
+        totalMintable += _increaseAmount;
+        return totalMintable;
     }
 
 }
