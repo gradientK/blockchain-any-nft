@@ -6,7 +6,6 @@ import "./Base64.sol";
 
 /**
  * @title NFT Gram Smart Contract
- * @author GradientK Web Solutions
  * @notice Smart contract to mint, buy & sell NFT
  * Metadata represented in image and description on-chain. 
  * The initial owner is set by the deployer.
@@ -62,7 +61,7 @@ contract NFTGram {
     constructor() {
         saleList.push(""); // init array[0] not for sale
         contractOwner = payable(msg.sender);
-        totalMintable = 10000000000;
+        totalMintable = 100000000;
         mintedCount = 0;
         baseURI = "https://www.instagram.com/p/";
         priceMin = 1000;
