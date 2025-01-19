@@ -367,7 +367,6 @@ contract NFTGram {
      * Get contract owner, if owner.
      */
     function getContractOwner() external view returns (address) {
-        require(contractOwner == msg.sender, "Only the owner may view who is the owner");
         return contractOwner;
     }
 
@@ -385,6 +384,7 @@ contract NFTGram {
      * Get royalty.
      */
     function getRoyalty() external view returns (uint256) {
+        require(contractOwner == msg.sender, "Only owner may view Royalty");
         return royalty;
     }
 
