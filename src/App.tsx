@@ -1,6 +1,6 @@
 import React from "react"
 import { BrowserRouter, Routes, Route } from "react-router";
-import Navbar from './components/navigation-bar.tsx';
+import NavigationBar from './components/navbar/navigation-bar.tsx';
 import { Home } from './pages/home.tsx';
 import { Mint } from './pages/mint.tsx';
 import { Instructions } from './pages/instructions.tsx';
@@ -9,7 +9,7 @@ import { Marketplace } from './pages/marketplace.tsx';
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
+      <NavigationBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/mint" element={<Mint />} />

@@ -18,7 +18,6 @@ root.render(
   <React.StrictMode>
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        {/* <ConnectWallet /> */}
         <App />
       </QueryClientProvider>
     </WagmiProvider>

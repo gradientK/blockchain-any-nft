@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
+import { ConnectionStatus } from "./connection-status.tsx"
 
-function Navbar() {
+function NavigationBar() {
   return (    
     <div className='navBar'>
       <Link to="/">Home</Link>
@@ -11,8 +12,12 @@ function Navbar() {
       <p />
       <Link to="/marketplace">Marketplace</Link>
       <p />
+      <ConnectionStatus />
+      <p>
+        ----------------------------------------------------------------------------------
+      </p>
     </div>
   )
 }
 
-export default Navbar;
+export default NavigationBar;

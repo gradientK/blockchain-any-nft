@@ -1,5 +1,5 @@
 import { WalletOptions } from "./wallet/wallet-options.tsx"
 
-export function Disconnected() {
+export function Reconnect() {
   return <WalletOptions />
 }
