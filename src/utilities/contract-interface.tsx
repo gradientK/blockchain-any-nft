@@ -13,7 +13,22 @@ export function GetContractOwner() {
   })
   if (error) {
     console.log("ERROR: Failed to get contract owner. " + error)
-    return "error"
+    return "Error"
+  } else { 
+    return data
+  }
+}
+
+export function GetRoyalty(walletAddress: `0x${string}` | undefined) {
+  const { data, error } = useReadContract({
+    abi,
+    address: props.POLYGON_AMOY_NFT_GRAM_SMART_CONTRACT_ADDRESS as unknown as `0x${string}`,
+    functionName: 'getRoyalty',
+    account: walletAddress,
+  })
+  if (error) {
+    console.log("ERROR: Failed to get royalty. " + error)
+    return "Error"
   } else { 
     return data
   }

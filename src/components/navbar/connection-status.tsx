@@ -13,7 +13,7 @@ function NotConnected() {
       <p>
         Wallet Not Connected 
         <br />
-        Return to Home to connect wallet
+        Connect Wallet to Access NFTs
       </p>
     </div>
   )

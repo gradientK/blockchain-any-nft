@@ -13,9 +13,9 @@ function NavigationBar() {
       <Link to="/marketplace">Marketplace</Link>
       <p />
       <ConnectionStatus />
-      <p>
+      <p />
         ----------------------------------------------------------------------------------
-      </p>
+      <p />
     </div>
   )
 }
