@@ -99,7 +99,12 @@ contract NFTGram {
         ownershipMap[msg.sender].push(_tokenId);
         
         emit Minted(msg.sender, _tokenId);
-        return true;
+
+        if (nftMap[_tokenId].exists) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

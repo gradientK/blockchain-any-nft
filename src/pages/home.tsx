@@ -1,13 +1,13 @@
 import { useAccount } from "wagmi"
-import { Reconnect } from "./../components/reconnect.tsx"
+import Reconnect from "../components/ui/reconnect.tsx"
 
-export function Home() {
+export default function HomeMain () {
   const { isConnected } = useAccount()
-  if (isConnected) return <HomeMain />
+  if (isConnected) return <Home />
   return <Reconnect />
 }
 
-function HomeMain() {
+function Home() {
   return (
     <div>
       Owned, sale and not for sale goes here

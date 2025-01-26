@@ -1,5 +1,5 @@
 import React from "react"
 
-export function Instructions() {
+export default function InstructionsMain() {
   return <p>instructions</p>
 }

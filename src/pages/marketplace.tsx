@@ -1,5 +1,5 @@
 import React from "react"
 
-export function Marketplace() {
+export default function MarketplaceMain() {
   return <p>marketplace</p>
 }

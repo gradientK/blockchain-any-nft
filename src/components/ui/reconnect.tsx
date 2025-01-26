@@ -1,6 +1,6 @@
-import { WalletOptions } from "./wallet/wallet-options.tsx"
+import { WalletOptions } from "../wallet/wallet-options.tsx"
 
-export function Reconnect() {
+export default function Reconnect() {
   return (
     <div>
       Connect MetaMask Wallet
