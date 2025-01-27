@@ -2,8 +2,6 @@ import { useReadContract } from "wagmi"
 import { abi } from "../config/abi.ts"
 import props from "../config/properties.json"
 
-
-
 // Contract Owner
 
 /**

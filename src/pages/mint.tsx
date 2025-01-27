@@ -1,5 +1,8 @@
 import { useState } from "react"
-import { useAccount } from "wagmi"
+import { ethers } from "ethers"
+import { useAccount, useWriteContract } from "wagmi"
+import { abi } from "../config/abi.ts"
+import props from "../config/properties.json"
 import Reconnect from "../components/ui/reconnect.tsx"
 
 export default function MintMain() {
@@ -9,7 +12,7 @@ export default function MintMain() {
 }
 
 function Mint() {
-  const { address } = useAccount()
+  const { writeContract } = useWriteContract()
   const [inputs, setInputs] = useState({
     name: "",
     description: "",      
@@ -23,22 +26,13 @@ function Mint() {
     setInputs(values => ({...values, [name]: value}))
   }
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-
-    console.log("i am the name " + inputs.name)
-    console.log("i am the description " + inputs.description)
-    console.log("i am the tokenid " + inputs.tokenID)
-    console.log("i am the price " + inputs.price)
-  }
-
   return (
     <div>
       <div>
         <p>See Mint Instructions prior to minting</p>
       </div>
       <div>
-        <form onSubmit={handleSubmit}>
+        <form>
           <label>NFT Name: <span />
             <input
               type={'text'}
@@ -76,20 +70,31 @@ function Mint() {
           </label>
           <br />
 
-          <label>Price (in POL) (enter '0' if not for sale): <span />
+          <label>Price (in POL) (enter '0.0' if not for sale): <span />
             <input
               type={'text'}
               name='price'
               value={inputs.price}
               onChange={handleChange}
-              placeholder={'0'}
+              placeholder={'0.0'}
               maxLength={64}
             />
           </label>
-          <br />
-
-          <button type='submit' >Mint NFT</button>
         </form>
+
+        <button onClick={() =>
+          writeContract({
+            abi,
+            address: props.NFTGRAM_SMART_CONTRACT_ADDRESS as unknown as `0x${string}`,
+            functionName: 'mintNFT',
+            args: [
+              inputs.tokenID,
+              ethers.parseEther(inputs.price) as bigint,
+              inputs.name,
+              inputs.description
+            ]
+          })
+        }>Mint NFT</button>
       </div>
     </div>
   )
