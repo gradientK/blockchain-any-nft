@@ -44,6 +44,12 @@ export const abi = [
 	},
 	{
 		"anonymous": false,
+		"inputs": [],
+		"name": "Paused",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
 		"inputs": [
 			{
 				"indexed": true,
@@ -68,11 +74,17 @@ export const abi = [
 		"type": "event"
 	},
 	{
+		"anonymous": false,
+		"inputs": [],
+		"name": "Unpaused",
+		"type": "event"
+	},
+	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "_tokenId",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"name": "burnNFT",
@@ -89,9 +101,9 @@ export const abi = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "_tokenId",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"name": "delistForSale",
@@ -129,9 +141,9 @@ export const abi = [
 		"name": "getForSaleByIndex",
 		"outputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -148,9 +160,9 @@ export const abi = [
 		"name": "getForSaleByTens",
 		"outputs": [
 			{
-				"internalType": "string[]",
+				"internalType": "uint256[]",
 				"name": "",
-				"type": "string[]"
+				"type": "uint256[]"
 			}
 		],
 		"stateMutability": "view",
@@ -159,9 +171,9 @@ export const abi = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "_tokenId",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"name": "getIsForSale",
@@ -178,27 +190,32 @@ export const abi = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "_tokenId",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"name": "getNFT",
 		"outputs": [
 			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
 				"internalType": "string",
 				"name": "",
 				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			},
 			{
 				"internalType": "string",
@@ -217,9 +234,9 @@ export const abi = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "_tokenId",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"name": "getNFTBase64",
@@ -238,9 +255,9 @@ export const abi = [
 		"name": "getNftsOwned",
 		"outputs": [
 			{
-				"internalType": "string[]",
+				"internalType": "uint256[]",
 				"name": "",
-				"type": "string[]"
+				"type": "uint256[]"
 			}
 		],
 		"stateMutability": "view",
@@ -249,9 +266,9 @@ export const abi = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "_tokenId",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"name": "getOwner",
@@ -281,9 +298,9 @@ export const abi = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "_tokenId",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"name": "getSalePrice",
@@ -300,6 +317,19 @@ export const abi = [
 	{
 		"inputs": [],
 		"name": "getTotalForSale",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getTotalMintable",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -345,9 +375,9 @@ export const abi = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "_tokenId",
-				"type": "string"
+				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
@@ -370,16 +400,6 @@ export const abi = [
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "_tokenId",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_salePrice",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
 				"name": "_name",
 				"type": "string"
 			},
@@ -387,9 +407,32 @@ export const abi = [
 				"internalType": "string",
 				"name": "_description",
 				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_image",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_salePrice",
+				"type": "uint256"
 			}
 		],
 		"name": "mintNFT",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "pause",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -403,9 +446,9 @@ export const abi = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "_tokenId",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"name": "purchaseNFT",
@@ -422,9 +465,9 @@ export const abi = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "_tokenId",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"name": "tokenURI",
@@ -441,9 +484,9 @@ export const abi = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "_tokenId",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"name": "tokenURIArray",
@@ -504,6 +547,19 @@ export const abi = [
 				"internalType": "bytes",
 				"name": "",
 				"type": "bytes"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "unpause",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "nonpayable",

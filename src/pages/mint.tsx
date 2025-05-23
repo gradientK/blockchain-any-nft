@@ -2,8 +2,10 @@ import { useState } from "react"
 import { ethers } from "ethers"
 import { useAccount, useWriteContract } from "wagmi"
 import { abi } from "../config/abi.ts"
-import props from "../config/properties.json"
 import Reconnect from "../components/ui/reconnect.tsx"
+import { GetContractAddress } from "../config/prop-reader.tsx"
+
+const contractAddress: string = GetContractAddress()
 
 export default function MintMain() {
   const { isConnected } = useAccount()
@@ -16,7 +18,7 @@ function Mint() {
   const [inputs, setInputs] = useState({
     name: "",
     description: "",      
-    tokenID: "",
+    uri: "",
     price: ""
   });
 
@@ -30,49 +32,47 @@ function Mint() {
     let validInputs: boolean = true 
     let priceInWei: bigint = 0.0 as unknown as bigint
 
-    if (inputs.name !== "" || inputs.description !== "" || inputs.tokenID !== "" || inputs.price !== "") {
+    if (inputs.name !== "" || inputs.description !== "" || inputs.uri !== "" || inputs.price !== "") {
       priceInWei = ethers.parseEther(inputs.price) as bigint
           
       if (inputs.name.length > 100 || inputs.name.length === 0) {
-        console.log("ERROR: NFT Name must be less than 100 characters")
+        console.log("NFT Name must be less than 100 characters")
         validInputs = false
       } else if (inputs.description.length > 500 || inputs.description.length === 0) {
-        console.log("ERROR: Description must be less than 500 characters")
+        console.log("Description must be less than 500 characters")
         validInputs = false
-      } else if (inputs.tokenID.length > 16 || inputs.tokenID.length === 0) {
-        console.log("ERROR: TokenID must match Instagram from URL")
+      } else if (inputs.uri.length > 500 || inputs.uri.length === 0) {
+        console.log("URI must be less than 500 characters")
         validInputs = false
       } else if (priceInWei < 1000 && priceInWei !== 0.0 as unknown as bigint) {
-        console.log("ERROR: Price must be at least 0.000000000000001")
+        console.log("Price must be at least 0.000000000000001 Wei")
         validInputs = false
       }
 
       if (validInputs) {
         writeContract({
           abi,
-          address: props.NFTGRAM_SMART_CONTRACT_ADDRESS as unknown as `0x${string}`,
+          address: contractAddress as `0x${string}`,
           functionName: 'mintNFT',
           args: [
-            inputs.tokenID,
-            priceInWei,
             inputs.name,
-            inputs.description
+            inputs.description,
+            inputs.uri,
+            priceInWei
           ]
         })
-        console.log("INFO: Successfully minted " + inputs.name)
+        console.log("Successfully minted " + inputs.name)
 
         // reset forms
         setInputs({
           name: "",
           description: "",      
-          tokenID: "",
+          uri: "",
           price: ""
         })
-      } else {
-        console.log("ERROR: Failed to mint NFT")
       }
     } else {
-      console.log("ERROR: Fields may not be empty")
+      console.log("Fields may not be empty")
     }
   }
 
@@ -89,8 +89,9 @@ function Mint() {
               name='name'
               value={inputs.name}
               onChange={handleChange}
-              placeholder={'Mini Legend of Zelda'}
+              placeholder={'Cat in Space'}
               maxLength={100}
+              size={43}
             />
           </label>
           <br />
@@ -101,21 +102,22 @@ function Mint() {
               name='description'
               value={inputs.description}
               onChange={handleChange}
-              placeholder={'Young Link clashing with Small Zelda'}
+              placeholder={'Trippy cat flying through space'}
               maxLength={500}
-              size={50}
+              size={113}
             />
           </label>
           <br />
 
-          <label>Token ID (must be from Instagram URL): <span />
+          <label>DropBox Address: <span />
             <input
               type={'text'}
-              name='tokenID'
-              value={inputs.tokenID}
+              name='uri'
+              value={inputs.uri}
               onChange={handleChange}
-              placeholder={'DAYuMcUvTEj'}
-              maxLength={16}
+              placeholder={'https://www.dropbox.com/scl/fi/4vaord3u3y8xno276xj46/catinspace.jpg?rlkey=jes15hupgepzkbmz7rm8cat7h&st=j03auq1x&dl=0'}
+              maxLength={500}
+              size={107}
             />
           </label>
           <br />

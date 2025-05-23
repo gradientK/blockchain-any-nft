@@ -12,6 +12,8 @@ function NavigationBar() {
       <p />
       <Link to="/marketplace">Marketplace</Link>
       <p />
+      <Link to="/owner">Contract Maintenance</Link>
+      <p />
       <ConnectionStatus />
       <p />
       ----------------------------------------------------------------------------------

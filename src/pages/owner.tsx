@@ -11,9 +11,9 @@ export default function OwnerMain() {
 function Owner() {
   const { address } = useAccount()
 
-  const owner = GetContractOwner() as string
+  const owner = GetContractOwner()
   const minted = GetTotalMinted() as unknown as String
-  const royalty = GetRoyalty(address) as `0x${string}`
+  const royalty = GetRoyalty(address) as unknown as String
 
   return (
     <div>

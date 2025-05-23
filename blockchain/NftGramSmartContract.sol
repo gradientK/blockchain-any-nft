@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity >=0.7.0 <0.9.0;
 
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "./Base64.sol";
@@ -15,7 +15,7 @@ contract NFTGram {
 
     // Contract vars
     address payable private contractOwner;
-    string private baseURI;
+    bool paused;
 
     // mint count
     uint256 private totalMintable;
@@ -27,27 +27,31 @@ contract NFTGram {
 
     // Nft metadata
     struct NFT {
-        string tokenId;
+        uint256 tokenId;
         address payable owner;
         uint256 price; // wei
         uint256 saleIndex; // index in saleList[], [0] means not for sale
         bool exists; // true upon creation
         string name;
         string description;
-        // string image; // combines baseURI + tokenId
+        string image; // URI location
     }
 
     // Key: NFT id, value: NFT metadata
-    mapping (string => NFT) private nftMap;
+    mapping (uint256 => NFT) private nftMap;
 
     // Key: owner, value: list of owned NFTs by id
-    mapping(address => string[]) private ownershipMap;
+    mapping(address => uint256[]) private ownershipMap;
 
     // List of all nfts for sale
-    string[] private saleList;
+    uint256[] private saleList;
 
     // Minted
     event Minted(address indexed minter, string indexed tokenId);
+
+    // Paused/Unpaused contract transactions
+    event Paused();
+    event Unpaused();
 
     // Transfer of nft ownership
     event Transferred(address indexed from, address indexed to, string indexed tokenId);
@@ -59,11 +63,11 @@ contract NFTGram {
      * Constructor, init contract variables.
      */
     constructor() {
-        saleList.push(""); // init array[0] not for sale
+        paused = false;
+        saleList.push(0); // init array[0] not for sale
         contractOwner = payable(msg.sender);
         totalMintable = 100000000;
         mintedCount = 0;
-        baseURI = "https://www.instagram.com/p/";
         priceMin = 1000;
         royalty = 3;
     }
@@ -71,46 +75,49 @@ contract NFTGram {
     /**
      * Mint function. _salePrice of 0 will infer not for sale.
      */
-    function mintNFT(string calldata _tokenId, uint256 _salePrice, string calldata _name, string calldata _description) public returns (bool) {
+    function mintNFT(string calldata _name, string calldata _description, string calldata _image, uint256 _salePrice) public returns (uint256) {
+        require(!paused, "Contract minting temporarily paused for maintenance");
         require(mintedCount < totalMintable, "Cannot mint, total NFTs allowed by contract reached");
-        require(!nftMap[_tokenId].exists, "Token ID already exists, must be unique");
-        require(bytes(_tokenId).length < 128, "Invalid token ID, too long");
         require(bytes(_name).length < 128, "Name is too long, should be less than 128 characters");
         require(bytes(_description).length < 512, "Description is too long, should be less than 512 characters");
+        require(bytes(_image).length < 512, "Description is too long, should be less than 512 characters");
+
+        uint256 tokenId = mintedCount + 1;
 
         uint256 newIndex = 0; // 0 is not for sale
         if (_salePrice > 0) {
             require(priceMin <= _salePrice, "Sale price must meet minimum, increase");
             newIndex = saleList.length; // ex. length 3 is [0,1,2]
-            saleList.push(_tokenId); // ex. push to array 3, [0,1,2,3]
+            saleList.push(tokenId); // ex. push to array 3, [0,1,2,3]
         }
 
-        nftMap[_tokenId] = NFT({
-            tokenId: _tokenId,
+        nftMap[tokenId] = NFT({
+            tokenId: tokenId,
             owner: payable(msg.sender),
             price: _salePrice,
             saleIndex: newIndex,
             exists: true, // true upon creation
             name: _name,
-            description: _description
+            description: _description,
+            image: _image
         });
 
         mintedCount++;
-        ownershipMap[msg.sender].push(_tokenId);
+        ownershipMap[msg.sender].push(tokenId);
         
-        emit Minted(msg.sender, _tokenId);
+        emit Minted(msg.sender, Strings.toString(tokenId));
 
-        if (nftMap[_tokenId].exists) {
-            return true;
+        if (nftMap[tokenId].exists) {
+            return tokenId;
         } else {
-            return false;
+            return 0;
         }
     }
 
     /**
      * Get nft sale price.
      */
-    function getSalePrice(string calldata _tokenId) public view returns (uint256) {
+    function getSalePrice(uint256 _tokenId) public view returns (uint256) {
         require(nftMap[_tokenId].exists, "NFT not found");
         require(nftMap[_tokenId].saleIndex != 0, "NFT is not for sale");
         return nftMap[_tokenId].price;
@@ -119,7 +126,7 @@ contract NFTGram {
     /**
      * Get if is for sale.
      */
-    function getIsForSale(string calldata _tokenId) public view returns (bool) {
+    function getIsForSale(uint256 _tokenId) public view returns (bool) {
         require(nftMap[_tokenId].exists, "NFT not found");
         if (nftMap[_tokenId].saleIndex == 0) {
             return false;
@@ -131,7 +138,7 @@ contract NFTGram {
     /**
      * Get nft owner.
      */
-    function getOwner(string calldata _tokenId) public view returns (address) {
+    function getOwner(uint256 _tokenId) public view returns (address) {
         require(nftMap[_tokenId].exists, "NFT not found");
         return nftMap[_tokenId].owner;
     }
@@ -139,16 +146,16 @@ contract NFTGram {
     /**
      * Get nft, only owner can call, return array.
      */
-    function getNFT(string calldata _tokenId) public view returns (string memory, uint256, uint256, string memory, string memory) {
+    function getNFT(uint256 _tokenId) public view returns (uint256, uint256, uint256, string memory, string memory, string memory) {
         require(nftMap[_tokenId].exists, "NFT not found");
         require(nftMap[_tokenId].owner == msg.sender, "Must be the owner to view this data");
-        return (nftMap[_tokenId].tokenId, nftMap[_tokenId].price, nftMap[_tokenId].saleIndex, nftMap[_tokenId].name, nftMap[_tokenId].description);
+        return (nftMap[_tokenId].tokenId, nftMap[_tokenId].price, nftMap[_tokenId].saleIndex, nftMap[_tokenId].name, nftMap[_tokenId].description, nftMap[_tokenId].image);
     }
 
     /**
      * Get nft, only owner can call, return base64 string.
      */
-    function getNFTBase64(string calldata _tokenId) public view returns (string memory) {
+    function getNFTBase64(uint256 _tokenId) public view returns (string memory) {
         require(nftMap[_tokenId].exists, "NFT not found");
         require(nftMap[_tokenId].owner == msg.sender, "Must be the owner to view this data");
         
@@ -165,26 +172,26 @@ contract NFTGram {
             nftMap[_tokenId].name,
             '", "description": "', 
             nftMap[_tokenId].description,
+            '", "image": "', 
+            nftMap[_tokenId].image,
             '"}')))));
     }
 
     /**
      * Get nft metadata, return array
      */
-    function tokenURIArray(string calldata _tokenId) public view returns (string memory, string memory, string memory, uint256) {
+    function tokenURIArray(uint256 _tokenId) public view returns (string memory, string memory, string memory, uint256) {
         require(nftMap[_tokenId].exists, "NFT not found");
-        
-        string memory uri = string.concat(baseURI, _tokenId);
-        return (nftMap[_tokenId].name, nftMap[_tokenId].description, uri, nftMap[_tokenId].price);
+
+        return (nftMap[_tokenId].name, nftMap[_tokenId].description, nftMap[_tokenId].image, nftMap[_tokenId].price);
     }
     
     /**
      * Get nft metadata, return base64 string.
      */
-    function tokenURI(string calldata _tokenId) public view returns (string memory) {
+    function tokenURI(uint256 _tokenId) public view returns (string memory) {
         require(nftMap[_tokenId].exists, "NFT not found");
- 
-        string memory uri = string.concat(baseURI, _tokenId);      
+    
         string memory currentPrice = Strings.toString(nftMap[_tokenId].price); 
         return string(abi.encodePacked('data:application/json;base64,', Base64.encode(bytes(abi.encodePacked(
             '{"name":"', 
@@ -192,7 +199,7 @@ contract NFTGram {
             '", "description":"', 
             nftMap[_tokenId].description,
             '", "image": "', 
-            uri,
+            nftMap[_tokenId].image,
             '", "price": "', 
             currentPrice,
             '"}')))));
@@ -201,14 +208,14 @@ contract NFTGram {
     /**
      * Get nft by key:owner.
      */
-    function getNftsOwned() public view returns (string[] memory) {
+    function getNftsOwned() public view returns (uint256[] memory) {
         return ownershipMap[msg.sender];
     }
 
     /**
      * Get token ID by index in saleList.
      */
-    function getForSaleByIndex(uint256 _index) public view returns (string memory) {
+    function getForSaleByIndex(uint256 _index) public view returns (uint256) {
         require(_index != 0, "No NFT located in index 0, start at 1");
         require(_index < saleList.length, "Invalid index provided, not enough NFTs for sale");
         // gave up on making a dynamic sized array, waiting for Solidity update
@@ -219,12 +226,12 @@ contract NFTGram {
      * Get token IDs in saleList by groups of ten.
      * @param _groupOfTen 1 = get 1-10; 2 = get 11-20, 3 = get 21-30, etc.
      */
-    function getForSaleByTens(uint256 _groupOfTen) public view returns (string[] memory){
+    function getForSaleByTens(uint256 _groupOfTen) public view returns (uint256[] memory){
         require(_groupOfTen != 0, "Groups of ten start at 1");
         uint256 endIndex = _groupOfTen * 10;
         uint256 startIndex = endIndex - 9;
         
-        string[] memory tenOnSale = new string[](10);
+        uint256[] memory tenOnSale = new uint256[](10);
         uint16 tmp = 0;
         for (uint256 i = startIndex; i <= endIndex; i++) {
             if (i < saleList.length) {
@@ -245,7 +252,8 @@ contract NFTGram {
     /**
      * Update nft state to for sale. royalty fee subtracted during sale.
      */
-    function listForSale(string calldata _tokenId, uint256 _salePrice) external returns (bool) {
+    function listForSale(uint256 _tokenId, uint256 _salePrice) external returns (bool) {
+        require(!paused, "Contract transactions temporarily paused for maintenance");
         require(nftMap[_tokenId].exists, "NFT not found.");
         require(nftMap[_tokenId].owner == msg.sender, "You are not the owner of the NFT");
         require(nftMap[_tokenId].saleIndex == 0, "NFT is already listed as for sale");
@@ -261,7 +269,8 @@ contract NFTGram {
     /**
      * Update nft state to no longer for sale.
      */
-    function delistForSale(string calldata _tokenId) external returns (bool) {
+    function delistForSale(uint256 _tokenId) external returns (bool) {
+        require(!paused, "Contract transactions temporarily paused for maintenance");
         require(nftMap[_tokenId].exists, "NFT not found.");
         require(nftMap[_tokenId].owner == msg.sender, "You are not the owner of the NFT");
 
@@ -272,7 +281,8 @@ contract NFTGram {
     /**
      * Transfer nft, update to no longer for sale.
      */
-    function purchaseNFT(string calldata _tokenId) external payable returns (bool) {
+    function purchaseNFT(uint256 _tokenId) external payable returns (bool) {
+        require(!paused, "Contract transactions temporarily paused for maintenance");
         require (nftMap[_tokenId].exists, "NFT not found");
         require(nftMap[_tokenId].owner != msg.sender, "You already own this NFT");
         require(nftMap[_tokenId].saleIndex != 0, "NFT is not listed for sale");
@@ -295,14 +305,15 @@ contract NFTGram {
         // buyer pays royalty fee x1
         transferFunds(contractOwner, fee * 2);
 
-        emit Transferred(seller, msg.sender, _tokenId);
+        emit Transferred(seller, msg.sender, Strings.toString(_tokenId));
         return true;
     }
 
     /**
      * Remove NFT.
      */
-    function burnNFT(string calldata _tokenId) external returns (bool) {
+    function burnNFT(uint256 _tokenId) external returns (bool) {
+        require(!paused, "Contract nft burning temporarily paused for maintenance");
         require (nftMap[_tokenId].exists, "NFT not found");
         require(nftMap[_tokenId].owner == msg.sender, "You are not the owner of the NFT");
 
@@ -312,7 +323,6 @@ contract NFTGram {
         removeOwnership(_tokenId, msg.sender);            
         
         delete nftMap[_tokenId];
-        mintedCount--;
         return true;
     }
 
@@ -337,7 +347,7 @@ contract NFTGram {
     /**
      * Remove and reorganize for sale state from structures.
      */
-    function removeForSaleData(string memory _tokenId) private {
+    function removeForSaleData(uint256 _tokenId) private {
         require (nftMap[_tokenId].saleIndex != 0, "NFT not for sale to remove");
         uint256 oldIndex = nftMap[_tokenId].saleIndex;
         uint256 moveIndex = saleList.length - 1;
@@ -352,7 +362,7 @@ contract NFTGram {
     /**
      * Remove nft from owner map.
      */
-    function removeOwnership(string calldata _tokenId, address _owner) private returns (bool) {
+    function removeOwnership(uint256 _tokenId, address _owner) private returns (bool) {
         bool removed = false;
         for(uint256 i = 0; i < ownershipMap[_owner].length; i++) {
             // string storage currId = ownershipMap[_owner][i];
@@ -386,6 +396,28 @@ contract NFTGram {
     }
 
     /**
+     * Pause contract transactions.
+     */
+    function pause() external returns (bool) {
+        require(contractOwner == msg.sender, "Only owner may pause contract");
+        require(!paused, "Contract already paused");
+        paused = true;
+        emit Paused();
+        return paused;
+    }
+
+    /**
+     * Unpause contract transactions.
+     */
+    function unpause() external returns (bool) {
+        require(contractOwner == msg.sender, "Only owner may unpause contract");
+        require(paused, "Contract already unpaused");
+        paused = false;
+        emit Unpaused();
+        return paused;
+    }
+
+    /**
      * Get royalty.
      */
     function getRoyalty() external view returns (uint256) {
@@ -406,6 +438,14 @@ contract NFTGram {
      */
     function getTotalMinted() external view returns (uint256) {
         return mintedCount;
+    }
+
+    /**
+     * Get total number of NFTs mintable within contract.
+     */
+    function getTotalMintable() external view returns (uint256) {
+        require(contractOwner == msg.sender, "Only owner may view mintable allowed");
+        return totalMintable;
     }
 
     /**
