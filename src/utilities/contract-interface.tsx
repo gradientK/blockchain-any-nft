@@ -17,7 +17,7 @@ export function GetNft(tokenId: bigint): readonly [bigint, bigint, bigint, strin
     account: address,
     args: [
       tokenId
-    ],
+    ]
   })
   if (isPending) return [BigInt(-1), BigInt(-1), BigInt(-1), 'Pending', 'Pending', 'Pending']
   else if (error) {

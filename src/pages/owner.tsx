@@ -15,13 +15,21 @@ function Owner() {
   const minted = GetTotalMinted() as unknown as String
   const royalty = GetRoyalty(address) as unknown as String
 
-  return (
-    <div>
-      Contract Owner: {owner}
-      <br />
-      Royalty Percentage: {royalty}
-      <br />
-      Total Minted: {minted}
-    </div>
-  )
+  if (owner === address) {
+    return (
+      <div>
+        Contract Owner: {owner}
+        <br />
+        Royalty Percentage: {royalty}
+        <br />
+        Total Minted: {minted}
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        NftGram Smart Contract
+      </div>
+    )
+  }
 }

@@ -30,7 +30,7 @@ function Mint() {
 
   function MintToChain() {
     let validInputs: boolean = true 
-    let priceInWei: bigint = 0.0 as unknown as bigint
+    let priceInWei: bigint = BigInt(0)
 
     if (inputs.name !== "" || inputs.description !== "" || inputs.uri !== "" || inputs.price !== "") {
       priceInWei = ethers.parseEther(inputs.price) as bigint
@@ -44,10 +44,12 @@ function Mint() {
       } else if (inputs.uri.length > 500 || inputs.uri.length === 0) {
         console.log("URI must be less than 500 characters")
         validInputs = false
-      } else if (priceInWei < 1000 && priceInWei !== 0.0 as unknown as bigint) {
-        console.log("Price must be at least 0.000000000000001 Wei")
+      } else if (priceInWei < 1000 && priceInWei !== BigInt(0)) {
+        console.log("Price must be at least 0.000000000000001 POL")
         validInputs = false
       }
+
+      let rawUri = inputs.uri.replace('dl=0', 'raw=1') // needed for DropBox
 
       if (validInputs) {
         writeContract({
@@ -57,7 +59,7 @@ function Mint() {
           args: [
             inputs.name,
             inputs.description,
-            inputs.uri,
+            rawUri,
             priceInWei
           ]
         })
@@ -91,7 +93,7 @@ function Mint() {
               onChange={handleChange}
               placeholder={'Cat in Space'}
               maxLength={100}
-              size={43}
+              size={40}
             />
           </label>
           <br />
@@ -104,7 +106,7 @@ function Mint() {
               onChange={handleChange}
               placeholder={'Trippy cat flying through space'}
               maxLength={500}
-              size={113}
+              size={52}
             />
           </label>
           <br />
@@ -117,19 +119,20 @@ function Mint() {
               onChange={handleChange}
               placeholder={'https://www.dropbox.com/scl/fi/4vaord3u3y8xno276xj46/catinspace.jpg?rlkey=jes15hupgepzkbmz7rm8cat7h&st=j03auq1x&dl=0'}
               maxLength={500}
-              size={107}
+              size={52}
             />
           </label>
           <br />
 
-          <label>Price (in POL) (enter '0.0' if not for sale): <span />
+          <label>Price (in POL) (enter '0' if not for sale): <span />
             <input
               type={'text'}
               name='price'
               value={inputs.price}
               onChange={handleChange}
-              placeholder={'0.0'}
+              placeholder={'0'}
               maxLength={64}
+              size={14}
             />
           </label>
         </form>
