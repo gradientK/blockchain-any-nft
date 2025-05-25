@@ -33,7 +33,7 @@ function Mint() {
     let priceInWei: bigint = BigInt(0)
 
     if (inputs.name !== "" || inputs.description !== "" || inputs.uri !== "" || inputs.price !== "") {
-      priceInWei = ethers.parseEther(inputs.price) as bigint
+      priceInWei = BigInt(ethers.parseEther(inputs.price))
           
       if (inputs.name.length > 100 || inputs.name.length === 0) {
         console.log("NFT Name must be less than 100 characters")
@@ -130,7 +130,7 @@ function Mint() {
               name='price'
               value={inputs.price}
               onChange={handleChange}
-              placeholder={'0'}
+              placeholder={'155.3'}
               maxLength={64}
               size={14}
             />
