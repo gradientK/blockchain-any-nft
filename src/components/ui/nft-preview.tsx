@@ -1,17 +1,13 @@
+export default function NftPreview(params: any) {
+  const { uri0, uri1, uri2, uri3, uri4, uri5, uri6, uri7, uri8, uri9 } = params
 
-export default function NftPreview({ tokenId, price, saleIndex, name, description, uri }: { tokenId: bigint, price: bigint, saleIndex: bigint, name: string, description: string, uri: string }) {
-
-  const idString: string | undefined = tokenId as unknown as string
-  const priceString: string | undefined = price as unknown as string
-  const saleIndexString: string | undefined = saleIndex as unknown as string
   return (
     <div>
-      <p>Token ID is {idString}</p>
-      <p>Price is {priceString}</p>
-      <p>Sale index is {saleIndexString}</p>
-      <p>Name is {name}</p>
-      <p>Description is {description}</p>
-      <p>Image URI is {uri}</p>
+      <img
+          src={uri0}
+          alt={uri0}
+          style={{ maxWidth: '200px', height: '200', width: '200', display: 'block' }}
+        />
     </div>
   )
 }
