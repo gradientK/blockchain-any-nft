@@ -144,26 +144,26 @@ contract NFTGram {
     }
 
     /**
-     * Get nft, only owner can call, return array.
+     * Get nft, return array.
      */
-    function getNFT(uint256 _tokenId) public view returns (uint256, uint256, uint256, string memory, string memory, string memory) {
+    function getNFT(uint256 _tokenId) public view returns (uint256, address, uint256, uint256, string memory, string memory, string memory) {
         require(nftMap[_tokenId].exists, "NFT not found");
-        require(nftMap[_tokenId].owner == msg.sender, "Must be the owner to view this data");
-        return (nftMap[_tokenId].tokenId, nftMap[_tokenId].price, nftMap[_tokenId].saleIndex, nftMap[_tokenId].name, nftMap[_tokenId].description, nftMap[_tokenId].image);
+        return (nftMap[_tokenId].tokenId, nftMap[_tokenId].owner, nftMap[_tokenId].price, nftMap[_tokenId].saleIndex, nftMap[_tokenId].name, nftMap[_tokenId].description, nftMap[_tokenId].image);
     }
 
     /**
-     * Get nft, only owner can call, return base64 string.
+     * Get nft, return base64 string.
      */
     function getNFTBase64(uint256 _tokenId) public view returns (string memory) {
         require(nftMap[_tokenId].exists, "NFT not found");
-        require(nftMap[_tokenId].owner == msg.sender, "Must be the owner to view this data");
         
         string memory currentPrice = Strings.toString(nftMap[_tokenId].price);
         string memory currentSaleIndex = Strings.toString(nftMap[_tokenId].saleIndex);
         return string(abi.encodePacked('data:application/json;base64,', Base64.encode(bytes(abi.encodePacked(
             '{"tokenId":"', 
             nftMap[_tokenId].tokenId,
+            '", "owner": "', 
+            nftMap[_tokenId].owner,
             '", "price": "', 
             currentPrice,
             '", "saleIndex": "', 
@@ -206,7 +206,7 @@ contract NFTGram {
     }
 
     /**
-     * Get nft by key:owner.
+     * Get nft by owner.
      */
     function getNftsOwned() public view returns (uint256[] memory) {
         return ownershipMap[msg.sender];
@@ -240,6 +240,37 @@ contract NFTGram {
             }
         }
         return tenOnSale;
+    }
+
+    /**
+     * Get data for 5 nfts.
+     */
+    function getFiveNFTs(uint256 _id1, uint256 _id2, uint256 _id3, uint256 _id4, uint256 _id5) 
+            public view returns (uint256[] memory, uint256[] memory, string[] memory, string[] memory) {
+        require(nftMap[_id1].exists, "All 5 NFTs not found");
+        require(nftMap[_id2].exists, "All 5 NFTs not found");
+        require(nftMap[_id3].exists, "All 5 NFTs not found");
+        require(nftMap[_id4].exists, "All 5 NFTs not found");
+        require(nftMap[_id5].exists, "All 5 NFTs not found");
+
+        uint256[] memory tokens = new uint256[](5);
+        uint256[] memory prices = new uint256[](5);
+        string[] memory names = new string[](5);
+        string[] memory locations = new string[](5);
+
+        tokens[0] = _id1;
+        tokens[1] = _id2;
+        tokens[2] = _id3;
+        tokens[3] = _id4;
+        tokens[4] = _id5;
+
+        for (uint16 i = 0; i < 5; i++) {
+            prices[i] = nftMap[tokens[i]].price;
+            names[i] = nftMap[tokens[i]].name;
+            locations[i] = nftMap[tokens[i]].image;
+        }
+
+        return (tokens, prices, names, locations);
     }
 
     /**
