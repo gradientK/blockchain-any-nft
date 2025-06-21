@@ -8,7 +8,7 @@ const contractAddress: string = GetContractAddress()
  * Get NFT information
  * @returns token ID, price, sale index, name, description, address uri
  */
-export function GetNft(tokenId: bigint): readonly [bigint, bigint, bigint, string, string, string] | undefined {
+export function GetNft(tokenId: bigint): readonly [bigint, string, bigint, bigint, string, string, string] | undefined {
   const { address } = useAccount()
   const { data, error, isPending } = useReadContract({
     abi,
@@ -19,10 +19,32 @@ export function GetNft(tokenId: bigint): readonly [bigint, bigint, bigint, strin
       tokenId
     ]
   })
-  if (isPending) return [BigInt(-1), BigInt(-1), BigInt(-1), 'Pending', 'Pending', 'Pending']
+  if (isPending) return [BigInt(-1), 'Pending', BigInt(-1), BigInt(-1), 'Pending', 'Pending', 'Pending']
   else if (error) {
-    console.log("Failed to get contract owner. " + error)
-    return [BigInt(-1), BigInt(-1), BigInt(-1), 'Error', 'Error', 'Error']
+    console.log("Failed to get NFT. " + error)
+    return [BigInt(-1), 'Error', BigInt(-1), BigInt(-1), 'Error', 'Error', 'Error']
+  } else {
+    return data
+  }
+}
+
+/**
+ * Get NFT information for 9 NFTs
+ * @returns [[sale price], [token name], [uri location]]
+ */
+export function GetNineNFTs(id1: bigint, id2: bigint, id3: bigint, id4: bigint, id5: bigint, id6: bigint, id7: bigint, id8: bigint, id9: bigint): readonly [readonly bigint[], readonly string[], readonly string[]] | undefined {
+  const { data, error, isPending } = useReadContract({
+    abi,
+    address: contractAddress as `0x${string}`,
+    functionName: 'getNineNFTs',
+    args: [
+      id1, id2, id3, id4, id5, id6, id7, id8, id9
+    ]
+  })
+  if (isPending) return [[BigInt(-1)], ['Pending'], ['Pending']]
+  else if (error) {
+    console.log("Failed to get Five NFTs. " + error)
+    return [[BigInt(-1)], ['Error'], ['Error']]
   } else {
     return data
   }
@@ -42,7 +64,7 @@ export function GetNftsOwned(): readonly bigint[] {
   })
   if (isPending) return [BigInt(-1)]
   else if (error) {
-    console.log("Failed to get contract owner. " + error)
+    console.log("Failed to get owned by owner. " + error)
     return [BigInt(-1)]
   } else {
     return data

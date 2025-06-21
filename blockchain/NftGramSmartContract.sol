@@ -243,34 +243,42 @@ contract NFTGram {
     }
 
     /**
-     * Get data for 5 nfts.
+     * Get data for 9 nfts.
      */
-    function getFiveNFTs(uint256 _id1, uint256 _id2, uint256 _id3, uint256 _id4, uint256 _id5) 
-            public view returns (uint256[] memory, uint256[] memory, string[] memory, string[] memory) {
-        require(nftMap[_id1].exists, "All 5 NFTs not found");
-        require(nftMap[_id2].exists, "All 5 NFTs not found");
-        require(nftMap[_id3].exists, "All 5 NFTs not found");
-        require(nftMap[_id4].exists, "All 5 NFTs not found");
-        require(nftMap[_id5].exists, "All 5 NFTs not found");
+    function getNineNFTs(uint256 _id1, uint256 _id2, uint256 _id3, uint256 _id4, uint256 _id5, uint256 _id6, uint256 _id7, uint256 _id8, uint256 _id9) 
+            public view returns (uint256[] memory, string[] memory, string[] memory) {
+        require(nftMap[_id1].exists, "All 9 NFTs not found");
+        require(nftMap[_id2].exists, "All 9 NFTs not found");
+        require(nftMap[_id3].exists, "All 9 NFTs not found");
+        require(nftMap[_id4].exists, "All 9 NFTs not found");
+        require(nftMap[_id5].exists, "All 9 NFTs not found");
+        require(nftMap[_id6].exists, "All 9 NFTs not found");
+        require(nftMap[_id7].exists, "All 9 NFTs not found");
+        require(nftMap[_id8].exists, "All 9 NFTs not found");
+        require(nftMap[_id9].exists, "All 9 NFTs not found");
 
-        uint256[] memory tokens = new uint256[](5);
-        uint256[] memory prices = new uint256[](5);
-        string[] memory names = new string[](5);
-        string[] memory locations = new string[](5);
-
+        uint256[] memory tokens = new uint256[](9);
+        uint256[] memory prices = new uint256[](9);
+        string[] memory names = new string[](9);
+        string[] memory locations = new string[](9);
+        
         tokens[0] = _id1;
         tokens[1] = _id2;
         tokens[2] = _id3;
         tokens[3] = _id4;
         tokens[4] = _id5;
+        tokens[5] = _id6;
+        tokens[6] = _id7;
+        tokens[7] = _id8;
+        tokens[8] = _id9;
 
-        for (uint16 i = 0; i < 5; i++) {
+        for (uint16 i = 0; i < 9; i++) {
             prices[i] = nftMap[tokens[i]].price;
             names[i] = nftMap[tokens[i]].name;
             locations[i] = nftMap[tokens[i]].image;
         }
 
-        return (tokens, prices, names, locations);
+        return (prices, names, locations);
     }
 
     /**

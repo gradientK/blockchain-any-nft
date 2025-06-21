@@ -135,60 +135,6 @@ export const abi =
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_id1",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_id2",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_id3",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_id4",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_id5",
-				"type": "uint256"
-			}
-		],
-		"name": "getFiveNFTs",
-		"outputs": [
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "string[]",
-				"name": "",
-				"type": "string[]"
-			},
-			{
-				"internalType": "string[]",
-				"name": "",
-				"type": "string[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
 				"name": "_index",
 				"type": "uint256"
 			}
@@ -318,6 +264,75 @@ export const abi =
 				"internalType": "uint256[]",
 				"name": "",
 				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id1",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_id2",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_id3",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_id4",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_id5",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_id6",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_id7",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_id8",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_id9",
+				"type": "uint256"
+			}
+		],
+		"name": "getNineNFTs",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
 			}
 		],
 		"stateMutability": "view",
