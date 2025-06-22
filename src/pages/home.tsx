@@ -2,14 +2,13 @@ import { Link } from 'react-router-dom';
 import { useAccount } from "wagmi"
 import NftPreview from "../components/ui/nft-preview.tsx"
 import Reconnect from "../components/ui/reconnect.tsx"
-import { GetNft, GetNftsOwned } from "../utilities/contract-interface.tsx"
+import { GetNftsOwned, GetNineNFTs } from "../utilities/contract-interface.tsx"
 import { SplitArray } from "../utilities/misc-util.tsx"
 
-const previewSize = 10
+const previewSize = 9
 
-let idsOwned: any
-let idArrays: (bigint | undefined)[][]
-let pageUris: (string | undefined)[] = []
+let idsOwned: any = [] // used once
+let idArrays: (bigint | undefined)[][] = [] // [page number][id 0-9]
 
 export default function HomeMain () {
   const { isConnected } = useAccount()
@@ -23,27 +22,40 @@ export default function HomeMain () {
 }
 
 function Home() {
+  let pageNum = 0 // make dynamic later
+
+  let pagePrices: bigint[] = []
+  let pageNames: string[] = []
+  let pageUris: string[] = []
+
+  // just verifying we have expected data
   if (idsOwned.at(0) !== BigInt(-1) && idsOwned.at(0) !== undefined) {
+    if (idArrays.at(pageNum)?.length === previewSize) {
 
-    let pageNum = 0 // Fix zero here
-
-    if (idArrays.at(pageNum)?.length === previewSize)
-      for (let i = 0; i < idArrays.length; i++) {
-        let tokenId: bigint = idArrays.at(pageNum)?.at(i) as bigint
-        
-        if (tokenId > BigInt(0)) {
-          let nftData: readonly [bigint, bigint, bigint, string, string, string] | undefined
-
-          // async me or useEffect
-          console.log("-------here1" + nftData?.[5])
-          nftData = GetNft(tokenId)
-          console.log("-------here2" + nftData?.[5])
-          // async me or useEffect
-          
-          pageUris.push(nftData?.[5])
-        } else {
-          pageUris.push('0')
+      // must have 9 valid nft id, get duplicate of index 0 if needed
+      for (let i = 0; i < previewSize; i++) {
+        if (idArrays.at(pageNum)?.at(i) === BigInt(0)) {
+          idArrays[pageNum][i] = idArrays.at(pageNum)?.at(0)
         }
+      }
+      
+      let id1 = idArrays.at(pageNum)?.at(0) as bigint
+      let id2 = idArrays.at(pageNum)?.at(1) as bigint
+      let id3 = idArrays.at(pageNum)?.at(2) as bigint
+      let id4 = idArrays.at(pageNum)?.at(3) as bigint
+      let id5 = idArrays.at(pageNum)?.at(4) as bigint
+      let id6 = idArrays.at(pageNum)?.at(5) as bigint
+      let id7 = idArrays.at(pageNum)?.at(6) as bigint
+      let id8 = idArrays.at(pageNum)?.at(7) as bigint
+      let id9 = idArrays.at(pageNum)?.at(8) as bigint
+
+      let priceNameUri: readonly [readonly bigint[], readonly string[], readonly string[]] | undefined = [[], [], []]
+      priceNameUri = GetNineNFTs(id1, id2, id3, id4, id5, id6, id7, id8, id9);
+
+      pagePrices = priceNameUri.at(0)
+      pageNames = priceNameUri.at(1)
+      pageUris = priceNameUri.at(2)
+
     } else {
       console.log("Split Array not the correct size of {}: {}", previewSize, idArrays.length)
     }

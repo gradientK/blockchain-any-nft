@@ -43,7 +43,7 @@ export function GetNineNFTs(id1: bigint, id2: bigint, id3: bigint, id4: bigint, 
   })
   if (isPending) return [[BigInt(-1)], ['Pending'], ['Pending']]
   else if (error) {
-    console.log("Failed to get Five NFTs. " + error)
+    console.log("Failed to get Nine NFTs. " + error)
     return [[BigInt(-1)], ['Error'], ['Error']]
   } else {
     return data
