@@ -1,7 +1,9 @@
 import props from "./properties.json"
 
-export function GetContractAddress() {
-  const contractAddress = props.POLYGON_AMOY_TESTNET_NFTGRAM_SMART_CONTRACT_ADDRESS;
+export function GetCoinNetwork() {
+  return props.BLOCKCHAIN_NETWORK
+}
 
-  return contractAddress
+export function GetContractAddress() {
+  return props.POLYGON_AMOY_TESTNET_NFTGRAM_SMART_CONTRACT_ADDRESS
 }

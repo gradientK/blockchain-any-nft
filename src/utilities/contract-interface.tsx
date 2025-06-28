@@ -21,7 +21,7 @@ export function GetNft(tokenId: bigint): readonly [bigint, string, bigint, bigin
   })
   if (isPending) return [BigInt(-1), 'Pending', BigInt(-1), BigInt(-1), 'Pending', 'Pending', 'Pending']
   else if (error) {
-    console.log("Failed to get NFT. " + error)
+    console.warn("Failed to get NFT. " + error)
     return [BigInt(-1), 'Error', BigInt(-1), BigInt(-1), 'Error', 'Error', 'Error']
   } else {
     return data
@@ -43,7 +43,7 @@ export function GetNineNFTs(id1: bigint, id2: bigint, id3: bigint, id4: bigint, 
   })
   if (isPending) return [[BigInt(-1)], ['Pending'], ['Pending']]
   else if (error) {
-    console.log("Failed to get Nine NFTs. " + error)
+    console.warn("Failed to get Nine NFTs. " + error)
     return [[BigInt(-1)], ['Error'], ['Error']]
   } else {
     return data
@@ -64,7 +64,7 @@ export function GetNftsOwned(): readonly bigint[] {
   })
   if (isPending) return [BigInt(-1)]
   else if (error) {
-    console.log("Failed to get owned by owner. " + error)
+    console.warn("Failed to get owned by owner. " + error)
     return [BigInt(-1)]
   } else {
     return data
@@ -84,7 +84,7 @@ export function GetContractOwner(): string {
     functionName: 'getContractOwner',
   })
   if (error) {
-    console.log("Failed to get contract owner. " + error)
+    console.warn("Failed to get contract owner. " + error)
     return "Error"
   } else return data as string
 }
@@ -101,7 +101,7 @@ export function GetRoyalty(walletAddress: `0x${string}` | undefined): (bigint | 
     account: walletAddress,
   })
   if (error) {
-    console.log("Failed to get royalty. " + error)
+    console.warn("Failed to get royalty. " + error)
     return BigInt(-1)
   } else return data
 }
@@ -117,7 +117,7 @@ export function GetTotalMinted(): (bigint | undefined) {
     functionName: 'getTotalMinted',
   })
   if (error) {
-    console.log("Failed to get total minted. " + error)
+    console.warn("Failed to get total minted. " + error)
     return BigInt(-1)
   } else return data
 }

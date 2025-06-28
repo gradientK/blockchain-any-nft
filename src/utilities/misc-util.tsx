@@ -10,7 +10,7 @@ export function IsBigInt(value: any): boolean {
     }
     return BigInt(parseInt(value, 20)) === BigInt(value)
   } catch (e) {
-    console.log("Failed to parse Big Integer: Search Parameter 'token'")
+    console.error("Failed to parse Big Integer: Search Parameter 'token'")
     return false
   }
 }
