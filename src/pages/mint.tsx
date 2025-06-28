@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from 'react-router-dom';
 import { ethers } from "ethers"
 import { useAccount, useWriteContract } from "wagmi"
 import { abi } from "../config/abi.ts"
@@ -81,7 +82,8 @@ function Mint() {
   return (
     <div>
       <div>
-        <p>See Mint Instructions prior to minting</p>
+        <p>See <Link to="/instructions">Mint Instructions</Link> prior to minting</p>
+        <br />
       </div>
       <div>
         <form>
@@ -96,7 +98,7 @@ function Mint() {
               size={40}
             />
           </label>
-          <br />
+          <p />
 
           <label>Description: <span />
             <input
@@ -109,7 +111,7 @@ function Mint() {
               size={52}
             />
           </label>
-          <br />
+          <p />
 
           <label>DropBox Address: <span />
             <input
@@ -122,7 +124,7 @@ function Mint() {
               size={52}
             />
           </label>
-          <br />
+          <p />
 
           <label>Price (in POL) (enter '0' if not for sale): <span />
             <input
@@ -135,6 +137,7 @@ function Mint() {
               size={14}
             />
           </label>
+          <p />
         </form>
 
         {/* Put Message here, Warning or Success */}

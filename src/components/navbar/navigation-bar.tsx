@@ -5,19 +5,17 @@ function NavigationBar() {
   return (    
     <div className='navBar'>
       <Link to="/">Home</Link>
-      <p />
+      <br />
       <Link to="/mint">Mint</Link>
-      <p />
+      <br />
       <Link to="/instructions">Mint Instructions</Link>
-      <p />
+      <br />
       <Link to="/marketplace">Marketplace</Link>
       <p />
-      <Link to="/owner">Contract Maintenance</Link>
-      <p />
       <ConnectionStatus />
-      <p />
+      <br />
       --------------------------------------------------------------------------
-      <p />
+      <br />
     </div>
   )
 }

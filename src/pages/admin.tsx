@@ -1,19 +1,22 @@
 import { useAccount } from "wagmi"
 import Reconnect from "../components/ui/reconnect.tsx"
-import { GetContractOwner, GetRoyalty, GetTotalMinted } from "../utilities/contract-interface.tsx"
+import { 
+  GetContractOwner, GetRoyalty, GetTotalMinted, GetTotalMintable 
+} from "../utilities/contract-interface.tsx"
 
-export default function OwnerMain() {
+export default function AdminMain() {
   const { isConnected } = useAccount()
-  if (isConnected) return <Owner />
+  if (isConnected) return <Admin />
   return <Reconnect />
 }
 
-function Owner() {
+function Admin() {
   const { address } = useAccount()
 
-  const owner = GetContractOwner()
-  const minted = GetTotalMinted() as unknown as String
-  const royalty = GetRoyalty(address) as unknown as String
+  const owner: string = GetContractOwner()
+  const royalty: String = String(GetRoyalty(address))
+  const minted: String = String(GetTotalMinted())
+  const mintable: String = String(GetTotalMintable(address))
 
   if (owner === address) {
     return (
@@ -23,6 +26,8 @@ function Owner() {
         Royalty Percentage: {royalty}
         <br />
         Total Minted: {minted}
+        <br />
+        Total Mintable: {mintable}
       </div>
     )
   } else {

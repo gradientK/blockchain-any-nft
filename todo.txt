@@ -1,4 +1,3 @@
 Stories:
--Add to getNFT & getNFTBase64: owner
 -Add put up for sale functionality in nft.tsx
--remove return tokens[] from getFiveNfts()
+-Add isPaused() to smart contract

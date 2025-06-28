@@ -29,6 +29,27 @@ export function GetNft(tokenId: bigint): readonly [bigint, string, bigint, bigin
 }
 
 /**
+ * Get NFTs Owned
+ * @returns array of NFT token IDs owned
+ */
+export function GetNftsOwned(): readonly bigint[] {
+  const { address } = useAccount()
+  const { data, error, isPending } = useReadContract({
+    abi,
+    address: contractAddress as `0x${string}`,
+    functionName: 'getNftsOwned',
+    account: address
+  })
+  if (isPending) return [BigInt(-1)]
+  else if (error) {
+    console.warn("Failed to get owned by owner. " + error)
+    return [BigInt(-1)]
+  } else {
+    return data
+  }
+}
+
+/**
  * Get NFT information for 9 NFTs
  * @returns [[sale price], [token name], [uri location]]
  */
@@ -50,27 +71,6 @@ export function GetNineNFTs(id1: bigint, id2: bigint, id3: bigint, id4: bigint, 
   }
 }
 
-/**
- * Get NFTs Owned
- * @returns array of NFT token IDs owned
- */
-export function GetNftsOwned(): readonly bigint[] {
-  const { address } = useAccount()
-  const { data, error, isPending } = useReadContract({
-    abi,
-    address: contractAddress as `0x${string}`,
-    functionName: 'getNftsOwned',
-    account: address
-  })
-  if (isPending) return [BigInt(-1)]
-  else if (error) {
-    console.warn("Failed to get owned by owner. " + error)
-    return [BigInt(-1)]
-  } else {
-    return data
-  }
-}
-
 // Contract Owner
 
 /**
@@ -78,12 +78,13 @@ export function GetNftsOwned(): readonly bigint[] {
  * @returns owner
  */
 export function GetContractOwner(): string {
-  const { data, error } = useReadContract({
+  const { data, error, isPending } = useReadContract({
     abi,
     address: contractAddress as `0x${string}`,
     functionName: 'getContractOwner',
   })
-  if (error) {
+  if (isPending) return 'Pending'
+  else if (error) {
     console.warn("Failed to get contract owner. " + error)
     return "Error"
   } else return data as string
@@ -94,13 +95,14 @@ export function GetContractOwner(): string {
  * @returns royalty
  */
 export function GetRoyalty(walletAddress: `0x${string}` | undefined): (bigint | undefined ) {
-  const { data, error } = useReadContract({
+  const { data, error, isPending } = useReadContract({
     abi,
     address: contractAddress as `0x${string}`,
     functionName: 'getRoyalty',
     account: walletAddress,
   })
-  if (error) {
+  if (isPending) return BigInt(-1)
+  else if (error) {
     console.warn("Failed to get royalty. " + error)
     return BigInt(-1)
   } else return data
@@ -111,12 +113,31 @@ export function GetRoyalty(walletAddress: `0x${string}` | undefined): (bigint | 
  * @returns minted
  */
 export function GetTotalMinted(): (bigint | undefined) {
-  const { data, error } = useReadContract({
+  const { data, error, isPending } = useReadContract({
     abi,
     address: contractAddress as `0x${string}`,
     functionName: 'getTotalMinted',
   })
-  if (error) {
+  if (isPending) return BigInt(-1)
+  else if (error) {
+    console.warn("Failed to get total minted. " + error)
+    return BigInt(-1)
+  } else return data
+}
+
+/**
+ * Get Total Mintable
+ * @returns total mintable
+ */
+export function GetTotalMintable(walletAddress: `0x${string}` | undefined): (bigint | undefined ) {
+  const { data, error, isPending } = useReadContract({
+    abi,
+    address: contractAddress as `0x${string}`,
+    functionName: 'getTotalMintable',
+    account: walletAddress
+  })
+  if (isPending) return BigInt(-1)
+  else if (error) {
     console.warn("Failed to get total minted. " + error)
     return BigInt(-1)
   } else return data
