@@ -1,20 +1,24 @@
+import { Link } from 'react-router-dom';
 import { useAccount } from "wagmi"
-import { Account } from "../wallet/account.tsx"
 
 export function ConnectionStatus() {
   const { isConnected } = useAccount()
-  if (isConnected) return <Account />
+  if (isConnected) return <Connected />
   return <NotConnected />
+}
+
+function Connected() {
+  return (
+    <div>
+      <Link to="/logon">Disconnect Wallet</Link>
+    </div>
+  )
 }
 
 function NotConnected() {
   return (
     <div>
-      <p>
-        Wallet Not Connected 
-        <br />
-        Connect Wallet to Access NFTs
-      </p>
+      <div>Wallet is Disconnected</div>
     </div>
   )
 }

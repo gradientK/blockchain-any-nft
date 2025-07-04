@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAccount } from "wagmi"
 import PreviewHome from "../components/ui/preview-home.tsx"
-import Reconnect from "../components/ui/reconnect.tsx"
+import LogonLink from "../components/ui/logon-link.tsx"
 import { GetNftsOwned, GetNineNFTs } from "../utilities/contract-interface.tsx"
 import { SplitArray } from "../utilities/misc-util.tsx"
 
@@ -17,7 +17,7 @@ export default function HomeMain () {
     idArrays = SplitArray(idsOwned, previewSize)
     return <Home />
   } else {
-    return <Reconnect />
+    return <LogonLink />
   }
 }
 

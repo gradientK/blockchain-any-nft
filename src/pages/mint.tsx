@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 import { ethers } from "ethers"
 import { useAccount, useWriteContract } from "wagmi"
 import { abi } from "../config/abi.ts"
-import Reconnect from "../components/ui/reconnect.tsx"
 import { GetContractAddress } from "../config/prop-reader.tsx"
+import LogonLink from "../components/ui/logon-link.tsx"
 
 const contractAddress: string = GetContractAddress()
 
 export default function MintMain() {
   const { isConnected } = useAccount()
   if (isConnected) return <Mint />
-  return <Reconnect />
+  return <LogonLink />
 }
 
 function Mint() {

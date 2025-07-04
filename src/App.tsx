@@ -6,6 +6,7 @@ import InstructionsMain from './pages/instructions.tsx';
 import MarketplaceMain from './pages/marketplace.tsx';
 import MintMain from './pages/mint.tsx';
 import NftMain from './pages/nft.tsx';
+import LogonMain from './pages/logon.tsx';
 import AdminMain from './pages/admin.tsx';
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/marketplace" element={<MarketplaceMain />} />
         <Route path="/mint" element={<MintMain />} />
         <Route path="/nft" element={<NftMain />} />
+        <Route path="/logon" element={<LogonMain />} />
         <Route path="/admin" element={<AdminMain />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

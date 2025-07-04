@@ -1,5 +1,5 @@
 import { useAccount } from "wagmi"
-import Reconnect from "../components/ui/reconnect.tsx"
+import LogonLink from "../components/ui/logon-link.tsx"
 import { 
   GetContractOwner, GetRoyalty, GetTotalMinted, GetTotalMintable 
 } from "../utilities/contract-interface.tsx"
@@ -7,7 +7,7 @@ import {
 export default function AdminMain() {
   const { isConnected } = useAccount()
   if (isConnected) return <Admin />
-  return <Reconnect />
+  return <LogonLink />
 }
 
 function Admin() {
