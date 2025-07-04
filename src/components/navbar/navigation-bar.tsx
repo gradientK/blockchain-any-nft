@@ -13,9 +13,8 @@ export default function NavigationBar() {
       <Link to="/marketplace">Marketplace</Link>
       <p />
       <ConnectionStatus />
-      <br />
       --------------------------------------------------------------------------
-      <br />
+      <p />
     </div>
   )
 }

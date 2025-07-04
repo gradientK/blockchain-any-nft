@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from 'react-router-dom';
 import { useAccount, useDisconnect, useEnsName } from 'wagmi'
 import { WalletOptions } from "../components/wallet/wallet-options.tsx"
 
@@ -11,6 +12,8 @@ export default function LogonMain() {
       <p />
       {address && <div>Wallet Connected: {ensName ? `${ensName} (${address})` : address}</div>}
       <button onClick={() => disconnect()}>Disconnect MetaMask</button>
+      <p />
+      <Link to="/">Go Home</Link>
     </div>
   )
   return <Reconnect />

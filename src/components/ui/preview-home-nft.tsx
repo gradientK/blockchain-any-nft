@@ -20,7 +20,7 @@ export default function PreviewHomeNft(params: any) {
     return (
       <div>
         <ImagePreview />
-        Sale price: {priceInWei} {coin}
+        Price: {priceInWei} {coin}
         <br /><p />
       </div>
     )
