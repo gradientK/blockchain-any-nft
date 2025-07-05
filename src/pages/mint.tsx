@@ -5,6 +5,7 @@ import { useAccount, useWriteContract } from "wagmi"
 import { abi } from "../config/abi.ts"
 import { GetContractAddress } from "../config/prop-reader.tsx"
 import LogonLink from "../components/ui/logon-link.tsx"
+import { IsValidEth } from "../utilities/misc-util.tsx"
 
 const contractAddress: string = GetContractAddress()
 
@@ -21,7 +22,7 @@ function Mint() {
     description: "",      
     uri: "",
     price: ""
-  });
+  })
 
   const handleChange = (event: { target: { name: any; value: any } }) => {
     const name = event.target.name;
@@ -33,9 +34,7 @@ function Mint() {
     let validInputs: boolean = true 
     let priceInWei: bigint = BigInt(0)
 
-    if (inputs.name !== "" || inputs.description !== "" || inputs.uri !== "" || inputs.price !== "") {
-      priceInWei = BigInt(ethers.parseEther(inputs.price))
-          
+    if (inputs.name !== "" || inputs.description !== "" || inputs.uri !== "" || inputs.price !== "") {         
       if (inputs.name.length > 100 || inputs.name.length === 0) {
         console.info("NFT Name must be less than 100 characters")
         validInputs = false
@@ -45,9 +44,15 @@ function Mint() {
       } else if (inputs.uri.length > 500 || inputs.uri.length === 0) {
         console.info("URI must be less than 500 characters")
         validInputs = false
-      } else if (priceInWei < 1000 && priceInWei !== BigInt(0)) {
-        console.info("Price must be at least 0.000000000000001 POL")
+      } else if (!IsValidEth(inputs.price)) { 
+        console.info("Price entered is not a valid price")
         validInputs = false
+      } else {
+        priceInWei = BigInt(ethers.parseEther(inputs.price))
+        if (priceInWei < 1000 && priceInWei !== BigInt(0)) {
+          console.info("Price must be at least 0.000000000000001 POL")
+          validInputs = false
+        }
       }
 
       let rawUri = inputs.uri.replace('dl=0', 'raw=1') // needed for DropBox

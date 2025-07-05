@@ -7,15 +7,18 @@ export default function LogonMain() {
   const { address, isConnected } = useAccount()
   const { data: ensName } = useEnsName({ address })
   const { disconnect } = useDisconnect()
-  if (isConnected) return (
-    <div>
-      <p />
-      {address && <div>Wallet Connected: {ensName ? `${ensName} (${address})` : address}</div>}
-      <button onClick={() => disconnect()}>Disconnect MetaMask</button>
-      <p />
-      <Link to="/">Go Home</Link>
-    </div>
-  )
+
+  if (isConnected) {
+    return (
+      <div>
+        <p />
+        {address && <div>Wallet Connected: {ensName ? `${ensName} (${address})` : address}</div>}
+        <button onClick={() => disconnect()}>Disconnect MetaMask</button>
+        <p />
+        <Link to="/">Go Home</Link>
+      </div>
+    )
+  }
   return <Reconnect />
 }
 

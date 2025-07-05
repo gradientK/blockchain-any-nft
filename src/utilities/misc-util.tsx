@@ -8,9 +8,28 @@ export function IsBigInt(value: any): boolean {
     if (isNaN(value)) {
       return false
     }
-    return BigInt(parseInt(value, 20)) === BigInt(value)
+    return BigInt(parseInt(value)) === BigInt(value)
   } catch (e) {
-    console.error("Failed to parse Big Integer: Search Parameter 'token'")
+    console.error("Failed to parse Big Integer: " + value)
+    return false
+  }
+}
+
+/**
+ * Checks if value is a valid Eth price
+ * @param value
+ * @returns boolean
+ */
+export function IsValidEth(value: string): boolean {
+  try {
+    if (isNaN(value as unknown as number) || isNaN(parseFloat(value))) {
+      return false
+    } else if (parseFloat(value) < 0.000000000000000001) {
+      return false
+    }
+    return true
+  } catch (e) {
+    console.error("Failed to parse Eth price: " + value)
     return false
   }
 }

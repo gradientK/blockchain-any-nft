@@ -1,66 +1,157 @@
+import { useState } from "react"
 import { useSearchParams } from "react-router";
-import { ethers } from "ethers"
 import { Link } from 'react-router-dom';
+import { ethers } from "ethers"
+import { useAccount, useWriteContract } from "wagmi"
+import { abi } from "../config/abi.ts"
+import { GetContractAddress } from "../config/prop-reader.tsx"
 import { GetNft } from "../utilities/contract-interface.tsx"
-import { IsBigInt } from "../utilities/misc-util.tsx"
+import { IsBigInt, IsValidEth } from "../utilities/misc-util.tsx"
 
-let token: string | null
-let nftData: readonly [bigint, string, bigint, bigint, string, string, string] | undefined
+const contractAddress: string = GetContractAddress()
+
+let token: any = null
 
 export default function NftMain() {
   const [searchParams] = useSearchParams()
   token = searchParams.get("token")
+  if (token === null || !IsBigInt(token)) {
+    return (
+      <div>
+        Invalid Token ID provided
+        <p />
+        <Link to="/">Go Home</Link>
+      </div>
+    )
+  }
   return <Nft />
 }
 
 function Nft() {
-  if (token === null) {
+  const { address } = useAccount()
+  const { writeContract } = useWriteContract()
+
+  let nftData = GetNft(BigInt(token))
+  const tokenId: bigint = nftData?.at(0) as bigint
+  const owner: string = nftData?.at(1) as string
+  const price: bigint = nftData?.at(2) as bigint
+  const saleIndex: bigint = nftData?.at(3) as bigint
+  const name: string = nftData?.at(4) as string
+  const description: string = nftData?.at(5) as string
+  const uri: string = nftData?.at(6) as string
+
+  const [newPrice, setPrice] = useState('');
+
+  if (name === 'Pending') {
     return (
       <div>
-        <span>
-          No NFT Token ID provided
-          <br></br>
-          <Link to="/">Go Home</Link>
-        </span>
+        Retrieving NFT
       </div>
     )
-  } else if (IsBigInt(token)) {
-
-    nftData = GetNft(BigInt(token))    
-    const tokenId: bigint = nftData?.at(0) as bigint
-    const owner: string = nftData?.at(1) as string
-    const price: bigint = nftData?.at(2) as bigint
-    const saleIndex: bigint = nftData?.at(3) as bigint
-    const name: string = nftData?.at(4) as string
-    const description: string = nftData?.at(5) as string
-    const uri: string = nftData?.at(6) as string
-
-    const idString: string = String(tokenId)
-    const saleIndexString: string = String(saleIndex)
-    let priceInWei: string = ethers.formatEther(price)
-
+  } else if (name === 'Error') {
     return (
       <div>
-        <img
-          src={ uri }
-          alt={ uri }
-          style={{ maxWidth: '200px', height: '200', width: '200', display: 'block' }}
-        />
-        <p>Token ID: {idString}</p>
-        <p>Owner: {owner}</p>
-        <p>Name: {name}</p>
-        <p>Description: {description}</p>
-        <p>Price: {priceInWei}</p>
-        <p>Sale index: {saleIndexString}</p>
-        <p>Image URI: {uri}</p> 
-        <p>---- Add functionality to Put up for sale or Remove for sale ----</p> 
+        Failed to find NFT {token}
       </div>
     )
   } else {
+    if (owner === address) {
+      if (price === BigInt(0)) {
+        return (
+          <div>
+            <NftDetails />
+            <form>
+              <label>For Sale Price (in POL): <span />
+                <input
+                  type={'text'}
+                  name='forSale'
+                  value={newPrice}
+                  onChange={event => setPrice(event.target.value)}
+                  placeholder={'155.3'}
+                  maxLength={64}
+                  size={14}
+                />
+              </label>
+            </form>
+            <button onClick={ListForSale}>List For Sale</button>
+          </div>
+        )
+      } else {
+        return (
+          <div>
+            <NftDetails />
+            <button onClick={DelistForSale}>Remove For Sale</button>
+          </div>
+        )
+      }
+    } else {
+      return (
+        <div>
+          <NftDetails />
+          <button onClick={PurchaseNft}>Buy NFT</button>
+        </div>
+      )
+    }
+  }
+  
+  function NftDetails() {
+    const idString: string = String(tokenId)
+    const saleIndexString: string = String(saleIndex)
+    let priceInPol: string = ethers.formatEther(price)
     return (
       <div>
-        Invalid 'token' ID provided
+        <img
+          src={uri}
+          alt={uri}
+          style={{ maxWidth: '200px', height: '200', width: '200', display: 'block' }}
+        />
+        <p>Token ID: {idString}</p>
+        <p>Name: {name}</p>
+        <p>Description: {description}</p>
+        <p>Owner: {owner === address ? "You're the Owner" : owner}</p>
+        <p>Price: {price === BigInt(0) ? "Not For Sale" : priceInPol}</p>
+        <p>Sale index: {saleIndexString}</p>
       </div>
     )
+  }
+
+  function ListForSale() {
+    if (newPrice === "" || !IsValidEth(newPrice)) {
+      console.info("Sale Price invalid")
+    } else {
+      let newPriceInWei = BigInt(ethers.parseEther(newPrice))
+
+      if (newPriceInWei < 1000) {
+        console.info("Sale Price must be at least 0.000000000000001 POL")
+      } else {
+        writeContract({
+          abi,
+          address: contractAddress as `0x${string}`,
+          functionName: 'listForSale',
+          args: [tokenId, newPriceInWei]
+        })
+        console.info("Listing NFT " + name + " for sale, price: " + newPrice)
+      } 
+    } 
+  }
+
+  function DelistForSale() {
+    writeContract({
+      abi,
+      address: contractAddress as `0x${string}`,
+      functionName: 'delistForSale',
+      args: [tokenId]
+    })
+    console.info("Updating " + name + " to no longer for sale")
+  }
+
+  function PurchaseNft() {
+    writeContract({
+      abi,
+      address: contractAddress as `0x${string}`,
+      functionName: 'purchaseNFT',
+      args: [tokenId]
+    })
+    console.info("Purchasing " + name)
   }
 }
