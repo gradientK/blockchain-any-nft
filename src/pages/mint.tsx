@@ -37,16 +37,16 @@ function Mint() {
       priceInWei = BigInt(ethers.parseEther(inputs.price))
           
       if (inputs.name.length > 100 || inputs.name.length === 0) {
-        console.log("NFT Name must be less than 100 characters")
+        console.info("NFT Name must be less than 100 characters")
         validInputs = false
       } else if (inputs.description.length > 500 || inputs.description.length === 0) {
-        console.log("Description must be less than 500 characters")
+        console.info("Description must be less than 500 characters")
         validInputs = false
       } else if (inputs.uri.length > 500 || inputs.uri.length === 0) {
-        console.log("URI must be less than 500 characters")
+        console.info("URI must be less than 500 characters")
         validInputs = false
       } else if (priceInWei < 1000 && priceInWei !== BigInt(0)) {
-        console.log("Price must be at least 0.000000000000001 POL")
+        console.info("Price must be at least 0.000000000000001 POL")
         validInputs = false
       }
 
@@ -64,7 +64,7 @@ function Mint() {
             priceInWei
           ]
         })
-        console.log("Successfully minted " + inputs.name)
+        console.info("Minting " + inputs.name)
 
         // reset forms
         setInputs({
@@ -75,7 +75,7 @@ function Mint() {
         })
       }
     } else {
-      console.log("Fields may not be empty")
+      console.info("Fields may not be empty")
     }
   }
 
