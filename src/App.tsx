@@ -1,7 +1,9 @@
 import React from "react"
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavigationBar from './components/navbar/navigation-bar.tsx';
+import PageNotFound from './components/ui/not-found.tsx';
 import HomeMain from './pages/home.tsx';
+import HomePageMain from './pages/home-page.tsx';
 import InstructionsMain from './pages/instructions.tsx';
 import MarketplaceMain from './pages/marketplace.tsx';
 import MintMain from './pages/mint.tsx';
@@ -15,6 +17,7 @@ export default function App() {
       <NavigationBar />
       <Routes>
         <Route path="/" element={<HomeMain />} />
+        <Route path="/:page" element={<HomePageMain />} />
         <Route path="/instructions" element={<InstructionsMain />} />
         <Route path="/marketplace" element={<MarketplaceMain />} />
         <Route path="/mint" element={<MintMain />} />
@@ -24,14 +27,5 @@ export default function App() {
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
-  )
-}
-
-function PageNotFound() {
-  return (
-    <div>
-      <h1>404</h1>
-      <p>Requested resource not found</p>
-    </div>
   )
 }

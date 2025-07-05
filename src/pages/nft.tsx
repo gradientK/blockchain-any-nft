@@ -1,6 +1,5 @@
 import { useState } from "react"
-import { useSearchParams } from "react-router";
-import { Link } from 'react-router-dom';
+import { useParams, useSearchParams, Link } from 'react-router-dom';
 import { ethers } from "ethers"
 import { useAccount, useWriteContract } from "wagmi"
 import { abi } from "../config/abi.ts"
@@ -28,7 +27,7 @@ export default function NftMain() {
 }
 
 function Nft() {
-  const { address } = useAccount()
+  const { address, isConnected } = useAccount()
   const { writeContract } = useWriteContract()
 
   let nftData = GetNft(BigInt(token))
@@ -85,12 +84,20 @@ function Nft() {
         )
       }
     } else {
-      return (
-        <div>
-          <NftDetails />
-          <button onClick={PurchaseNft}>Buy NFT</button>
-        </div>
-      )
+      if (price === BigInt(0)) {
+        return (
+          <div>
+            <NftDetails />
+          </div>
+        )
+      } else {
+        return (
+          <div>
+            <NftDetails />
+            {isConnected ? <button onClick={PurchaseNft}>Buy NFT</button> : <Link to="/logon">Your wallet must be connected to purchase</Link>}
+          </div>
+        )
+      }
     }
   }
   

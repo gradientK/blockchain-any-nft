@@ -73,5 +73,6 @@ export function SplitArray(array: bigint[], subSize: number): (bigint | undefine
   for (let j = tmpArray.length; j < subSize; j++) {
     newArray.at(newArray.length - 1)?.push(BigInt(0))
   } 
+
   return newArray
 }

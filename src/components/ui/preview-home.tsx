@@ -10,7 +10,7 @@ export default function PreviewHome(params: any) {
 
   // if owner does not have enough to fill 0-8
   // remainder of array will be duplicates of 0
-  if (id1 === id0) { 
+  if (id1 === id0) {
     return (
       <div>
         <PreviewHomeNft id={id0} price={price0} name={name0} uri={uri0} />

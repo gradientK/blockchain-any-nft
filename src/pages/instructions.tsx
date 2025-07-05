@@ -6,7 +6,7 @@ export default function InstructionsMain() {
     <div>
       <p>instructions</p>
       <br />
-      <Link to="/mint">Now go mint your NFT</Link>
+      <Link to="/mint">Now go mint a NFT</Link>
     </div>
   )
 }
