@@ -48,31 +48,16 @@ export function ShuffleArray(array: []) {
 }
 
 /**
- * Split Array into Array within Array
+ * Adds extra zeros to end of array to make array evenly divisible 
  * @param array
- * @param size of sub arrays, must be positive integer
+ * @param divSize divisible number, must be positive integer
  * @returns 
  */
-export function SplitArray(array: bigint[], subSize: number): (bigint | undefined)[][] {
-  let newArray: (bigint | undefined)[][] = []
-
-  let tmpArray: (bigint | undefined)[] = []
-  for (let i = 0; i < array.length; i++) {
-    if (tmpArray.length < subSize) {
-      tmpArray.push(array.at(i))
-    } else {
-      newArray.push(tmpArray)
-      tmpArray.length = 0 // reset array
-    }
-    // don't forget to push the last sub array, however incomplete
-    if (i === array.length - 1 && tmpArray.length > 0) {
-      newArray.push(tmpArray)
-    }
+export function PadArray(array: bigint[], divSize: number): (bigint)[] {
+  const desiredLength: number = Math.ceil(array.length / divSize) * divSize
+  const newArray: bigint[] = array
+  for (let i = array.length; i < desiredLength; i++) {
+    newArray.push(BigInt(0))
   }
-  // fill in the remainder so all sub arrays are of equal length
-  for (let j = tmpArray.length; j < subSize; j++) {
-    newArray.at(newArray.length - 1)?.push(BigInt(0))
-  } 
-
   return newArray
 }

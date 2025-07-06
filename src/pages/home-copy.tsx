@@ -1,37 +1,33 @@
-import { useParams, Link } from 'react-router-dom';
+import { useState, useEffect } from "react"
+import { Link } from 'react-router-dom';
 import { useAccount } from "wagmi"
 import PageNotFound from '../components/ui/not-found.tsx';
-import PreviewHome from "../components/ui/preview-home.tsx"
+import PreviewHome from "../components/ui/preview.tsx"
 import LogonLink from "../components/ui/logon-link.tsx"
 import { GetNftsOwned, GetNineNFTs } from "../utilities/contract-interface.tsx"
-import { SplitArray } from "../utilities/misc-util.tsx"
 
-const previewSize = 9 // corresponds to smart contract GetNineNFTs
+let idsOwned: any = []
+let idArrays: any = []
+let pageNum = 1
+let previewSize = 9
+let allOwned: readonly bigint[] = [BigInt(-1)]
 
-let idsOwned: any = [] // used once
-let idArrays: (bigint | undefined)[][] = [] // [page number][id 0-9]
-
-export default function HomePageMain () {
+export default function HomeMain2() {
   const { isConnected } = useAccount()
   if (isConnected) {
-    idsOwned = GetNftsOwned()
-    idArrays = SplitArray(idsOwned, previewSize)
-    return <HomePage />
-  } else {
-    return <LogonLink />
+    allOwned = GetNftsOwned()
+    if (allOwned.at(0) === BigInt(-1)) {
+      return "Retrieving"
+    }
+    return <Home />
   }
+  return <LogonLink />
 }
 
-function HomePage() {
-  let pageNum: number = 0
-
-  let { page } = useParams();
-  if (isNaN(Number(page)) || page === "0" || Number(page) > idArrays.length) {
-    return <PageNotFound />
-  } else {
-    pageNum = Number(page) - 1
-  }
-
+function Home() {
+  const nftsPerPage = 9 // corresponds to smart contract GetNineNFTs
+  const [currentPage, setPage] = useState([])
+  
   let id0: bigint = BigInt(0)
   let id1: bigint = BigInt(0)
   let id2: bigint = BigInt(0)
