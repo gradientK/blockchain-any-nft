@@ -54,7 +54,9 @@ function Nft() {
       </div>
     )
   } else {
+    // if owner
     if (owner === address) {
+      // if not for sale
       if (price === BigInt(0)) {
         return (
           <div>
@@ -75,6 +77,7 @@ function Nft() {
             <button onClick={ListForSale}>List For Sale</button>
           </div>
         )
+      // if for sale
       } else {
         return (
           <div>
@@ -83,13 +86,16 @@ function Nft() {
           </div>
         )
       }
+    // if not owner
     } else {
+      // cannot purchase
       if (price === BigInt(0)) {
         return (
           <div>
             <NftDetails />
           </div>
         )
+      // can purchase
       } else {
         return (
           <div>

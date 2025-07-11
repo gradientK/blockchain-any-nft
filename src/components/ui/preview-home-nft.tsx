@@ -4,9 +4,7 @@ import { GetCoinNetwork } from "../../config/prop-reader.tsx"
 
 const coin = GetCoinNetwork()
 
-export default function PreviewHomeNft(params: any) {
-  const { id, price, name, uri } = params
-  let priceInWei: string = ethers.formatEther(price)
+export default function PreviewHomeNft({ id, price, name, uri }: { id: bigint, price: bigint, name: string, uri: string }) {
 
   if (price === BigInt(0)) {
     return (
@@ -17,6 +15,8 @@ export default function PreviewHomeNft(params: any) {
       </div>
     )
   } else {
+
+    let priceInWei: string = ethers.formatEther(price)
     return (
       <div>
         <ImagePreview />
@@ -32,7 +32,7 @@ export default function PreviewHomeNft(params: any) {
         <Link           
           to={{
             pathname: "/nft",
-            search: `?token=${id}`,
+            search: `?token=${String(id)}`,
           }}
         >
           <img
@@ -45,5 +45,5 @@ export default function PreviewHomeNft(params: any) {
       </div>
     )
   }
-}
 
+}

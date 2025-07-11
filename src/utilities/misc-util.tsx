@@ -53,11 +53,45 @@ export function ShuffleArray(array: []) {
  * @param divSize divisible number, must be positive integer
  * @returns 
  */
-export function PadArray(array: bigint[], divSize: number): (bigint)[] {
+export function PadArray(array: readonly bigint[], divSize: number): bigint[] {
   const desiredLength: number = Math.ceil(array.length / divSize) * divSize
-  const newArray: bigint[] = array
+  const newArray: bigint[] = []
+  for (let value of array) {
+    newArray.push(value)
+  }
   for (let i = array.length; i < desiredLength; i++) {
     newArray.push(BigInt(0))
   }
   return newArray
+}
+
+/**
+ * If value equals 0, replace with value at index 0
+ * @param array 
+ */
+export function ReplaceZeros(array: bigint[]): bigint[] {
+  let replaced: bigint[] = []
+  for (let i = 0; i < array.length; i++) {
+    if (array.at(i) === BigInt(0)) {
+      replaced.push(array.at(0) as bigint)
+    } else {
+      replaced.push(array.at(i) as bigint)
+    }
+  }
+  return replaced
+}
+
+/**
+ * If value equals value at index 0, remove
+ * @param array 
+ */
+export function DedupArray(array: bigint[]): bigint[] {
+  let deduped: bigint[] = []
+  deduped.push(array.at(0) as bigint)
+  for (let i = 1; i < array.length; i++) {
+    if (array.at(i) !== array.at(0)) {
+      deduped.push(array.at(i) as bigint)
+    }
+  }
+  return deduped
 }
