@@ -135,44 +135,6 @@ export const abi =
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_index",
-				"type": "uint256"
-			}
-		],
-		"name": "getForSaleByIndex",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_groupOfTen",
-				"type": "uint256"
-			}
-		],
-		"name": "getForSaleByTens",
-		"outputs": [
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
 				"name": "_tokenId",
 				"type": "uint256"
 			}
@@ -257,8 +219,37 @@ export const abi =
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "_tokenIds",
+				"type": "uint256[]"
+			}
+		],
+		"name": "getNftsData",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
-		"name": "getNftsOwned",
+		"name": "getNftsForSale",
 		"outputs": [
 			{
 				"internalType": "uint256[]",
@@ -270,69 +261,13 @@ export const abi =
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id1",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_id2",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_id3",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_id4",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_id5",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_id6",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_id7",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_id8",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_id9",
-				"type": "uint256"
-			}
-		],
-		"name": "getNineNFTs",
+		"inputs": [],
+		"name": "getNftsOwned",
 		"outputs": [
 			{
 				"internalType": "uint256[]",
 				"name": "",
 				"type": "uint256[]"
-			},
-			{
-				"internalType": "string[]",
-				"name": "",
-				"type": "string[]"
-			},
-			{
-				"internalType": "string[]",
-				"name": "",
-				"type": "string[]"
 			}
 		],
 		"stateMutability": "view",
@@ -432,6 +367,25 @@ export const abi =
 		"inputs": [
 			{
 				"internalType": "uint256",
+				"name": "_group",
+				"type": "uint256"
+			}
+		],
+		"name": "getTwelveForSale",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
 				"name": "_increaseAmount",
 				"type": "uint256"
 			}
@@ -445,6 +399,19 @@ export const abi =
 			}
 		],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "isPaused",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{

@@ -5,13 +5,13 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "./Base64.sol";
 
 /**
- * @title NFT Gram Smart Contract
+ * @title Any NFT Smart Contract
  * @notice Smart contract to mint, buy & sell NFT
  * Metadata represented in image and description on-chain. 
  * The initial owner is set by the deployer.
  * Owner and author of contract is not liable for any real world loss due to use or misuse.
  */
-contract NFTGram {
+contract AnyNFT {
 
     // Contract vars
     address payable private contractOwner;
@@ -75,7 +75,7 @@ contract NFTGram {
     /**
      * Mint function. _salePrice of 0 will infer not for sale.
      */
-    function mintNFT(string calldata _name, string calldata _description, string calldata _image, uint256 _salePrice) public returns (uint256) {
+    function mintNFT(string calldata _name, string calldata _description, string calldata _image, uint256 _salePrice) external returns (uint256) {
         require(!paused, "Contract minting temporarily paused for maintenance");
         require(mintedCount < totalMintable, "Cannot mint, total NFTs allowed by contract reached");
         require(bytes(_name).length < 128, "Name is too long, should be less than 128 characters");
@@ -117,7 +117,7 @@ contract NFTGram {
     /**
      * Get nft sale price.
      */
-    function getSalePrice(uint256 _tokenId) public view returns (uint256) {
+    function getSalePrice(uint256 _tokenId) external view returns (uint256) {
         require(nftMap[_tokenId].exists, "NFT not found");
         require(nftMap[_tokenId].saleIndex != 0, "NFT is not for sale");
         return nftMap[_tokenId].price;
@@ -126,7 +126,7 @@ contract NFTGram {
     /**
      * Get if is for sale.
      */
-    function getIsForSale(uint256 _tokenId) public view returns (bool) {
+    function getIsForSale(uint256 _tokenId) external view returns (bool) {
         require(nftMap[_tokenId].exists, "NFT not found");
         if (nftMap[_tokenId].saleIndex == 0) {
             return false;
@@ -138,7 +138,7 @@ contract NFTGram {
     /**
      * Get nft owner.
      */
-    function getOwner(uint256 _tokenId) public view returns (address) {
+    function getOwner(uint256 _tokenId) external view returns (address) {
         require(nftMap[_tokenId].exists, "NFT not found");
         return nftMap[_tokenId].owner;
     }
@@ -146,7 +146,7 @@ contract NFTGram {
     /**
      * Get nft, return array.
      */
-    function getNFT(uint256 _tokenId) public view returns (uint256, address, uint256, uint256, string memory, string memory, string memory) {
+    function getNFT(uint256 _tokenId) external view returns (uint256, address, uint256, uint256, string memory, string memory, string memory) {
         require(nftMap[_tokenId].exists, "NFT not found");
         return (nftMap[_tokenId].tokenId, nftMap[_tokenId].owner, nftMap[_tokenId].price, nftMap[_tokenId].saleIndex, nftMap[_tokenId].name, nftMap[_tokenId].description, nftMap[_tokenId].image);
     }
@@ -154,7 +154,7 @@ contract NFTGram {
     /**
      * Get nft, return base64 string.
      */
-    function getNFTBase64(uint256 _tokenId) public view returns (string memory) {
+    function getNFTBase64(uint256 _tokenId) external view returns (string memory) {
         require(nftMap[_tokenId].exists, "NFT not found");
         
         string memory currentPrice = Strings.toString(nftMap[_tokenId].price);
@@ -180,7 +180,7 @@ contract NFTGram {
     /**
      * Get nft metadata, return array
      */
-    function tokenURIArray(uint256 _tokenId) public view returns (string memory, string memory, string memory, uint256) {
+    function tokenURIArray(uint256 _tokenId) external view returns (string memory, string memory, string memory, uint256) {
         require(nftMap[_tokenId].exists, "NFT not found");
 
         return (nftMap[_tokenId].name, nftMap[_tokenId].description, nftMap[_tokenId].image, nftMap[_tokenId].price);
@@ -189,7 +189,7 @@ contract NFTGram {
     /**
      * Get nft metadata, return base64 string.
      */
-    function tokenURI(uint256 _tokenId) public view returns (string memory) {
+    function tokenURI(uint256 _tokenId) external view returns (string memory) {
         require(nftMap[_tokenId].exists, "NFT not found");
     
         string memory currentPrice = Strings.toString(nftMap[_tokenId].price); 
@@ -208,84 +208,70 @@ contract NFTGram {
     /**
      * Get nft by owner.
      */
-    function getNftsOwned() public view returns (uint256[] memory) {
+    function getNftsOwned() external view returns (uint256[] memory) {
         return ownershipMap[msg.sender];
     }
 
     /**
-     * Get token ID by index in saleList.
+     * Get data for multiple nfts.
      */
-    function getForSaleByIndex(uint256 _index) public view returns (uint256) {
-        require(_index != 0, "No NFT located in index 0, start at 1");
-        require(_index < saleList.length, "Invalid index provided, not enough NFTs for sale");
-        // gave up on making a dynamic sized array, waiting for Solidity update
-        return saleList[_index];
-    }
+    function getNftsData(uint256[] calldata _tokenIds) 
+            external view returns (uint256[] memory, string[] memory, string[] memory) {
+        require(_tokenIds.length != 0, "No token IDs found");
 
-    /**
-     * Get token IDs in saleList by groups of ten.
-     * @param _groupOfTen 1 = get 1-10; 2 = get 11-20, 3 = get 21-30, etc.
-     */
-    function getForSaleByTens(uint256 _groupOfTen) public view returns (uint256[] memory){
-        require(_groupOfTen != 0, "Groups of ten start at 1");
-        uint256 endIndex = _groupOfTen * 10;
-        uint256 startIndex = endIndex - 9;
-        
-        uint256[] memory tenOnSale = new uint256[](10);
-        uint16 tmp = 0;
-        for (uint256 i = startIndex; i <= endIndex; i++) {
-            if (i < saleList.length) {
-                tenOnSale[tmp] = saleList[i];
-                tmp++;
+        uint256[] memory prices = new uint256[](_tokenIds.length);
+        string[] memory names = new string[](_tokenIds.length);
+        string[] memory locations = new string[](_tokenIds.length);
+
+        for (uint16 i = 0; i < _tokenIds.length; i++) {
+            if (nftMap[_tokenIds[i]].exists) {
+                prices[i] = nftMap[_tokenIds[i]].price;
+                names[i] = nftMap[_tokenIds[i]].name;
+                locations[i] = nftMap[_tokenIds[i]].image;
+            } else {
+                prices[i] = 0;
+                names[i] = "not found";
+                locations[i] = "not found";
             }
-        }
-        return tenOnSale;
-    }
-
-    /**
-     * Get data for 9 nfts.
-     */
-    function getNineNFTs(uint256 _id1, uint256 _id2, uint256 _id3, uint256 _id4, uint256 _id5, uint256 _id6, uint256 _id7, uint256 _id8, uint256 _id9) 
-            public view returns (uint256[] memory, string[] memory, string[] memory) {
-        require(nftMap[_id1].exists, "All 9 NFTs not found");
-        require(nftMap[_id2].exists, "All 9 NFTs not found");
-        require(nftMap[_id3].exists, "All 9 NFTs not found");
-        require(nftMap[_id4].exists, "All 9 NFTs not found");
-        require(nftMap[_id5].exists, "All 9 NFTs not found");
-        require(nftMap[_id6].exists, "All 9 NFTs not found");
-        require(nftMap[_id7].exists, "All 9 NFTs not found");
-        require(nftMap[_id8].exists, "All 9 NFTs not found");
-        require(nftMap[_id9].exists, "All 9 NFTs not found");
-
-        uint256[] memory tokens = new uint256[](9);
-        uint256[] memory prices = new uint256[](9);
-        string[] memory names = new string[](9);
-        string[] memory locations = new string[](9);
-        
-        tokens[0] = _id1;
-        tokens[1] = _id2;
-        tokens[2] = _id3;
-        tokens[3] = _id4;
-        tokens[4] = _id5;
-        tokens[5] = _id6;
-        tokens[6] = _id7;
-        tokens[7] = _id8;
-        tokens[8] = _id9;
-
-        for (uint16 i = 0; i < 9; i++) {
-            prices[i] = nftMap[tokens[i]].price;
-            names[i] = nftMap[tokens[i]].name;
-            locations[i] = nftMap[tokens[i]].image;
         }
 
         return (prices, names, locations);
     }
 
     /**
+     * Get token IDs in saleList by groups of twelve.
+     * @param _group 1 = get 1-12; 2 = get 13-24, 3 = get 25-36, etc.
+     */
+    function getTwelveForSale(uint256 _group) external view returns (uint256[] memory){
+        require(_group != 0, "Groups of twelve start at 1");
+        uint256 endIndex = _group * 12;
+        uint256 startIndex = endIndex - 11;
+        
+        uint256[] memory twelve = new uint256[](12);
+        uint16 tmp = 0;
+        for (uint256 i = startIndex; i <= endIndex; i++) {
+            if (i < saleList.length) {
+                twelve[tmp] = saleList[i];
+            } else {
+                twelve[tmp] = 0;
+            }
+            tmp++;
+        }
+        return twelve;
+    }
+
+    /**
      * Get total number of nfts for sale.
      */
-    function getTotalForSale() public view returns (uint256) {
+    function getTotalForSale() external view returns (uint256) {
         return saleList.length - 1;
+    }
+
+    /**
+     * Get nfts for sale list.
+     */
+    function getNftsForSale() external view returns (uint256[] memory) {
+        return saleList;
     }
 
     /**
@@ -453,6 +439,13 @@ contract NFTGram {
         require(paused, "Contract already unpaused");
         paused = false;
         emit Unpaused();
+        return paused;
+    }
+
+    /**
+     * Get paused status.
+     */
+    function isPaused() external view returns (bool) {
         return paused;
     }
 
