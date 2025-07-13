@@ -48,7 +48,8 @@ export function ShuffleArray(array: []) {
 }
 
 /**
- * Adds extra zeros to end of array to make array evenly divisible 
+ * Adds extra zeros to end of array to make array evenly divisible
+ * ex. divSize 6: [2,3,5,8] becomes [2,3,5,8,0,0]
  * @param array
  * @param divSize divisible number, must be positive integer
  * @returns 
@@ -67,6 +68,7 @@ export function PadArray(array: readonly bigint[], divSize: number): bigint[] {
 
 /**
  * If value equals 0, replace with value at index 0
+ * ex. [2,3,5,8,0,0] becomes [2,3,5,8,2,2]
  * @param array 
  */
 export function ReplaceZeros(array: bigint[]): bigint[] {
@@ -83,6 +85,7 @@ export function ReplaceZeros(array: bigint[]): bigint[] {
 
 /**
  * If value equals value at index 0, remove
+ * ex. [2,3,5,8,2,2] becomes [2,3,5,8]
  * @param array 
  */
 export function DedupArray(array: bigint[]): bigint[] {

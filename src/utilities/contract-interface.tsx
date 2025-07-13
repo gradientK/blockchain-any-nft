@@ -50,21 +50,19 @@ export function GetNftsOwned(): readonly bigint[] {
 }
 
 /**
- * Get NFT information for 9 NFTs
+ * Get data for multiple NFTs
  * @returns [[sale price], [token name], [uri location]]
  */
-export function GetNineNFTs(id1: bigint, id2: bigint, id3: bigint, id4: bigint, id5: bigint, id6: bigint, id7: bigint, id8: bigint, id9: bigint): readonly [readonly bigint[], readonly string[], readonly string[]] | undefined {
+export function GetNftsData(tokenIDs: bigint[]): readonly [readonly bigint[], readonly string[], readonly string[]] | undefined {
   const { data, error, isPending } = useReadContract({
     abi,
     address: contractAddress as `0x${string}`,
-    functionName: 'getNineNFTs',
-    args: [
-      id1, id2, id3, id4, id5, id6, id7, id8, id9
-    ]
+    functionName: 'getNftsData',
+    args: [tokenIDs]
   })
   if (isPending) return [[BigInt(-1)], ['Pending'], ['Pending']]
   else if (error) {
-    console.warn("Failed to get Nine NFTs. " + error)
+    console.warn("Failed to get NFTs data. " + error)
     return [[BigInt(-1)], ['Error'], ['Error']]
   } else {
     return data
