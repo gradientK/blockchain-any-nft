@@ -19,7 +19,7 @@ export function GetNft(tokenId: bigint): readonly [bigint, string, bigint, bigin
       tokenId
     ]
   })
-  if (isPending) return [BigInt(-1), 'Pending', BigInt(-1), BigInt(-1), 'Pending', 'Pending', 'Pending']
+  if (isPending) return [BigInt(-2), 'Pending', BigInt(-2), BigInt(-2), 'Pending', 'Pending', 'Pending']
   else if (error) {
     console.warn("Failed to get NFT. " + error)
     return [BigInt(-1), 'Error', BigInt(-1), BigInt(-1), 'Error', 'Error', 'Error']
@@ -40,7 +40,7 @@ export function GetNftsOwned(): readonly bigint[] {
     functionName: 'getNftsOwned',
     account: address
   })
-  if (isPending) return [BigInt(-1)]
+  if (isPending) return [BigInt(-2)]
   else if (error) {
     console.warn("Failed to get owned by owner. " + error)
     return [BigInt(-1)]
@@ -60,10 +60,50 @@ export function GetNftsData(tokenIDs: bigint[]): readonly [readonly bigint[], re
     functionName: 'getNftsData',
     args: [tokenIDs]
   })
-  if (isPending) return [[BigInt(-1)], ['Pending'], ['Pending']]
+  if (isPending) return [[BigInt(-2)], ['Pending'], ['Pending']]
   else if (error) {
     console.warn("Failed to get NFTs data. " + error)
     return [[BigInt(-1)], ['Error'], ['Error']]
+  } else {
+    return data
+  }
+}
+
+/**
+ * Get IDs for NFTs on sale by group
+ * example: group 1 = get 1-12; 2 = get 13-24, 3 = get 25-36, etc.
+ * @returns [token IDs]
+ */
+export function GetTwelveForSale(group: bigint): readonly bigint[] {
+  const { data, error, isPending } = useReadContract({
+    abi,
+    address: contractAddress as `0x${string}`,
+    functionName: 'getTwelveForSale',
+    args: [group]
+  })
+  if (isPending) return [BigInt(-2)]
+  else if (error) {
+    console.warn("Failed to get group of NFT IDs. " + error)
+    return [BigInt(-1)]
+  } else {
+    return data
+  }
+}
+
+/**
+ * Get total number of NFTs currently for sale
+ * @returns total
+ */
+export function GetTotalForSale(): bigint {
+  const { data, error, isPending } = useReadContract({
+    abi,
+    address: contractAddress as `0x${string}`,
+    functionName: 'getTotalForSale'
+  })
+  if (isPending) return BigInt(-2)
+  else if (error) {
+    console.warn("Failed to get total NFTs for sale. " + error)
+    return BigInt(-1)
   } else {
     return data
   }
@@ -99,7 +139,7 @@ export function GetRoyalty(walletAddress: `0x${string}` | undefined): (bigint | 
     functionName: 'getRoyalty',
     account: walletAddress,
   })
-  if (isPending) return BigInt(-1)
+  if (isPending) return BigInt(-2)
   else if (error) {
     console.warn("Failed to get royalty. " + error)
     return BigInt(-1)
@@ -116,7 +156,7 @@ export function GetTotalMinted(): (bigint | undefined) {
     address: contractAddress as `0x${string}`,
     functionName: 'getTotalMinted',
   })
-  if (isPending) return BigInt(-1)
+  if (isPending) return BigInt(-2)
   else if (error) {
     console.warn("Failed to get total minted. " + error)
     return BigInt(-1)
@@ -134,7 +174,7 @@ export function GetTotalMintable(walletAddress: `0x${string}` | undefined): (big
     functionName: 'getTotalMintable',
     account: walletAddress
   })
-  if (isPending) return BigInt(-1)
+  if (isPending) return BigInt(-2)
   else if (error) {
     console.warn("Failed to get total minted. " + error)
     return BigInt(-1)

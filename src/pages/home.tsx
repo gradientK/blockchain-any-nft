@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { Link } from 'react-router-dom';
 import { useAccount } from "wagmi"
-import Preview from "../components/ui/preview.tsx"
+import PreviewHome from "../components/ui/preview-home.tsx"
 import LogonLink from "../components/ui/logon-link.tsx"
 import Pagination from "../components/ui/pagination.tsx"
 import { GetNftsOwned } from "../utilities/contract-interface.tsx"
@@ -12,8 +12,10 @@ export default function HomeMain() {
   const { isConnected } = useAccount()
   if (isConnected) {
     allNfts = GetNftsOwned()
-    if (allNfts.at(0) === BigInt(-1)) {
+    if (allNfts.at(0) === BigInt(-2)) {
       return <div>Retrieving</div>
+    } else if (allNfts.at(0) === BigInt(-1)) {
+      return <div>Error: Failed to get all NFTs owned</div>
     } else if (allNfts.length === 0) {
       return <div><Link to="/mint">Mint your first NFT</Link></div>
     }
@@ -21,7 +23,6 @@ export default function HomeMain() {
     //
     // For TESTING ONLY, remove me
     allNfts = [BigInt(1), BigInt(2), BigInt(3), BigInt(4), BigInt(5), BigInt(6), BigInt(7), BigInt(8), BigInt(9), BigInt(10), BigInt(11), BigInt(12), BigInt(13), BigInt(14)]
-    //
     //
 
     return <Home />
@@ -42,7 +43,7 @@ function Home() {
   
   return (
     <div>
-      <Preview ids={currentNfts} />
+      <PreviewHome ids={currentNfts} />
       <Pagination
         nftsPerPage={nftsPerPage}
         totalNfts={allNfts.length}

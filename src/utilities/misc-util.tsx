@@ -98,3 +98,18 @@ export function DedupArray(array: bigint[]): bigint[] {
   }
   return deduped
 }
+
+/**
+ * If value equals 0, remove it
+ * ex. [2,3,5,8,0,0] becomes [2,3,5,8]
+ * @param array 
+ */
+export function RemoveZeros(array: readonly bigint[]): bigint[] {
+  let removed: bigint[] = []
+  for (let i = 0; i < array.length; i++) {
+    if (array.at(i) !== BigInt(0)) {
+      removed.push(array.at(0) as bigint)
+    }
+  }
+  return removed
+}
