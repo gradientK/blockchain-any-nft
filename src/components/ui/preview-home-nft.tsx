@@ -31,7 +31,7 @@ export default function PreviewHomeNft({ id, price, name, uri }: { id: bigint, p
       <div>
         <Link           
           to={{
-            pathname: "/nft",
+            pathname: "/nft/",
             search: `?token=${String(id)}`,
           }}
         >

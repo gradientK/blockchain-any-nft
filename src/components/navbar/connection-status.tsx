@@ -10,7 +10,7 @@ export function ConnectionStatus() {
 function Connected() {
   return (
     <div>
-      <Link to="/logon">Disconnect Wallet</Link>
+      <Link to="/logon/">Disconnect Wallet</Link>
     </div>
   )
 }

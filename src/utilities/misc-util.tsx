@@ -108,7 +108,7 @@ export function RemoveZeros(array: readonly bigint[]): bigint[] {
   let removed: bigint[] = []
   for (let i = 0; i < array.length; i++) {
     if (array.at(i) !== BigInt(0)) {
-      removed.push(array.at(0) as bigint)
+      removed.push(array.at(i) as bigint)
     }
   }
   return removed

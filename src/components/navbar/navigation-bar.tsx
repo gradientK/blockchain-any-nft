@@ -6,11 +6,11 @@ export default function NavigationBar() {
     <div className='navBar'>
       <Link to="/">Home</Link>
       <br />
-      <Link to="/mint">Mint</Link>
+      <Link to="/mint/">Mint</Link>
       <br />
-      <Link to="/instructions">Mint Instructions</Link>
+      <Link to="/instructions/">Mint Instructions</Link>
       <br />
-      <Link to="/marketplace">Marketplace</Link>
+      <Link to="/marketplace/">Marketplace</Link>
       <p />
       <ConnectionStatus />
       --------------------------------------------------------------------------

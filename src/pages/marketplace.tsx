@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react"
 import { Link } from 'react-router-dom';
 import { useAccount } from "wagmi"
-import Preview from "../components/ui/preview-home.tsx"
+import PreviewMarket from "../components/ui/preview-market.tsx"
 import LogonLink from "../components/ui/logon-link.tsx"
 import Pagination from "../components/ui/pagination.tsx"
 import { GetTotalForSale, GetTwelveForSale } from "../utilities/contract-interface.tsx"
 import { RemoveZeros } from "../utilities/misc-util.tsx"
+import { GetMockTotalSale, GetMockTwelveIds } from "../utilities/test-util.tsx"
 
 let totalForSale: bigint = BigInt(-1)
 let groupForSale: readonly bigint[] = [BigInt(-1)]
@@ -14,6 +15,13 @@ export default function MarketplaceMain() {
   const { isConnected } = useAccount()
   if (isConnected) {
     totalForSale = GetTotalForSale()
+
+    //
+    // for TESTING ONLY delete me later
+    totalForSale = GetMockTotalSale()
+    //
+    //
+
     if (totalForSale === BigInt(-1)) {
       return <div>Retrieving</div>
     } else if (totalForSale === BigInt(0)) {
@@ -29,6 +37,13 @@ function MarketPlace() {
   const [currentPage, setCurrentPage] = useState(1)
 
   groupForSale = GetTwelveForSale(BigInt(currentPage)) // todo: add parameter nftsPerPage
+
+  //
+  // for TESTING ONLY delete me later
+  groupForSale = GetMockTwelveIds(currentPage)
+  //
+  //
+
   if (groupForSale.at(0) === BigInt(-2)) {
     return <div>Retrieving</div>
   } else if (groupForSale.at(0) === BigInt(-1)) {
@@ -44,7 +59,7 @@ function MarketPlace() {
   
   return (
     <div>
-      <Preview ids={currentNfts} />
+      <PreviewMarket ids={currentNfts} />
       <Pagination
         nftsPerPage={nftsPerPage}
         totalNfts={Number(totalForSale)}

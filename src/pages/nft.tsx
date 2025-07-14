@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useParams, useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { ethers } from "ethers"
 import { useAccount, useWriteContract } from "wagmi"
 import { abi } from "../config/abi.ts"
@@ -75,6 +75,7 @@ function Nft() {
               </label>
             </form>
             <button onClick={ListForSale}>List For Sale</button>
+            <p><LinkToBurn /></p>
           </div>
         )
       // if for sale
@@ -83,6 +84,7 @@ function Nft() {
           <div>
             <NftDetails />
             <button onClick={DelistForSale}>Remove For Sale</button>
+            <p><LinkToBurn /></p>
           </div>
         )
       }
@@ -95,12 +97,12 @@ function Nft() {
             <NftDetails />
           </div>
         )
-      // can purchase
+      // purchase
       } else {
         return (
           <div>
             <NftDetails />
-            {isConnected ? <button onClick={PurchaseNft}>Buy NFT</button> : <Link to="/logon">Your wallet must be connected to purchase</Link>}
+            {isConnected ? <button onClick={PurchaseNft}>Buy NFT</button> : <Link to="/logon/">Your wallet must be connected to purchase</Link>}
           </div>
         )
       }
@@ -126,6 +128,10 @@ function Nft() {
         <p>Sale index: {saleIndexString}</p>
       </div>
     )
+  }
+
+  function LinkToBurn() {
+    return <Link to={{ pathname: "/burn/", search: `?token=${String(tokenId)}` }}>Burn NFT</Link>
   }
 
   function ListForSale() {

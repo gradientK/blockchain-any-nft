@@ -1,6 +1,6 @@
 import PreviewHomeNft from "./preview-home-nft.tsx"
 import { GetNftsData } from "../../utilities/contract-interface.tsx"
-import { getMockNftsOwned } from "../../utilities/test-util.tsx"
+import { GetMockNftsData } from "../../utilities/test-util.tsx"
 
 export default function PreviewHome({ ids }: { ids: bigint[] }) {
   let priceNameUri = GetNftsData(ids)
@@ -12,8 +12,9 @@ export default function PreviewHome({ ids }: { ids: bigint[] }) {
 
   //
   // For TESTING ONLY, Remove me later
-  priceNameUri = getMockNftsOwned(ids)
+  priceNameUri = GetMockNftsData(ids)
   //
+  // 
 
   let prices = priceNameUri?.at(0)
   let names = priceNameUri?.at(1)

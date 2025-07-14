@@ -4,7 +4,7 @@ export default function LogonLink() {
   return (
     <div>
       <h3>Welcome to PhysNFT</h3>
-      <Link to="/logon">Log in to your wallet</Link>
+      <Link to="/logon/">Log in to your wallet</Link>
     </div>
   )
 }

@@ -1,7 +1,32 @@
-/**
- * Get mock data for getMockNftsOwned()
- */
-export function getMockNftsOwned(indexes: bigint[]): [bigint[], string[], string[]] {
+const quantity: number = 14
+const perPage: number = 12
+
+export function GetMockAllIds(): bigint[] {
+  return [
+    BigInt(1), BigInt(2), BigInt(3), BigInt(4), BigInt(5), BigInt(6), BigInt(7), 
+    BigInt(8), BigInt(9), BigInt(10), BigInt(11), BigInt(12), BigInt(13), BigInt(14)
+  ].slice(0, quantity)
+}
+
+export function GetMockTotalSale(): bigint {
+  return BigInt(quantity)
+}
+
+export function GetMockTwelveIds(oneOrTwo: number): bigint[] {
+  if (oneOrTwo === 1) {
+    return GetMockAllIds().slice(0, 12)
+  } else if (oneOrTwo === 2) {
+    let append: bigint[] = []
+    for (let i = 0; i < quantity - (quantity - perPage); i++) {
+      append.push(BigInt(0))
+    }
+    return GetMockAllIds().slice(12, 24).concat(append)
+  } else {
+    return [BigInt(-1)]
+  }
+}
+
+export function GetMockNftsData(indexes: bigint[]): [bigint[], string[], string[]] {
   const tmpPrices: bigint[] = []
   const tmpNames: string[] = []
   const tmpUris: string[] = []

@@ -5,6 +5,7 @@ import PreviewHome from "../components/ui/preview-home.tsx"
 import LogonLink from "../components/ui/logon-link.tsx"
 import Pagination from "../components/ui/pagination.tsx"
 import { GetNftsOwned } from "../utilities/contract-interface.tsx"
+import { GetMockAllIds } from "../utilities/test-util.tsx"
 
 let allNfts: readonly bigint[] = [BigInt(-1)]
 
@@ -22,7 +23,8 @@ export default function HomeMain() {
 
     //
     // For TESTING ONLY, remove me
-    allNfts = [BigInt(1), BigInt(2), BigInt(3), BigInt(4), BigInt(5), BigInt(6), BigInt(7), BigInt(8), BigInt(9), BigInt(10), BigInt(11), BigInt(12), BigInt(13), BigInt(14)]
+    allNfts = GetMockAllIds()
+    //
     //
 
     return <Home />
