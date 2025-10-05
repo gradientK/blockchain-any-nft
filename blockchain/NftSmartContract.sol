@@ -80,7 +80,7 @@ contract AnyNFT {
         require(mintedCount < totalMintable, "Cannot mint, total NFTs allowed by contract reached");
         require(bytes(_name).length < 128, "Name is too long, should be less than 128 characters");
         require(bytes(_description).length < 512, "Description is too long, should be less than 512 characters");
-        require(bytes(_image).length < 512, "Description is too long, should be less than 512 characters");
+        require(bytes(_image).length < 512, "Image URI is too long, should be less than 512 characters");
 
         uint256 tokenId = mintedCount + 1;
 
@@ -239,25 +239,26 @@ contract AnyNFT {
     }
 
     /**
-     * Get token IDs in saleList by groups of twelve.
-     * @param _group 1 = get 1-12; 2 = get 13-24, 3 = get 25-36, etc.
+     * Get token IDs in saleList by range.
+     * @param _startIndex beginning index of saleList, must be >0
+     * @param _endIndex ending index of saleList
      */
-    function getTwelveForSale(uint256 _group) external view returns (uint256[] memory){
-        require(_group != 0, "Groups of twelve start at 1");
-        uint256 endIndex = _group * 12;
-        uint256 startIndex = endIndex - 11;
-        
-        uint256[] memory twelve = new uint256[](12);
+    function getForSaleList(uint256 _startIndex, uint256 _endIndex) external view returns (uint256[] memory){
+        require(_startIndex != 0, "saleList starts at index 1");
+        require(_startIndex < _endIndex, "_startIndex must be less than _endIndex");
+        require(_startIndex < saleList.length, "_startIndex range more than for sale available");
+        require(_endIndex < saleList.length, "_endIndex range more than for sale available");
+        require(_endIndex - _startIndex + 1 <= 200, "max results 200");
+
+        uint256 returnSize = _endIndex - _startIndex + 1;
+        uint256[] memory returnList = new uint256[](returnSize);
+
         uint16 tmp = 0;
-        for (uint256 i = startIndex; i <= endIndex; i++) {
-            if (i < saleList.length) {
-                twelve[tmp] = saleList[i];
-            } else {
-                twelve[tmp] = 0;
-            }
+        for (uint256 i = _startIndex; i <= _endIndex; i++) {
+            returnList[tmp] = saleList[i];
             tmp++;
         }
-        return twelve;
+        return returnList;
     }
 
     /**
