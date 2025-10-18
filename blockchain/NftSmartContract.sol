@@ -218,6 +218,7 @@ contract AnyNFT {
     function getNftsData(uint256[] calldata _tokenIds) 
             external view returns (uint256[] memory, string[] memory, string[] memory) {
         require(_tokenIds.length != 0, "No token IDs found");
+        require(_tokenIds.length <= 200, "Limit request 200");
 
         uint256[] memory prices = new uint256[](_tokenIds.length);
         string[] memory names = new string[](_tokenIds.length);
