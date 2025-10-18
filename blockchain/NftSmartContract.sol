@@ -246,7 +246,7 @@ contract AnyNFT {
      */
     function getForSaleList(uint256 _startIndex, uint256 _endIndex) external view returns (uint256[] memory){
         require(_startIndex != 0, "saleList starts at index 1");
-        require(_startIndex < _endIndex, "_startIndex must be less than _endIndex");
+        require(_startIndex <= _endIndex, "_startIndex must be less than or equal to _endIndex");
         require(_startIndex < saleList.length, "_startIndex range more than for sale available");
         require(_endIndex < saleList.length, "_endIndex range more than for sale available");
         require(_endIndex - _startIndex + 1 <= 200, "max results 200");
@@ -464,6 +464,7 @@ contract AnyNFT {
      */
     function updateRoyalty(uint256 _newRoyalty) external {
         require(contractOwner == msg.sender, "Only owner may update Royalty");
+        require(_newRoyalty > 0, "Royalty amount must be positive");
         royalty = _newRoyalty;
     }
 
@@ -487,6 +488,7 @@ contract AnyNFT {
      */
     function increaseTotalMintable(uint256 _increaseAmount) external returns (uint256) {
         require(contractOwner == msg.sender, "Only owner may increase mintable allowed");
+        require(_increaseAmount > 0, "Increase amount must be positive");
         totalMintable += _increaseAmount;
         return totalMintable;
     }

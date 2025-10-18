@@ -179,3 +179,20 @@ export function GetTotalMintable(walletAddress: `0x${string}` | undefined): (big
     return BigInt(-1)
   } else return data
 }
+
+/**
+ * Is Contract Paused
+ * @returns is paused is true
+ */
+export function IsPaused(): boolean | undefined {
+  const { data, error, isPending } = useReadContract({
+    abi,
+    address: contractAddress as `0x${string}`,
+    functionName: 'isPaused'
+  })
+  if (isPending) return undefined
+  if (error) {
+    console.warn("Failed to get isPaused status. " + error)
+    throw new Error("Error retrieving is paused status.");
+  } else return data
+}

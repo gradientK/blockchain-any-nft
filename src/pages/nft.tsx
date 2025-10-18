@@ -124,7 +124,7 @@ function Nft() {
         <p>Name: {name}</p>
         <p>Description: {description}</p>
         <p>Owner: {owner === address ? "You're the Owner" : owner}</p>
-        <p>Price: {price === BigInt(0) ? "Not For Sale" : priceInPol}</p>
+        <p>Price: {price === BigInt(0) ? "Not For Sale" : priceInPol} POL</p>
         <p>Sale index: {saleIndexString}</p>
       </div>
     )
