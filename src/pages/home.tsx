@@ -23,7 +23,7 @@ export default function HomeMain() {
 
     //
     // For TESTING ONLY, remove me
-    allNfts = GetMockAllIds()
+    //allNfts = GetMockAllIds()
     //
     //
 
@@ -33,7 +33,7 @@ export default function HomeMain() {
 }
 
 function Home() {
-  const nftsPerPage: number = 12 // corresponds to smart contract GetNineNFTs
+  const nftsPerPage: number = 12
   const [currentPage, setCurrentPage] = useState(1)
 
   const indexOfLastNft: number = currentPage * nftsPerPage;

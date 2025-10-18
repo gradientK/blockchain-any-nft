@@ -1,3 +1,64 @@
 Stories:
 -getTwelveForSale: refactor, dynamically pass in index size
  
+
+
+
+
+-Mint 12 NFTs
+Americana Supergirl
+  Star spangled American girl super hero
+  https://www.dropbox.com/scl/fi/j1ajp8wtvoz2vyosf3u22/americansupergirl.jpg?rlkey=gqj61kefw3aderfab8v9wdu03&st=cqblirnv&raw=1
+  10.1
+Boy and the Fox
+  Boy fishing by the lake with his friend the Fox
+  https://www.dropbox.com/scl/fi/hlzd1n1urt32yac9wwnfb/boyfishingwithfox.jpg?rlkey=4cf6dewi2x3e0zlpz4lfeohid&st=oa2n97h9&raw=1
+  0.2
+White Bunny
+  The White Bunny running through Wonderland while Alice chases him
+  https://www.dropbox.com/scl/fi/xfzaqxl1qytnj6r3ab8wu/bunnyalice.jpg?rlkey=lrenlybdt4skw280t75v7tds5&st=pqzfgye1&raw=1
+  3.3
+Castle in the Sky
+  Heavenly castle standing majestically on a cloud
+  https://www.dropbox.com/scl/fi/5kc7t448vyg1o3z15diif/castleinthesky.jpg?rlkey=u6vfzgfyykivkza1d63nsr4u9&st=pyo1nksh&raw=1
+  0.4
+Cat in Space
+  Trippy cat flying through space
+  https://www.dropbox.com/scl/fi/4vaord3u3y8xno276xj46/catinspace.jpg?rlkey=jes15hupgepzkbmz7rm8cat7h&st=13es8no2&raw=1
+  5.5
+Cyber Girl
+  Futurism cyber punk girl listening to music
+  https://www.dropbox.com/scl/fi/5mqiz57z4g74uhf8qse58/cybergirl.jpg?rlkey=h31ia38du7kxbnq1dtkws8yzp&st=90e0525o&raw=1
+  6.6
+Rain Dancer
+  Corporate man dancing in the rain
+  https://www.dropbox.com/scl/fi/oil7b4lpg1af0dwfedeg1/dancingintherain.jpg?rlkey=x5zko8ff2twinh9clbkkbbif6&st=ahfywcei&raw=1
+  0.7
+Gumball Dog
+  Dog enjoying his bowl of tasty gumballs
+  https://www.dropbox.com/scl/fi/ai4p7ynd0h931gqlk2l97/doggumballs.jpg?rlkey=wbf0jzlgxyn23v06rnevy0cbd&st=q8hojm65&raw=1
+  0.8
+Trippin Frog
+  Toadstool frog tripping out in a 1980's themed game
+  https://www.dropbox.com/scl/fi/bdlrrcxmp954jzvkhomaj/frogtripping.jpg?rlkey=8rkavks48ho8l3ni7ek9jadn5&st=xrmoa84q&raw=1
+  9
+Smoking Geisha
+  Stunning Geisha girl smoking a cigar
+  https://www.dropbox.com/scl/fi/zyeen1i16i6kuamc3j6ng/geishasmoking.jpg?rlkey=r71w3r1sn5d1zcass4xx1622k&st=h6cwbkej&raw=1
+  10
+The Mech Warrior
+  Future soldier in a mechanized battle suit fighting alien invaders
+  https://www.dropbox.com/scl/fi/0p80rpxx36q6s7zr2en4c/mechwarrior.jpg?rlkey=9ud5shekzhio6wggzee3re61f&st=gmkc6lhm&raw=1
+  1.1
+Fairy Village
+  Village of fairies in their mushroom homes in the forest
+  https://www.dropbox.com/scl/fi/rzyyk5zi3tbu2bb57u19h/mushroomfairy.jpg?rlkey=910vtia52uk6l0zmyut8tch34&st=d3q3p8qs&raw=1
+  1.2
+Ice Cream Penguins
+  Two origami shaped penguins hugging their vanilla ice cream cone
+  https://www.dropbox.com/scl/fi/245ndewkelurl7pb52c69/origamipenguins.jpg?rlkey=njp9pk6tawpb4bd1b30irlzyu&st=c5o0oj8a&raw=1
+  0.13
+Spooky Ghost
+  Spooky ghost running through a haunted Halloween town
+  https://www.dropbox.com/scl/fi/3qlsmwwpl14kixst7rtp6/spookyghost.jpg?rlkey=hxzfaxlrc6ifyux1p5zfpg4jr&st=n1yitt6u&raw=1
+  14

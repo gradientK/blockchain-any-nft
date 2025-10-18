@@ -4,7 +4,7 @@ import { useAccount } from "wagmi"
 import PreviewMarket from "../components/ui/preview-market.tsx"
 import LogonLink from "../components/ui/logon-link.tsx"
 import Pagination from "../components/ui/pagination.tsx"
-import { GetTotalForSale, GetTwelveForSale } from "../utilities/contract-interface.tsx"
+import { GetTotalForSale, GetForSaleList } from "../utilities/contract-interface.tsx"
 import { RemoveZeros } from "../utilities/misc-util.tsx"
 import { GetMockTotalSale, GetMockTwelveIds } from "../utilities/test-util.tsx"
 
@@ -18,7 +18,7 @@ export default function MarketplaceMain() {
 
     //
     // for TESTING ONLY delete me later
-    totalForSale = GetMockTotalSale()
+    //totalForSale = GetMockTotalSale()
     //
     //
 
@@ -33,14 +33,19 @@ export default function MarketplaceMain() {
 }
 
 function MarketPlace() {
-  const nftsPerPage: number = 12 // corresponds to smart contract GetTwelveNFTs
+  const nftsPerPage: number = 12 // single variable to manipulate
   const [currentPage, setCurrentPage] = useState(1)
 
-  groupForSale = GetTwelveForSale(BigInt(currentPage)) // todo: add parameter nftsPerPage
+  let startIndex: bigint = BigInt(currentPage * nftsPerPage - nftsPerPage + 1)
+  let endIndex: bigint = BigInt(currentPage * nftsPerPage)
+  if (endIndex > totalForSale) {
+    endIndex = totalForSale
+  }
+  groupForSale = GetForSaleList(startIndex, endIndex)
 
   //
   // for TESTING ONLY delete me later
-  groupForSale = GetMockTwelveIds(currentPage)
+  //groupForSale = GetMockTwelveIds(currentPage)
   //
   //
 

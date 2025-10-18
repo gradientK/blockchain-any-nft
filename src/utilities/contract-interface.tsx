@@ -70,20 +70,19 @@ export function GetNftsData(tokenIDs: bigint[]): readonly [readonly bigint[], re
 }
 
 /**
- * Get IDs for NFTs on sale by group
- * example: group 1 = get 1-12; 2 = get 13-24, 3 = get 25-36, etc.
+ * Get IDs for NFTs on sale
  * @returns [token IDs]
  */
-export function GetTwelveForSale(group: bigint): readonly bigint[] {
+export function GetForSaleList(startIndex: bigint, endIndex: bigint): readonly bigint[] {
   const { data, error, isPending } = useReadContract({
     abi,
     address: contractAddress as `0x${string}`,
-    functionName: 'getTwelveForSale',
-    args: [group]
+    functionName: 'getForSaleList',
+    args: [startIndex, endIndex]
   })
   if (isPending) return [BigInt(-2)]
   else if (error) {
-    console.warn("Failed to get group of NFT IDs. " + error)
+    console.warn("Failed to get group of NFT IDs for sale. " + error)
     return [BigInt(-1)]
   } else {
     return data
