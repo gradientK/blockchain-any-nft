@@ -30,7 +30,15 @@ function Admin() {
   const [newContractOwner, setNewContractOwner] = useState('');
 
   if (owner === address) {
-    if (paused) {
+    if (paused === undefined) {
+      return (
+        <div>
+          <AdminDetails />
+          <br />
+          Pause status unknown, unable to modify at this time.
+        </div>
+      )
+    } else if (paused) {
       return (
         <div>
           <AdminDetails />

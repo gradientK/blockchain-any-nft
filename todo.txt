@@ -1,6 +1,5 @@
 Stories:
--getTwelveForSale: refactor, dynamically pass in index size
- 
+- 
 
 
 
