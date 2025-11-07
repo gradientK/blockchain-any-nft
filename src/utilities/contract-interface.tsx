@@ -131,12 +131,11 @@ export function GetContractOwner(): string {
  * Get Royalty percentage
  * @returns royalty
  */
-export function GetRoyalty(walletAddress: `0x${string}` | undefined): (bigint | undefined ) {
+export function GetRoyalty(): bigint {
   const { data, error, isPending } = useReadContract({
     abi,
     address: contractAddress as `0x${string}`,
     functionName: 'getRoyalty',
-    account: walletAddress,
   })
   if (isPending) return BigInt(-2)
   else if (error) {

@@ -20,7 +20,7 @@ function Admin() {
   const { writeContract } = useWriteContract()
 
   const owner: string = GetContractOwner()
-  const royalty: String = String(GetRoyalty(address))
+  const royalty: String = String(GetRoyalty())
   const minted: String = String(GetTotalMinted())
   const mintable: String = String(GetTotalMintable(address))
   let paused: boolean | undefined = IsPaused()

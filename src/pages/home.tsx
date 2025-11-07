@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Link } from 'react-router-dom';
 import { useAccount } from "wagmi"
 import PreviewHome from "../components/ui/preview-home.tsx"
 import LogonLink from "../components/ui/logon-link.tsx"
 import Pagination from "../components/ui/pagination.tsx"
 import { GetNftsOwned } from "../utilities/contract-interface.tsx"
-import { GetMockAllIds } from "../utilities/test-util.tsx"
 
 let allNfts: readonly bigint[] = [BigInt(-1)]
 
@@ -20,13 +19,6 @@ export default function HomeMain() {
     } else if (allNfts.length === 0) {
       return <div><Link to="/mint">Mint your first NFT</Link></div>
     }
-
-    //
-    // For TESTING ONLY, remove me
-    //allNfts = GetMockAllIds()
-    //
-    //
-
     return <Home />
   }
   return <LogonLink />

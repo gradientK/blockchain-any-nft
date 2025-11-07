@@ -4,7 +4,7 @@ import { abi } from "../config/abi.ts"
 import { GetContractAddress } from "../config/prop-reader.tsx"
 import LogonLink from "../components/ui/logon-link.tsx"
 import { GetNft } from "../utilities/contract-interface.tsx"
-import { IsBigInt, IsValidEth } from "../utilities/misc-util.tsx"
+import { IsBigInt } from "../utilities/misc-util.tsx"
 
 const contractAddress: string = GetContractAddress()
 

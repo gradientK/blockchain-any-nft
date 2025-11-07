@@ -5,5 +5,5 @@ export function GetCoinNetwork() {
 }
 
 export function GetContractAddress() {
-  return props.POLYGON_AMOY_TESTNET_NFTGRAM_SMART_CONTRACT_ADDRESS
+  return props.POLYGON_AMOY_TESTNET_ANYNFT_SMART_CONTRACT_ADDRESS
 }

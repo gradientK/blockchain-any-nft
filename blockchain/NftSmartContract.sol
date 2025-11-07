@@ -69,7 +69,7 @@ contract AnyNFT {
         totalMintable = 100000000;
         mintedCount = 0;
         priceMin = 1000;
-        royalty = 3;
+        royalty = 2;
     }
 
     /**
@@ -455,7 +455,6 @@ contract AnyNFT {
      * Get royalty.
      */
     function getRoyalty() external view returns (uint256) {
-        require(contractOwner == msg.sender, "Only owner may view Royalty");
         return royalty;
     }
 

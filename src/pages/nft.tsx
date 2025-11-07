@@ -4,7 +4,7 @@ import { ethers } from "ethers"
 import { useAccount, useWriteContract } from "wagmi"
 import { abi } from "../config/abi.ts"
 import { GetContractAddress } from "../config/prop-reader.tsx"
-import { GetNft } from "../utilities/contract-interface.tsx"
+import { GetNft, GetRoyalty } from "../utilities/contract-interface.tsx"
 import { IsBigInt, IsValidEth } from "../utilities/misc-util.tsx"
 
 const contractAddress: string = GetContractAddress()
@@ -34,10 +34,12 @@ function Nft() {
   const tokenId: bigint = nftData?.at(0) as bigint
   const owner: string = nftData?.at(1) as string
   const price: bigint = nftData?.at(2) as bigint
-  const saleIndex: bigint = nftData?.at(3) as bigint
   const name: string = nftData?.at(4) as string
   const description: string = nftData?.at(5) as string
   const uri: string = nftData?.at(6) as string
+
+  const priceInPol: string = ethers.formatEther(price)
+  const royalty: bigint = GetRoyalty()
 
   const [newPrice, setPrice] = useState('');
 
@@ -62,7 +64,7 @@ function Nft() {
           <div>
             <NftDetails />
             <form>
-              <label>For Sale Price (in POL): <span />
+              <label>List For Sale Price (in POL): <span />
                 <input
                   type={'text'}
                   name='forSale'
@@ -111,8 +113,6 @@ function Nft() {
   
   function NftDetails() {
     const idString: string = String(tokenId)
-    const saleIndexString: string = String(saleIndex)
-    let priceInPol: string = ethers.formatEther(price)
     return (
       <div>
         <img
@@ -125,7 +125,6 @@ function Nft() {
         <p>Description: {description}</p>
         <p>Owner: {owner === address ? "You're the Owner" : owner}</p>
         <p>Price: {price === BigInt(0) ? "Not For Sale" : priceInPol} POL</p>
-        <p>Sale index: {saleIndexString}</p>
       </div>
     )
   }
@@ -138,7 +137,7 @@ function Nft() {
     if (newPrice === "" || !IsValidEth(newPrice)) {
       console.info("Sale Price invalid")
     } else {
-      let newPriceInWei = BigInt(ethers.parseEther(newPrice))
+      let newPriceInWei: bigint = BigInt(ethers.parseEther(newPrice))
 
       if (newPriceInWei < 1000) {
         console.info("Sale Price must be at least 0.000000000000001 POL")
@@ -165,12 +164,14 @@ function Nft() {
   }
 
   function PurchaseNft() {
+    const feeInWei: bigint = (price * (royalty + BigInt(1))) / BigInt(100)
     writeContract({
       abi,
       address: contractAddress as `0x${string}`,
       functionName: 'purchaseNFT',
-      args: [tokenId]
+      args: [tokenId],
+      value: price + feeInWei
     })
-    console.info("Purchasing " + name)
+    console.info("Purchasing " + name + " for " + priceInPol + " POL, plus fee of " + String(royalty + BigInt(1)) + "%")
   }
 }
