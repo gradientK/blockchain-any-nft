@@ -1,12 +1,19 @@
+import { Link } from 'react-router-dom';
 import PreviewHomeNft from "./preview-home-nft.tsx"
 import { GetNftsData } from "../../utilities/contract-interface.tsx"
 
 export default function PreviewHome({ ids }: { ids: bigint[] }) {
   let priceNameUri = GetNftsData(ids)
+
   if (priceNameUri?.at(2)?.at(0) === 'Pending') {
     return <div>Retrieving NFTs</div>
   } else if (priceNameUri?.at(2)?.at(0) === 'Error') {
-    return <div>Failed to retrieve list of NFTs data</div>
+    return (
+      <div>
+        <p>Did not find any NFTs.</p>
+        <Link to="/mint">Mint an NFT</Link>
+      </div>
+    )
   }
 
   let prices = priceNameUri?.at(0)

@@ -1,3 +1,14 @@
+# Any NFT
+
+Blockchain marketplace website where you can create, buy and sell NFTs.  
+
+# EVM
+
+Built upon Ethereum Virtual Machine (EVM)  
+  
+Blockchains currently supported:  
+- Polygon
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
