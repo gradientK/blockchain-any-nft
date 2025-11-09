@@ -20,16 +20,23 @@ function Admin() {
   const { writeContract } = useWriteContract()
 
   const owner: string = GetContractOwner()
+  let paused: boolean | undefined = undefined
+  
+  try {
+    paused = IsPaused()
+  } catch (error) {
+    console.error("Failed to get smart contract Paused status.")
+  }
+
   const royalty: String = String(GetRoyalty())
   const minted: String = String(GetTotalMinted())
   const mintable: String = String(GetTotalMintable(address))
-  let paused: boolean | undefined = IsPaused()
 
   const [newRoyaltyPercentage, setNewRoyaltyPercentage] = useState('');
   const [totalMintableIncreaseAmount, setTotalMintableIncreaseAmount] = useState('');
   const [newContractOwner, setNewContractOwner] = useState('');
 
-  if (owner === address) {
+  if (owner.toUpperCase() === address?.toUpperCase()) {
     if (paused === undefined) {
       return (
         <div>

@@ -174,7 +174,7 @@ export function GetTotalMintable(walletAddress: `0x${string}` | undefined): (big
   })
   if (isPending) return BigInt(-2)
   else if (error) {
-    console.warn("Failed to get total minted. " + error)
+    console.warn("Failed to get total mintable. " + error)
     return BigInt(-1)
   } else return data
 }
