@@ -1,5 +1,5 @@
 import { http, createConfig } from "wagmi";
-import { polygonAmoy } from "wagmi/chains";
+import { avalanche, avalancheFuji, polygon, polygonAmoy } from "wagmi/chains";
 import { metaMask } from "wagmi/connectors";
 
 declare module 'wagmi' {
@@ -9,7 +9,7 @@ declare module 'wagmi' {
 }
 
 export const config = createConfig({
-  chains: [polygonAmoy],
+  chains: [avalanche, avalancheFuji, polygon, polygonAmoy],
   connectors: [
     metaMask({
       dappMetadata: {
@@ -20,6 +20,9 @@ export const config = createConfig({
     }),
   ],
   transports: {
+    [avalanche.id]: http(),
+    [avalancheFuji.id]: http(),
+    [polygon.id]: http(),
     [polygonAmoy.id]: http(),
   },
 })

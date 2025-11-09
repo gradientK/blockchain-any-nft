@@ -15,7 +15,7 @@ export default function HomeMain() {
     if (allNfts.at(0) === BigInt(-2)) {
       return <div>Retrieving</div>
     } else if (allNfts.at(0) === BigInt(-1)) {
-      return <div>Error: Failed to get all NFTs owned</div>
+      return <div>No NFTs found. <Link to="/mint">Mint an NFT</Link></div>
     } else if (allNfts.length === 0) {
       return <div><Link to="/mint">Mint your first NFT</Link></div>
     }
