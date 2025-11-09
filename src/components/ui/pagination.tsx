@@ -10,9 +10,9 @@ export default function Pagination ({ nftsPerPage, totalNfts, paginate }: { nfts
       <ul className='pagination'>
         {pageNumbers.map(pageNumber => (
           <li key={pageNumber}>
-            <a onClick={() => paginate(pageNumber)} href='#'>
+            <button onClick={() => paginate(pageNumber)}>
               {pageNumber}
-            </a>
+            </button>
           </li>
         ))}
       </ul>
