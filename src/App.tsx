@@ -17,7 +17,7 @@ export default function App() {
     <BrowserRouter>
       <div className="body-container">
         <NavigationBar />
-        <main className="content-wrap"> 
+        <main className="main-container"> 
           <Routes>
             <Route path="/admin/" element={<AdminMain />} />
             <Route path="/" element={<HomeMain />} />
