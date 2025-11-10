@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import './styles/main.scss';
 import NavigationBar from './components/navbar/navigation-bar.tsx'
+import Footer from './components/footer/footer.tsx'
 import PageNotFound from './components/ui/not-found.tsx'
 import AdminMain from './pages/admin.tsx'
 import HomeMain from './pages/home.tsx'
@@ -14,18 +15,23 @@ import NftMain from './pages/nft.tsx'
 export default function App() {
   return (
     <BrowserRouter>
-      <NavigationBar />
-      <Routes>
-        <Route path="/admin/" element={<AdminMain />} />
-        <Route path="/" element={<HomeMain />} />
-        <Route path="/burn/" element={<BurnMain />} />
-        <Route path="/instructions/" element={<InstructionsMain />} />
-        <Route path="/logon/" element={<LogonMain />} />
-        <Route path="/marketplace/" element={<MarketplaceMain />} />
-        <Route path="/mint/" element={<MintMain />} />
-        <Route path="/nft/" element={<NftMain />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+      <div className="body-container">
+        <NavigationBar />
+        <main className="content-wrap"> 
+          <Routes>
+            <Route path="/admin/" element={<AdminMain />} />
+            <Route path="/" element={<HomeMain />} />
+            <Route path="/burn/" element={<BurnMain />} />
+            <Route path="/instructions/" element={<InstructionsMain />} />
+            <Route path="/logon/" element={<LogonMain />} />
+            <Route path="/marketplace/" element={<MarketplaceMain />} />
+            <Route path="/mint/" element={<MintMain />} />
+            <Route path="/nft/" element={<NftMain />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </main>
+      </div>
+      <Footer />
     </BrowserRouter>
   )
 }

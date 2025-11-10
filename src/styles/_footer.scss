@@ -1,0 +1,16 @@
+@use "sass:color";
+@use "variables" as *;
+@use "common";
+
+.footer {
+  background-color: $logo-background;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0px 20px;
+  margin: 0;
+  flex-shrink: 0;
+  align-items: center;
+  text-align: center;
+  justify-content: center; 
+}
