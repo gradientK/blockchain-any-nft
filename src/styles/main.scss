@@ -1,0 +1,14 @@
+@use "sass:color";
+@use "variables" as *;
+@use "common";
+@use "navigation";
+
+body {
+  font-family: $font-sans-serif;
+  color: $dark-text;
+  background-color: $main-background;
+  margin: 0;
+  padding: 0;
+}
+
+

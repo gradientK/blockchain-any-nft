@@ -1,0 +1,69 @@
+@use "sass:color";
+@use "variables" as *;
+@use "common";
+
+.nav-bar {
+  background-color: $main-background;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 650px;
+  min-width: 0;
+  padding: 10px 10px;
+  margin: 5px auto;
+  .nav-home {
+    margin-right: 40px;
+  }
+  .nav-links {
+    display: flex;
+    flex-shrink: 0;
+    gap: 8px;
+    flex-wrap: nowrap; 
+  }
+  .nav-status {
+    flex-shrink: 0;
+    min-width: 0;
+    white-space: normal;
+    padding-left: 35px;
+    text-align: right;
+  }
+
+  .a-button {
+    flex-shrink: 0;
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+    border: 2px solid;
+    border-radius: 5px;
+    padding: 1px 8px;
+  }
+  a {
+    @extend .a-button;
+    color: $dark-text;
+    text-decoration:none;
+    font-size: 1.0rem;
+  }
+  a:visited {
+    @extend .a-button;
+    color: $dark-text;
+  }
+  a:hover {
+    @extend .a-button;
+    color: $active-link;
+  }     
+  a:active {
+    @extend .a-button;
+    color: $active-link;
+  }
+}
+
+.logo-banner {
+  background-color: $logo-background;
+  display: flex;
+  img {
+    height: 50px;
+    width: auto;
+    padding-left: 10px;
+    margin: 2px 0;
+  }
+}

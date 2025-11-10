@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import './styles/main.scss';
 import NavigationBar from './components/navbar/navigation-bar.tsx'
 import PageNotFound from './components/ui/not-found.tsx'
 import AdminMain from './pages/admin.tsx'
