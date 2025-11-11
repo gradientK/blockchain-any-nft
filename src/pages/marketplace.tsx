@@ -11,20 +11,16 @@ let totalForSale: bigint = BigInt(-1)
 let groupForSale: readonly bigint[] = [BigInt(-1)]
 
 export default function MarketplaceMain() {
-  const { isConnected } = useAccount()
-  if (isConnected) {
-    totalForSale = GetTotalForSale()
-    
-    if (totalForSale === BigInt(-2)) {
-      return <div>Retrieving</div>
-    } if (totalForSale === BigInt(-1)) {
-      return <div>Error getting NFTs for sale</div>
-    } else if (totalForSale === BigInt(0)) {
-      return <div>There are currently no NFTs for sale</div>
-    }
-    return <MarketPlace />
+  totalForSale = GetTotalForSale()
+  
+  if (totalForSale === BigInt(-2)) {
+    return <div>Retrieving</div>
+  } if (totalForSale === BigInt(-1)) {
+    return <div>Error getting NFTs for sale</div>
+  } else if (totalForSale === BigInt(0)) {
+    return <div>There are currently no NFTs for sale</div>
   }
-  return <LogonLink />
+  return <MarketPlace />
 }
 
 function MarketPlace() {
