@@ -5,28 +5,40 @@
 .nav-bar {
   background-color: $main-background;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 650px;
   min-width: 0;
   padding: 10px 10px;
   margin: 5px auto;
+  box-sizing: border-box;
+  gap: 5px;
+
   .nav-home {
-    margin-right: 40px;
+    margin-left: 30px;
+    margin-right: 15px;
+    flex-shrink: 0;
+    min-width: 0;
   }
   .nav-links {
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-shrink: 0;
     gap: 8px;
-    flex-wrap: nowrap; 
+    flex-wrap: nowrap;
+    min-width: 0;
   }
   .nav-status {
+    margin-left: 15px;
+    margin-right: 30px;
     flex-shrink: 0;
-    min-width: 0;
-    white-space: normal;
-    padding-left: 35px;
+    min-width: fit-content;
+    white-space: nowrap;
+    padding-left: 10px;
     text-align: right;
+    margin-left: auto;
   }
 
   .a-button {

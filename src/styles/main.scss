@@ -4,17 +4,31 @@
 @use "navigation";
 @use "footer";
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   font-family: $font-sans-serif;
   color: $dark-text;
   background-color: $main-background;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 .body-container {
-    display: flex;
+  display: flex;
   flex-direction: column;
-  min-height: 100vh
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
 }
 
