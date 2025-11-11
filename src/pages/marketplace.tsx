@@ -1,8 +1,6 @@
 import { useState } from "react"
 import { Link } from 'react-router-dom';
-import { useAccount } from "wagmi"
 import PreviewMarket from "../components/ui/preview-market.tsx"
-import LogonLink from "../components/ui/logon-link.tsx"
 import Pagination from "../components/ui/pagination.tsx"
 import { GetTotalForSale, GetForSaleList } from "../utilities/contract-interface.tsx"
 import { RemoveZeros } from "../utilities/misc-util.tsx"
