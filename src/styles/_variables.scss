@@ -1,5 +1,6 @@
 @use "sass:color";
 
+// Primary color palette (unchanged - backwards compatible)
 $main-background: #00beaf;
 $logo-background: #089d89;
 $body-background: #FFFFFF;
@@ -10,5 +11,33 @@ $light-text: #cff5f4;
 
 $active-link: #FADA5E;
 
+// Typography (unchanged - backwards compatible)
 $font-sans-serif: Helvetica Neue, Helvetica, Arial, sans-serif;
 $font-serif: Georgia, Times New Roman, Times, serif;
+
+// Additional utility colors (new - additive only, no breaking changes)
+$success-color: #10b981;
+$error-color: #ef4444;
+$warning-color: #f59e0b;
+
+// Shadow presets for consistency (new - optional to use)
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+$shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+// Border radius presets (new - optional to use)
+$radius-sm: 4px;
+$radius-md: 6px;
+$radius-lg: 8px;
+$radius-xl: 12px;
+
+// Transition presets (new - optional to use)
+$transition-fast: 0.15s ease;
+$transition-base: 0.25s ease;
+$transition-slow: 0.4s ease;
+
+// Breakpoints for responsive design (new - for consistency)
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 968px;
+$breakpoint-wide: 1200px;

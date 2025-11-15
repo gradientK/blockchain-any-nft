@@ -1,0 +1,296 @@
+@use "sass:color";
+@use "variables" as *;
+
+.nft-detail-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    margin: 20px auto;
+    padding: 0 15px;
+  }
+}
+
+.nft-detail-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  background-color: $body-background;
+  border: 2px solid $dark-text;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 968px) {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 25px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 20px;
+    gap: 20px;
+  }
+}
+
+.nft-image-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .nft-main-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid $dark-text;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: $main-background;
+  }
+
+  .nft-token-id {
+    text-align: center;
+    font-size: 0.9rem;
+    color: color.adjust($dark-text, $lightness: 20%);
+    font-weight: 500;
+  }
+}
+
+.nft-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .nft-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $dark-text;
+    margin: 0;
+    word-wrap: break-word;
+
+    @media (max-width: 768px) {
+      font-size: 1.75rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  .nft-description {
+    font-size: 1.05rem;
+    color: color.adjust($dark-text, $lightness: 15%);
+    line-height: 1.6;
+    padding: 15px;
+    background-color: $main-background;
+    border-radius: 6px;
+    border-left: 4px solid $logo-background;
+  }
+
+  .nft-metadata {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    background-color: $main-background;
+    border-radius: 8px;
+
+    .metadata-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid color.adjust($dark-text, $lightness: 60%);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .metadata-label {
+        font-weight: 600;
+        color: color.adjust($dark-text, $lightness: 10%);
+        font-size: 0.95rem;
+      }
+
+      .metadata-value {
+        font-weight: 500;
+        color: $dark-text;
+        text-align: right;
+        word-break: break-all;
+        max-width: 60%;
+
+        &.owner-address {
+          font-family: monospace;
+          font-size: 0.85rem;
+        }
+
+        &.price-highlight {
+          color: $logo-background;
+          font-size: 1.15rem;
+          font-weight: 700;
+        }
+
+        &.not-for-sale {
+          color: color.adjust($dark-text, $lightness: 30%);
+          font-style: italic;
+        }
+      }
+    }
+  }
+
+  .nft-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+
+    .action-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 15px;
+      background-color: $main-background;
+      border-radius: 8px;
+
+      label {
+        font-weight: 600;
+        color: $dark-text;
+        font-size: 0.95rem;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      input {
+        padding: 10px 14px;
+        border: 2px solid $dark-text;
+        border-radius: 6px;
+        font-size: 1rem;
+        background-color: $body-background;
+        color: $dark-text;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+        &:focus {
+          outline: none;
+          border-color: $logo-background;
+          box-shadow: 0 0 0 3px rgba($logo-background, 0.1);
+        }
+
+        &::placeholder {
+          color: color.adjust($dark-text, $lightness: 40%);
+        }
+      }
+    }
+
+    button {
+      padding: 12px 24px;
+      background-color: $dark-text;
+      color: $body-background;
+      border: 2px solid $dark-text;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        background-color: $logo-background;
+        border-color: $logo-background;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      &.primary-action {
+        background-color: $logo-background;
+        border-color: $logo-background;
+
+        &:hover {
+          background-color: color.adjust($logo-background, $lightness: -10%);
+          border-color: color.adjust($logo-background, $lightness: -10%);
+        }
+      }
+
+      &.danger-action {
+        background-color: #ef4444;
+        border-color: #ef4444;
+
+        &:hover {
+          background-color: #dc2626;
+          border-color: #dc2626;
+        }
+      }
+    }
+
+    a {
+      padding: 12px 24px;
+      background-color: $body-background;
+      color: $dark-text;
+      border: 2px solid $dark-text;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        background-color: $dark-text;
+        color: $body-background;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+.nft-error-state,
+.nft-loading-state {
+  width: 100%;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 40px 30px;
+  text-align: center;
+  background-color: $body-background;
+  border: 2px solid $dark-text;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  p {
+    font-size: 1.1rem;
+    color: $dark-text;
+    margin-bottom: 20px;
+  }
+
+  a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: $dark-text;
+    color: $body-background;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+
+    &:hover {
+      background-color: $logo-background;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+}

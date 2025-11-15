@@ -16,9 +16,8 @@ export default function NftMain() {
   token = searchParams.get("token")
   if (token === null || !IsBigInt(token)) {
     return (
-      <div>
-        Invalid Token ID provided
-        <p />
+      <div className="nft-error-state">
+        <p>Invalid Token ID provided</p>
         <Link to="/">Go Home</Link>
       </div>
     )
@@ -45,14 +44,15 @@ function Nft() {
 
   if (name === 'Pending') {
     return (
-      <div>
-        Retrieving NFT
+      <div className="nft-loading-state">
+        <p>Retrieving NFT...</p>
       </div>
     )
   } else if (name === 'Error') {
     return (
-      <div>
-        Failed to find NFT {token}
+      <div className="nft-error-state">
+        <p>Failed to find NFT #{token}</p>
+        <Link to="/">Go Home</Link>
       </div>
     )
   } else {
@@ -61,32 +61,52 @@ function Nft() {
       // if not for sale
       if (price === BigInt(0)) {
         return (
-          <div>
-            <NftDetails />
-            <form>
-              <label>List For Sale Price (in POL): <span />
-                <input
-                  type={'text'}
-                  name='forSale'
-                  value={newPrice}
-                  onChange={event => setPrice(event.target.value)}
-                  placeholder={'155.3'}
-                  maxLength={64}
-                  size={14}
-                />
-              </label>
-            </form>
-            <button onClick={ListForSale}>List For Sale</button>
-            <p><LinkToBurn /></p>
+          <div className="nft-detail-container">
+            <div className="nft-detail-content">
+              <NftImageSection />
+              <div className="nft-info-section">
+                <h1 className="nft-title">{name}</h1>
+                <p className="nft-description">{description}</p>
+                <NftMetadata />
+                <div className="nft-actions">
+                  <div className="action-form">
+                    <label>
+                      List For Sale Price (in POL):
+                      <input
+                        type="text"
+                        name="forSale"
+                        value={newPrice}
+                        onChange={event => setPrice(event.target.value)}
+                        placeholder="155.3"
+                        maxLength={64}
+                      />
+                    </label>
+                  </div>
+                  <button onClick={ListForSale} className="primary-action">
+                    List For Sale
+                  </button>
+                  <LinkToBurn />
+                </div>
+              </div>
+            </div>
           </div>
         )
       // if for sale
       } else {
         return (
-          <div>
-            <NftDetails />
-            <button onClick={DelistForSale}>Remove For Sale</button>
-            <p><LinkToBurn /></p>
+          <div className="nft-detail-container">
+            <div className="nft-detail-content">
+              <NftImageSection />
+              <div className="nft-info-section">
+                <h1 className="nft-title">{name}</h1>
+                <p className="nft-description">{description}</p>
+                <NftMetadata />
+                <div className="nft-actions">
+                  <button onClick={DelistForSale}>Remove From Sale</button>
+                  <LinkToBurn />
+                </div>
+              </div>
+            </div>
           </div>
         )
       }
@@ -95,42 +115,88 @@ function Nft() {
       // cannot purchase
       if (price === BigInt(0)) {
         return (
-          <div>
-            <NftDetails />
+          <div className="nft-detail-container">
+            <div className="nft-detail-content">
+              <NftImageSection />
+              <div className="nft-info-section">
+                <h1 className="nft-title">{name}</h1>
+                <p className="nft-description">{description}</p>
+                <NftMetadata />
+              </div>
+            </div>
           </div>
         )
       // purchase
       } else {
         return (
-          <div>
-            <NftDetails />
-            {isConnected ? <button onClick={PurchaseNft}>Buy NFT</button> : <Link to="/logon/">Your wallet must be connected to purchase</Link>}
+          <div className="nft-detail-container">
+            <div className="nft-detail-content">
+              <NftImageSection />
+              <div className="nft-info-section">
+                <h1 className="nft-title">{name}</h1>
+                <p className="nft-description">{description}</p>
+                <NftMetadata />
+                <div className="nft-actions">
+                  {isConnected ? (
+                    <button onClick={PurchaseNft} className="primary-action">
+                      Buy NFT
+                    </button>
+                  ) : (
+                    <Link to="/logon/">Connect Wallet to Purchase</Link>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         )
       }
     }
   }
   
-  function NftDetails() {
-    const idString: string = String(tokenId)
+  function NftImageSection() {
     return (
-      <div>
+      <div className="nft-image-section">
         <img
+          className="nft-main-image"
           src={uri}
-          alt={uri}
-          style={{ maxWidth: '200px', height: '200', width: '200', display: 'block' }}
+          alt={name}
         />
-        <p>Token ID: {idString}</p>
-        <p>Name: {name}</p>
-        <p>Description: {description}</p>
-        <p>Owner: {owner === address ? "You're the Owner" : owner}</p>
-        <p>Price: {price === BigInt(0) ? "Not For Sale" : priceInPol} POL</p>
+        <p className="nft-token-id">Token ID: #{String(tokenId)}</p>
+      </div>
+    )
+  }
+
+  function NftMetadata() {
+    const isOwner = owner === address
+    const displayOwner = isOwner ? "You" : owner
+    
+    return (
+      <div className="nft-metadata">
+        <div className="metadata-item">
+          <span className="metadata-label">Owner</span>
+          <span className={`metadata-value ${!isOwner ? 'owner-address' : ''}`}>
+            {displayOwner}
+          </span>
+        </div>
+        <div className="metadata-item">
+          <span className="metadata-label">Price</span>
+          <span className={`metadata-value ${price === BigInt(0) ? 'not-for-sale' : 'price-highlight'}`}>
+            {price === BigInt(0) ? "Not For Sale" : `${priceInPol} POL`}
+          </span>
+        </div>
       </div>
     )
   }
 
   function LinkToBurn() {
-    return <Link to={{ pathname: "/burn/", search: `?token=${String(tokenId)}` }}>Burn NFT</Link>
+    return (
+      <Link 
+        to={{ pathname: "/burn/", search: `?token=${String(tokenId)}` }}
+        className="danger-action"
+      >
+        Burn NFT
+      </Link>
+    )
   }
 
   function ListForSale() {
