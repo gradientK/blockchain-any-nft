@@ -9,16 +9,19 @@ export function ConnectionStatus() {
 
 function Connected() {
   return (
-    <div>
-      <Link to="/logon/">Disconnect Wallet</Link>
+    <div className="connection-status">
+      <span className="status-indicator connected"></span>
+      <span className="status-text">Connected</span>
+      <Link to="/logon/">Disconnect</Link>
     </div>
   )
 }
 
 function NotConnected() {
   return (
-    <div>
-      <div>Wallet is Disconnected</div>
+    <div className="connection-status">
+      <span className="status-indicator disconnected"></span>
+      <span className="status-text">Disconnected</span>
     </div>
   )
 }
