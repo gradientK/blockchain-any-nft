@@ -347,13 +347,37 @@
       box-shadow: $shadow-sm;
       max-width: 100%;
       height: auto;
-      max-height: 250px;
       object-fit: contain;
     }
 
     p {
       margin: 8px 0;
       font-size: 0.9rem;
+    }
+
+    // Individual image size overrides
+    .img-login {
+      max-height: 260px;
+    }
+
+    .img-upload {
+      max-height: 60px;
+    }
+
+    .img-share {
+      max-height: 100px;
+    }
+
+    .img-anyone-with-link {
+      max-height: 247px;
+    }
+
+    .img-form {
+      max-height: 300px;
+    }
+
+    .img-approve {
+      max-height: 260px;
     }
   }
 
