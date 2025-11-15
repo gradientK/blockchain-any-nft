@@ -3,7 +3,7 @@
 
 .pagination-container {
   width: 100%;
-  max-width: 1400px;
+  max-width: $breakpoint-wide;
   margin: 30px auto;
   padding: 0 15px;
   box-sizing: border-box;
@@ -32,32 +32,32 @@
       background-color: $body-background;
       color: $dark-text;
       border: 2px solid $dark-text;
-      border-radius: 6px;
+      border-radius: $radius-md;
       padding: 10px 16px;
       min-width: 44px;
       font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: all $transition-base;
+      box-shadow: $shadow-sm;
 
       &:hover:not(:disabled) {
         background-color: $dark-text;
         color: $body-background;
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: $shadow-md;
       }
 
       &:active:not(:disabled) {
         transform: translateY(0);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: $shadow-sm;
       }
 
       &.active {
         background-color: $logo-background;
         color: $body-background;
         border-color: $logo-background;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: $shadow-md;
       }
 
       &:disabled {
@@ -86,7 +86,7 @@
         font-weight: 700;
         min-width: 50px;
 
-        @media (max-width: 480px) {
+        @media (max-width: $breakpoint-mobile) {
           padding: 10px 12px;
           min-width: 40px;
           font-size: 0.9rem;
@@ -100,14 +100,14 @@
       padding: 0 12px;
       white-space: nowrap;
 
-      @media (max-width: 480px) {
+      @media (max-width: $breakpoint-mobile) {
         display: none;
       }
     }
   }
 
   // Mobile adjustments
-  @media (max-width: 768px) {
+  @media (max-width: $breakpoint-tablet) {
     margin: 20px auto;
 
     .pagination {
@@ -121,7 +121,7 @@
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: $breakpoint-mobile) {
     .pagination {
       gap: 4px;
 

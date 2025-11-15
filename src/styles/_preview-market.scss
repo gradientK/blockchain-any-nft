@@ -3,7 +3,7 @@
 
 .preview-market {
   width: 100%;
-  max-width: 1400px;
+  max-width: $breakpoint-wide;
   margin: 0 auto;
   padding: 20px 15px;
   box-sizing: border-box;
@@ -17,14 +17,12 @@
     gap: 24px;
     width: 100%;
 
-    // Tablet breakpoint
-    @media (max-width: 768px) {
+    @media (max-width: $breakpoint-tablet) {
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 18px;
     }
 
-    // Mobile breakpoint
-    @media (max-width: 480px) {
+    @media (max-width: $breakpoint-mobile) {
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: 12px;
     }
@@ -33,23 +31,23 @@
   li {
     background-color: $body-background;
     border: 2px solid $dark-text;
-    border-radius: 8px;
+    border-radius: $radius-lg;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform $transition-base, box-shadow $transition-base, border-color $transition-base;
+    box-shadow: $shadow-sm;
     cursor: pointer;
     display: flex;
     flex-direction: column;
 
     &:hover {
       transform: translateY(-4px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      box-shadow: $shadow-lg;
       border-color: $logo-background;
     }
 
     &:active {
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      box-shadow: $shadow-md;
     }
   }
 
@@ -66,9 +64,9 @@
       background-color: $dark-text;
       color: $body-background;
       padding: 8px 16px;
-      border-radius: 4px;
+      border-radius: $radius-sm;
       text-decoration: none;
-      transition: background-color 0.2s ease;
+      transition: background-color $transition-base;
 
       &:hover {
         background-color: $logo-background;
@@ -126,11 +124,6 @@
         color: color.adjust($dark-text, $lightness: 20%);
       }
     }
-
-    .nft-id {
-      font-size: 0.85rem;
-      color: color.adjust($dark-text, $lightness: 30%);
-    }
   }
 
   .buy-button {
@@ -139,11 +132,11 @@
     border: none;
     padding: 10px 16px;
     margin: 0 12px 12px 12px;
-    border-radius: 4px;
+    border-radius: $radius-sm;
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: all $transition-base;
 
     &:hover {
       background-color: $logo-background;
@@ -169,11 +162,11 @@
     background-color: $logo-background;
     color: $body-background;
     padding: 4px 10px;
-    border-radius: 4px;
+    border-radius: $radius-sm;
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: $shadow-sm;
   }
 }

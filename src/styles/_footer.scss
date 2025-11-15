@@ -22,7 +22,7 @@
     letter-spacing: 0.5px;
     opacity: 0.9;
 
-    @media (max-width: 480px) {
+    @media (max-width: $breakpoint-mobile) {
       font-size: 0.85rem;
     }
   }
