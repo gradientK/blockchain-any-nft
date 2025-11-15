@@ -84,67 +84,65 @@ function Mint() {
   }
 
   return (
-    <div>
-      <div>
-        <p>See <Link to="/instructions">Mint Instructions</Link> prior to minting</p>
-        <br />
+    <div className="mint-container">
+      <h2>Mint Your NFT</h2>
+      
+      <div className="mint-intro">
+        <p>
+          New to minting? Check out our{' '}
+          <Link to="/instructions">step-by-step instructions</Link>{' '}
+          before you begin.
+        </p>
       </div>
-      <div>
-        <form>
-          <label>NFT Name: <span />
-            <input
-              type={'text'}
-              name='name'
-              value={inputs.name}
-              onChange={handleChange}
-              placeholder={'Cat in Space'}
-              maxLength={100}
-              size={40}
-            />
-          </label>
-          <p />
 
-          <label>Description: <span />
-            <input
-              type={'text'}
-              name='description'
-              value={inputs.description}
-              onChange={handleChange}
-              placeholder={'Trippy cat flying through space'}
-              maxLength={500}
-              size={52}
-            />
-          </label>
-          <p />
+      <div className="mint-form">
+        <div className="form-group">
+          <label>NFT Name</label>
+          <input
+            type="text"
+            name="name"
+            value={inputs.name}
+            onChange={handleChange}
+            placeholder="Cat in Space"
+            maxLength={100}
+          />
+        </div>
 
-          <label>Dropbox Address: <span />
-            <input
-              type={'text'}
-              name='uri'
-              value={inputs.uri}
-              onChange={handleChange}
-              placeholder={'https://www.dropbox.com/scl/fi/4vaord3u3y8xno276xj46/catinspace.jpg?rlkey=jes15hupgepzkbmz7rm8cat7h&st=j03auq1x&dl=0'}
-              maxLength={500}
-              size={52}
-            />
-          </label>
-          <p />
+        <div className="form-group">
+          <label>Description</label>
+          <textarea
+            name="description"
+            value={inputs.description}
+            onChange={handleChange}
+            placeholder="A trippy cat flying through the cosmos..."
+            maxLength={500}
+          />
+        </div>
 
-          <label>Price (in POL) (enter '0' if not for sale): <span />
-            <input
-              type={'text'}
-              name='price'
-              value={inputs.price}
-              onChange={handleChange}
-              placeholder={'155.3'}
-              maxLength={64}
-              size={14}
-            />
-          </label>
-          <p />
-        </form>
+        <div className="form-group">
+          <label>Dropbox Image Link</label>
+          <input
+            type="text"
+            name="uri"
+            value={inputs.uri}
+            onChange={handleChange}
+            placeholder="https://www.dropbox.com/scl/fi/..."
+            maxLength={500}
+          />
+        </div>
 
-        {/* Put Message here, Warning or Success */}
+        <div className="form-group">
+          <label>Price in POL (enter '0' if not for sale)</label>
+          <input
+            type="text"
+            name="price"
+            value={inputs.price}
+            onChange={handleChange}
+            placeholder="155.3"
+            maxLength={64}
+          />
+        </div>
+
         <button onClick={MintToChain}>Mint NFT</button>
       </div>
     </div>

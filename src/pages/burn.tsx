@@ -15,10 +15,10 @@ export default function BurnMain() {
   let token = searchParams.get("token")
   if (token === null || !IsBigInt(token)) {
     return (
-      <div>
-        Invalid Token ID provided
-        <p />
-        <Link to="/">Go Home</Link>
+      <div className="burn-container">
+        <h2>Invalid Token</h2>
+        <p>The Token ID provided is not valid.</p>
+        <Link to="/">Return Home</Link>
       </div>
     )
   }
@@ -48,24 +48,34 @@ function Burn({ token, owner, name, uri }: { token: bigint, owner: string, name:
   }
 
   return (
-    <div>
+    <div className="burn-container">
+      <h2>Burn NFT</h2>
+      
       <img
-        src={ uri }
-        alt={ uri }
-        style={{ maxWidth: '200px', height: '200', width: '200', display: 'block' }}
+        className="nft-preview"
+        src={uri}
+        alt={name}
       />
-      {name}
-      <p />
-      {owner === address ? 
+      
+      <div className="nft-name">{name}</div>
+
+      {owner === address ? (
         <div>
-          Are you sure your want to burn your NFT? This cannot be undone
-          <br />
-          <button onClick={BurnNft}>Burn NFT</button>
-        </div> : <div>
-          This NFT is not yours to burn
-          <br />
-          <Link to="/Home/">Go Home</Link>
-        </div>}     
+          <div className="warning-message">
+            <p>⚠️ Warning: This action cannot be undone!</p>
+            <p>Are you sure you want to permanently burn this NFT?</p>
+          </div>
+          <div className="burn-actions">
+            <button onClick={BurnNft}>Burn NFT Forever</button>
+            <Link to="/">Cancel and Return Home</Link>
+          </div>
+        </div>
+      ) : (
+        <div className="error-message">
+          <p>You do not own this NFT and cannot burn it.</p>
+          <Link to="/">Return Home</Link>
+        </div>
+      )}
     </div>
   )
 }

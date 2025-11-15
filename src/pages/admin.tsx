@@ -39,37 +39,44 @@ function Admin() {
   if (owner.toUpperCase() === address?.toUpperCase()) {
     if (paused === undefined) {
       return (
-        <div>
+        <div className="admin-container">
+          <h2>Smart Contract Administration</h2>
           <AdminDetails />
-          <br />
-          Pause status unknown, unable to modify at this time.
+          <div className="pause-status">
+            Pause status unknown, unable to modify at this time.
+          </div>
         </div>
       )
     } else if (paused) {
       return (
-        <div>
+        <div className="admin-container">
+          <h2>Smart Contract Administration</h2>
+          <div className="pause-status paused">⚠️ Contract is Paused</div>
           <AdminDetails />
-          <br />
-          Unpause Smart Contract &nbsp;
-          <br />
-          <button onClick={UnpauseSmartContract}>Unpause</button>
+          <h3>Contract Controls</h3>
+          <button onClick={UnpauseSmartContract} className="success">
+            Unpause Contract
+          </button>
         </div>
       )
     } else {
       return (
-        <div>
+        <div className="admin-container">
+          <h2>Smart Contract Administration</h2>
+          <div className="pause-status active">✓ Contract is Active</div>
           <AdminDetails />
-          <br />
-          Pause Smart Contract &nbsp;
-          <br />
-          <button onClick={PauseSmartContract}>Pause</button>
+          <h3>Contract Controls</h3>
+          <button onClick={PauseSmartContract} className="danger">
+            Pause Contract
+          </button>
         </div>
       )
     }
   } else {
     return (
-      <div>
-        AnyNft Smart Contract
+      <div className="admin-container">
+        <h2>AnyNFT Smart Contract</h2>
+        <p>You do not have administrator access to this contract.</p>
       </div>
     )
   }
@@ -77,61 +84,69 @@ function Admin() {
   function AdminDetails() {
     return (
       <div>
-        Contract Owner: {owner}
-        <br />
-        <br />
-        Royalty: {royalty}%
-        <br />
-        <form>
-          <label>Update Royalty - Enter new royalty percentage: <span />
-            <input
-              type={'text'}
-              name='updateRoyalty'
-              value={newRoyaltyPercentage}
-              onChange={event => setNewRoyaltyPercentage(event.target.value)}
-              placeholder={'3'}
-              maxLength={64}
-              size={14}
-            />
-          </label>
-        </form>
-        <button onClick={UpdateRoyalty}>Update</button>
-        <br />
-        <br />
-        Total Minted: {minted}
-        <br />
-        Total Mintable: {mintable}
-        <br />
-        <form>
-          <label>Increase Total Mintable - Enter how many to increase by: <span />
-            <input
-              type={'text'}
-              name='increaseTotalMintable'
-              value={totalMintableIncreaseAmount}
-              onChange={event => setTotalMintableIncreaseAmount(event.target.value)}
-              placeholder={'1'}
-              maxLength={16}
-              size={14}
-            />
-          </label>
-        </form>
-        <button onClick={IncreaseTotalMintable}>Increase</button>
-        <br />
-        <br />
-        <form>
-          <label>Transfer Smart Contract - Enter new owner's address: <span />
-            <input
-              type={'text'}
-              name='transferContract'
-              value={newContractOwner}
-              onChange={event => setNewContractOwner(event.target.value)}
-              placeholder={'0x'}
-              maxLength={256}
-              size={14}
-            />
-          </label>
-        </form>
-        <button onClick={TransferContractOwner}>Transfer</button>
+        <div className="admin-section">
+          <h3>Contract Information</h3>
+          <div className="admin-info">Contract Owner: {owner}</div>
+          <div className="admin-info">Total Minted: {minted} NFTs</div>
+          <div className="admin-info">Total Mintable: {mintable} NFTs</div>
+        </div>
+
+        <div className="admin-section">
+          <h3>Royalty Settings</h3>
+          <div className="admin-info">Current Royalty: {royalty}%</div>
+          <div className="utility-form">
+            <div className="form-group">
+              <label>Update Royalty Percentage</label>
+              <input
+                type="text"
+                name="updateRoyalty"
+                value={newRoyaltyPercentage}
+                onChange={event => setNewRoyaltyPercentage(event.target.value)}
+                placeholder="3"
+                maxLength={64}
+              />
+            </div>
+            <button onClick={UpdateRoyalty}>Update Royalty</button>
+          </div>
+        </div>
+
+        <div className="admin-section">
+          <h3>Mintable Supply</h3>
+          <div className="utility-form">
+            <div className="form-group">
+              <label>Increase Total Mintable</label>
+              <input
+                type="text"
+                name="increaseTotalMintable"
+                value={totalMintableIncreaseAmount}
+                onChange={event => setTotalMintableIncreaseAmount(event.target.value)}
+                placeholder="100"
+                maxLength={16}
+              />
+            </div>
+            <button onClick={IncreaseTotalMintable}>Increase Supply</button>
+          </div>
+        </div>
+
+        <div className="admin-section">
+          <h3>Transfer Ownership</h3>
+          <div className="utility-form">
+            <div className="form-group">
+              <label>New Owner's Address</label>
+              <input
+                type="text"
+                name="transferContract"
+                value={newContractOwner}
+                onChange={event => setNewContractOwner(event.target.value)}
+                placeholder="0x..."
+                maxLength={256}
+              />
+            </div>
+            <button onClick={TransferContractOwner} className="danger">
+              Transfer Ownership
+            </button>
+          </div>
+        </div>
       </div>
     )
   }
