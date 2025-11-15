@@ -13,7 +13,6 @@ export default function PreviewHomeNft({ id, price, name, uri }: { id: bigint, p
         <div className="nft-details">
           <div className="nft-name">{name}</div>
           <div className="nft-price">Not for sale</div>
-          <div className="nft-id">#{String(id)}</div>
         </div>
       </div>
     )
@@ -26,7 +25,6 @@ export default function PreviewHomeNft({ id, price, name, uri }: { id: bigint, p
         <div className="nft-details">
           <div className="nft-name">{name}</div>
           <div className="nft-price">{priceInWei} {coin}</div>
-          <div className="nft-id">#{String(id)}</div>
         </div>
       </div>
     )

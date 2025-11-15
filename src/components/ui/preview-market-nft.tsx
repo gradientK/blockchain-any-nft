@@ -26,7 +26,6 @@ export default function PreviewMarketNft({ id, price, name, uri }: { id: bigint,
         <div className="nft-price">
           <span className="price-label">Price:</span> {priceInWei} {coin}
         </div>
-        <div className="nft-id">#{String(id)}</div>
       </div>
     </div>
   )
