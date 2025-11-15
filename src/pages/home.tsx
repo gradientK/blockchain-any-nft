@@ -13,11 +13,29 @@ export default function HomeMain() {
   if (isConnected) {
     allNfts = GetNftsOwned()
     if (allNfts.at(0) === BigInt(-2)) {
-      return <div>Retrieving</div>
+      return (
+        <div className="loading-state-container">
+          <p>Retrieving your NFTs...</p>
+        </div>
+      )
     } else if (allNfts.at(0) === BigInt(-1)) {
-      return <div>No NFTs found. <Link to="/mint">Mint an NFT</Link></div>
+      return (
+        <div className="empty-state-container">
+          <div className="empty-icon">🖼️</div>
+          <h3>No NFTs Found</h3>
+          <p>You don't have any NFTs yet. Start your collection today!</p>
+          <Link to="/mint">Mint Your First NFT</Link>
+        </div>
+      )
     } else if (allNfts.length === 0) {
-      return <div><Link to="/mint">Mint your first NFT</Link></div>
+      return (
+        <div className="empty-state-container">
+          <div className="empty-icon">✨</div>
+          <h3>Welcome to AnyNFT</h3>
+          <p>Your NFT collection is empty. Let's create something amazing!</p>
+          <Link to="/mint">Mint Your First NFT</Link>
+        </div>
+      )
     }
     return <Home />
   }
@@ -42,6 +60,7 @@ function Home() {
         nftsPerPage={nftsPerPage}
         totalNfts={allNfts.length}
         paginate={paginate}
+        currentPage={currentPage}
       />
     </div>
   )

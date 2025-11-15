@@ -357,7 +357,7 @@
 
     // Individual image size overrides
     .img-login {
-      max-height: 260px;
+      max-height: 170px;
     }
 
     .img-upload {
@@ -373,11 +373,11 @@
     }
 
     .img-form {
-      max-height: 300px;
+      max-height: 200px;
     }
 
     .img-approve {
-      max-height: 260px;
+      max-height: 275px;
     }
   }
 
@@ -512,5 +512,94 @@
     &:active {
       transform: translateY(0);
     }
+  }
+}
+
+// Empty state messages (for home page, marketplace, etc.)
+.empty-state-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 60px auto;
+  padding: 50px 35px;
+  background-color: $body-background;
+  border: 2px solid $dark-text;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-lg;
+  text-align: center;
+
+  @media (max-width: $breakpoint-mobile) {
+    margin: 40px auto;
+    padding: 35px 25px;
+  }
+
+  .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.3;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    color: $dark-text;
+    margin: 0 0 12px 0;
+    font-weight: 700;
+  }
+
+  p {
+    font-size: 1rem;
+    color: color.adjust($dark-text, $lightness: 15%);
+    margin: 12px 0 25px 0;
+    line-height: 1.5;
+  }
+
+  a {
+    display: inline-block;
+    padding: 12px 28px;
+    background-color: $logo-background;
+    color: $body-background;
+    border: 2px solid $logo-background;
+    border-radius: $radius-md;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all $transition-base;
+    box-shadow: $shadow-md;
+
+    &:hover {
+      background-color: color.adjust($logo-background, $lightness: -10%);
+      border-color: color.adjust($logo-background, $lightness: -10%);
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+      text-decoration: none;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// Loading state
+.loading-state-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 40px 30px;
+  background-color: $body-background;
+  border: 2px solid $dark-text;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-lg;
+  text-align: center;
+
+  @media (max-width: $breakpoint-mobile) {
+    margin: 40px auto;
+    padding: 30px 20px;
+  }
+
+  p {
+    font-size: 1rem;
+    color: $dark-text;
+    margin: 0;
+    font-weight: 500;
   }
 }
