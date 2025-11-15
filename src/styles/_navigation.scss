@@ -63,7 +63,7 @@
   }
   a:hover {
     @extend .a-button;
-    background-color: $light-background;
+    background-color: $main-background;
     color: $dark-text;
   }     
   a:active {

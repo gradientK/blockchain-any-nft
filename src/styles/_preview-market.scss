@@ -1,0 +1,179 @@
+@use "sass:color";
+@use "variables" as *;
+
+.preview-market {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 15px;
+  box-sizing: border-box;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    width: 100%;
+
+    // Tablet breakpoint
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    // Mobile breakpoint
+    @media (max-width: 480px) {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+    }
+  }
+
+  li {
+    background-color: $body-background;
+    border: 2px solid $dark-text;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      border-color: $logo-background;
+    }
+
+    &:active {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  // Loading and error states
+  .status-message {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 1.1rem;
+    color: $dark-text;
+    grid-column: 1 / -1;
+
+    a {
+      display: inline-block;
+      background-color: $dark-text;
+      color: $body-background;
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: $logo-background;
+      }
+    }
+  }
+}
+
+// NFT card internal structure for marketplace items
+.preview-market-nft {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 320px;
+  position: relative;
+
+  .nft-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background-color: $main-background;
+    display: block;
+  }
+
+  .nft-details {
+    padding: 12px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .nft-name {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: $dark-text;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .nft-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: $logo-background;
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      .price-label {
+        font-size: 0.85rem;
+        font-weight: 400;
+        color: color.adjust($dark-text, $lightness: 20%);
+      }
+    }
+
+    .nft-id {
+      font-size: 0.85rem;
+      color: color.adjust($dark-text, $lightness: 30%);
+    }
+  }
+
+  .buy-button {
+    background-color: $dark-text;
+    color: $body-background;
+    border: none;
+    padding: 10px 16px;
+    margin: 0 12px 12px 12px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+
+    &:hover {
+      background-color: $logo-background;
+      transform: scale(1.02);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    &:disabled {
+      background-color: color.adjust($dark-text, $lightness: 40%);
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  // For sale badge (optional)
+  .for-sale-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: $logo-background;
+    color: $body-background;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+}

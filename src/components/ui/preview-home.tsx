@@ -21,16 +21,18 @@ export default function PreviewHome({ ids }: { ids: bigint[] }) {
   let uris = priceNameUri?.at(2)
 
   return (
-    <ul>
-      {ids.map((key, index) => (
-        <li key={key}>
-          <PreviewHomeNft id={key} 
-              price={prices?.at(Number(index)) as bigint}
-              name={names?.at(Number(index)) as string}
-              uri={uris?.at(Number(index)) as string} />
-        </li>
-      ))}
-    </ul>
+    <div className="preview-home">
+      <ul>
+        {ids.map((key, index) => (
+          <li key={key}>
+            <PreviewHomeNft id={key} 
+                price={prices?.at(Number(index)) as bigint}
+                name={names?.at(Number(index)) as string}
+                uri={uris?.at(Number(index)) as string} />
+          </li>
+        ))}
+      </ul>
+    </div>
   )
   
 }

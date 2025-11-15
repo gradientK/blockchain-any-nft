@@ -8,7 +8,7 @@ export default function PreviewMarketNft({ id, price, name, uri }: { id: bigint,
 
   let priceInWei: string = ethers.formatEther(price)
   return (
-    <div>
+    <div className="preview-market-nft">
       <Link           
         to={{
           pathname: "/nft",
@@ -16,13 +16,18 @@ export default function PreviewMarketNft({ id, price, name, uri }: { id: bigint,
         }}
       >
         <img
+          className="nft-image"
           src={ uri }
-          alt={ uri }
-          style={{ maxWidth: '200px', height: '200', width: '200', display: 'block' }}
+          alt={ name }
         />
       </Link>
-      {priceInWei} {coin}
-      <br /><p />
+      <div className="nft-details">
+        <div className="nft-name">{name}</div>
+        <div className="nft-price">
+          <span className="price-label">Price:</span> {priceInWei} {coin}
+        </div>
+        <div className="nft-id">#{String(id)}</div>
+      </div>
     </div>
   )
 

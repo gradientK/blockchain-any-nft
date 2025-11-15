@@ -71,13 +71,12 @@ function Mint() {
         })
         console.info("Minting " + inputs.name)
 
-        // reset forms
-        // setInputs({
-        //   name: "",
-        //   description: "",      
-        //   uri: "",
-        //   price: ""
-        // })
+        setInputs({
+          name: "",
+          description: "",      
+          uri: "",
+          price: ""
+        })
       }
     } else {
       console.info("Fields may not be empty")
@@ -118,7 +117,7 @@ function Mint() {
           </label>
           <p />
 
-          <label>DropBox Address: <span />
+          <label>Dropbox Address: <span />
             <input
               type={'text'}
               name='uri'

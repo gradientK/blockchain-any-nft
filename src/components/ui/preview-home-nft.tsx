@@ -8,41 +8,44 @@ export default function PreviewHomeNft({ id, price, name, uri }: { id: bigint, p
 
   if (price === BigInt(0)) {
     return (
-      <div>
+      <div className="preview-home-nft">
         <ImagePreview />
-        Not for sale
-        <br /><p />
+        <div className="nft-details">
+          <div className="nft-name">{name}</div>
+          <div className="nft-price">Not for sale</div>
+          <div className="nft-id">#{String(id)}</div>
+        </div>
       </div>
     )
   } else {
 
     let priceInWei: string = ethers.formatEther(price)
     return (
-      <div>
+      <div className="preview-home-nft">
         <ImagePreview />
-        Price: {priceInWei} {coin}
-        <br /><p />
+        <div className="nft-details">
+          <div className="nft-name">{name}</div>
+          <div className="nft-price">{priceInWei} {coin}</div>
+          <div className="nft-id">#{String(id)}</div>
+        </div>
       </div>
     )
   }
 
   function ImagePreview() {
     return (
-      <div>
-        <Link           
-          to={{
-            pathname: "/nft/",
-            search: `?token=${String(id)}`,
-          }}
-        >
-          <img
-            src={ uri }
-            alt={ uri }
-            style={{ maxWidth: '200px', height: '200', width: '200', display: 'block' }}
-          />
-        </Link>
-        {name}
-      </div>
+      <Link           
+        to={{
+          pathname: "/nft/",
+          search: `?token=${String(id)}`,
+        }}
+      >
+        <img
+          className="nft-image"
+          src={ uri }
+          alt={ name }
+        />
+      </Link>
     )
   }
 
