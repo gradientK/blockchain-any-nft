@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ConnectionStatus } from "./connection-status.tsx"
+import polygonIcon from "../../images/polygon-token.svg"
 
 export default function NavigationBar() {
   return (    
@@ -18,7 +19,14 @@ export default function NavigationBar() {
         </div>
       </div>
       <div className='logo-banner'>
-        <img src={require("../../images/LogoBanner.jpg")} alt="Any NFT Marketplace"></img>
+        <div className="logo-container">
+          <img src={require("../../images/LogoBanner.jpg")} alt="Any NFT Marketplace" className="logo-main" />
+          <div className="polygon-branding">
+            <span className="polygon-text">Powered by</span>
+            <img src={polygonIcon} alt="Polygon" className="polygon-icon" />
+            <span className="polygon-name">Polygon</span>
+          </div>
+        </div>
       </div>
     </div>
   )

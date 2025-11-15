@@ -204,21 +204,108 @@
   box-shadow: $shadow-md;
   padding: 8px 0;
 
-  img {
+  .logo-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    @media (max-width: $breakpoint-tablet) {
+      gap: 12px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+      gap: 8px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
+  .logo-main {
     height: 56px;
     width: auto;
-    padding-left: 20px;
     margin: 4px 0;
     filter: drop-shadow($shadow-sm);
+    flex-shrink: 0;
 
     @media (max-width: $breakpoint-tablet) {
       height: 48px;
-      padding-left: 15px;
     }
 
     @media (max-width: $breakpoint-mobile) {
       height: 40px;
-      padding-left: 10px;
+    }
+  }
+
+  .polygon-branding {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.85;
+    transition: opacity $transition-base;
+    flex-shrink: 0;
+    white-space: nowrap;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    @media (max-width: $breakpoint-tablet) {
+      gap: 5px;
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+      gap: 4px;
+    }
+
+    .polygon-text {
+      font-size: 0.75rem;
+      color: $light-text;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+
+      @media (max-width: $breakpoint-tablet) {
+        font-size: 0.7rem;
+      }
+
+      @media (max-width: $breakpoint-mobile) {
+        font-size: 0.65rem;
+      }
+    }
+
+    .polygon-icon {
+      height: 20px;
+      width: 20px;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+
+      @media (max-width: $breakpoint-tablet) {
+        height: 18px;
+        width: 18px;
+      }
+
+      @media (max-width: $breakpoint-mobile) {
+        height: 16px;
+        width: 16px;
+      }
+    }
+
+    .polygon-name {
+      font-size: 0.85rem;
+      color: $light-text;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+
+      @media (max-width: $breakpoint-tablet) {
+        font-size: 0.8rem;
+      }
+
+      @media (max-width: $breakpoint-mobile) {
+        font-size: 0.75rem;
+      }
     }
   }
 }
