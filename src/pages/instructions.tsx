@@ -33,7 +33,7 @@ export default function InstructionsMain() {
 
       <div className="instruction-step">
         <h3>Step 3 - Mint Form</h3>
-        <p>1. Paste your Dropbox link into the Dropbox Address field</p>
+        <p>1. Paste your Dropbox link into the Dropbox Image Link field</p>
         <p>2. Fill out the rest: NFT Name, Description, and Price (enter '0' if not for sale)</p>
         <img src={require("../images/instructions/5form.jpg")} alt="Fill out form" className="img-form" />
         <p>3. Click "Mint NFT"</p>
