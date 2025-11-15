@@ -1,0 +1,135 @@
+@use "sass:color";
+@use "variables" as *;
+
+.pagination-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 30px auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+
+  nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pagination {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    li {
+      margin: 0;
+    }
+
+    button {
+      background-color: $body-background;
+      color: $dark-text;
+      border: 2px solid $dark-text;
+      border-radius: 6px;
+      padding: 10px 16px;
+      min-width: 44px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      &:hover:not(:disabled) {
+        background-color: $dark-text;
+        color: $body-background;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      &.active {
+        background-color: $logo-background;
+        color: $body-background;
+        border-color: $logo-background;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        background-color: $body-background;
+        color: $dark-text;
+      }
+
+      &.ellipsis {
+        border: none;
+        background: none;
+        box-shadow: none;
+        cursor: default;
+        padding: 10px 8px;
+        min-width: auto;
+
+        &:hover {
+          background: none;
+          transform: none;
+          box-shadow: none;
+        }
+      }
+
+      &.nav-button {
+        font-weight: 700;
+        min-width: 50px;
+
+        @media (max-width: 480px) {
+          padding: 10px 12px;
+          min-width: 40px;
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .page-info {
+      color: $dark-text;
+      font-size: 0.9rem;
+      padding: 0 12px;
+      white-space: nowrap;
+
+      @media (max-width: 480px) {
+        display: none;
+      }
+    }
+  }
+
+  // Mobile adjustments
+  @media (max-width: 768px) {
+    margin: 20px auto;
+
+    .pagination {
+      gap: 6px;
+
+      button {
+        padding: 8px 12px;
+        min-width: 38px;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .pagination {
+      gap: 4px;
+
+      button {
+        padding: 6px 10px;
+        min-width: 34px;
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
