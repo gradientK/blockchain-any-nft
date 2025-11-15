@@ -10,12 +10,28 @@ export default function LogonMain() {
 
   if (isConnected) {
     return (
-      <div>
-        <p />
-        {address && <div>Wallet Connected: {ensName ? `${ensName} (${address})` : address}</div>}
-        <button onClick={() => disconnect()}>Disconnect MetaMask</button>
-        <p />
-        <Link to="/">Go Home</Link>
+      <div className="wallet-connect-container">
+        <h3>Wallet Connected</h3>
+        
+        <div className="connection-status">
+          <span className="status-icon"></span>
+          <span className="status-text">Active Connection</span>
+        </div>
+
+        {address && (
+          <div className="wallet-address">
+            {ensName ? `${ensName} (${address})` : address}
+          </div>
+        )}
+
+        <button 
+          onClick={() => disconnect()} 
+          className="action-button disconnect-button"
+        >
+          Disconnect Wallet
+        </button>
+
+        <Link to="/">Return Home</Link>
       </div>
     )
   }
@@ -24,10 +40,9 @@ export default function LogonMain() {
 
 function Reconnect() {
   return (
-    <div>
-      <p />
-      Connect Wallet
-      <br />
+    <div className="wallet-connect-container">
+      <h3>Connect Your Wallet</h3>
+      <p>Choose a wallet to connect to the marketplace</p>
       <WalletOptions />
     </div>
   )

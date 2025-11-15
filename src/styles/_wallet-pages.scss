@@ -1,0 +1,302 @@
+@use "sass:color";
+@use "variables" as *;
+
+// Wallet connection pages
+.wallet-connect-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 40px 30px;
+  background-color: $body-background;
+  border: 2px solid $dark-text;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-lg;
+  text-align: center;
+
+  @media (max-width: $breakpoint-mobile) {
+    margin: 30px auto;
+    padding: 30px 20px;
+  }
+
+  h3 {
+    font-size: 1.8rem;
+    color: $dark-text;
+    margin: 0 0 20px 0;
+    font-weight: 700;
+
+    @media (max-width: $breakpoint-mobile) {
+      font-size: 1.5rem;
+    }
+  }
+
+  p {
+    font-size: 1.05rem;
+    color: color.adjust($dark-text, $lightness: 15%);
+    margin: 15px 0;
+    line-height: 1.5;
+  }
+
+  .wallet-address {
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: $dark-text;
+    background-color: $light-background;
+    padding: 12px 16px;
+    border-radius: $radius-md;
+    margin: 15px 0;
+    word-break: break-all;
+    border: 1px solid color.adjust($logo-background, $lightness: 20%);
+  }
+
+  .wallet-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 25px 0;
+
+    button {
+      padding: 14px 24px;
+      background-color: $dark-text;
+      color: $body-background;
+      border: 2px solid $dark-text;
+      border-radius: $radius-md;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all $transition-base;
+      box-shadow: $shadow-sm;
+
+      &:hover:not(:disabled) {
+        background-color: $logo-background;
+        border-color: $logo-background;
+        transform: translateY(-2px);
+        box-shadow: $shadow-md;
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: $shadow-sm;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: color.adjust($dark-text, $lightness: 40%);
+        border-color: color.adjust($dark-text, $lightness: 40%);
+      }
+    }
+  }
+
+  .action-button {
+    padding: 12px 24px;
+    background-color: $dark-text;
+    color: $body-background;
+    border: 2px solid $dark-text;
+    border-radius: $radius-md;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all $transition-base;
+    box-shadow: $shadow-sm;
+    margin: 10px 0;
+
+    &:hover {
+      background-color: $logo-background;
+      border-color: $logo-background;
+      transform: translateY(-2px);
+      box-shadow: $shadow-md;
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: $shadow-sm;
+    }
+
+    &.disconnect-button {
+      background-color: $error-color;
+      border-color: $error-color;
+
+      &:hover {
+        background-color: color.adjust($error-color, $lightness: -10%);
+        border-color: color.adjust($error-color, $lightness: -10%);
+      }
+    }
+  }
+
+  a {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: $body-background;
+    color: $dark-text;
+    border: 2px solid $dark-text;
+    border-radius: $radius-md;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all $transition-base;
+    box-shadow: $shadow-sm;
+    margin: 10px 0;
+
+    &:hover {
+      background-color: $dark-text;
+      color: $body-background;
+      transform: translateY(-2px);
+      box-shadow: $shadow-md;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  .connection-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background-color: rgba($success-color, 0.1);
+    border: 2px solid $success-color;
+    border-radius: $radius-md;
+    margin: 15px 0;
+
+    .status-icon {
+      width: 12px;
+      height: 12px;
+      background-color: $success-color;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .status-text {
+      font-weight: 600;
+      color: color.adjust($success-color, $lightness: -20%);
+    }
+  }
+}
+
+// Logon link (when not connected)
+.logon-prompt {
+  width: 100%;
+  max-width: 500px;
+  margin: 80px auto;
+  padding: 50px 40px;
+  background-color: $body-background;
+  border: 2px solid $dark-text;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-lg;
+  text-align: center;
+
+  @media (max-width: $breakpoint-mobile) {
+    margin: 50px auto;
+    padding: 40px 25px;
+  }
+
+  h3 {
+    font-size: 2rem;
+    color: $dark-text;
+    margin: 0 0 25px 0;
+    font-weight: 700;
+
+    @media (max-width: $breakpoint-mobile) {
+      font-size: 1.6rem;
+    }
+  }
+
+  a {
+    display: inline-block;
+    padding: 14px 32px;
+    background-color: $logo-background;
+    color: $body-background;
+    border: 2px solid $logo-background;
+    border-radius: $radius-md;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all $transition-base;
+    box-shadow: $shadow-md;
+
+    &:hover {
+      background-color: color.adjust($logo-background, $lightness: -10%);
+      border-color: color.adjust($logo-background, $lightness: -10%);
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// 404 Page
+.not-found-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 60px 40px;
+  background-color: $body-background;
+  border: 2px solid $dark-text;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-lg;
+  text-align: center;
+
+  @media (max-width: $breakpoint-mobile) {
+    margin: 50px auto;
+    padding: 40px 25px;
+  }
+
+  h1 {
+    font-size: 4rem;
+    color: $logo-background;
+    margin: 0 0 10px 0;
+    font-weight: 900;
+
+    @media (max-width: $breakpoint-mobile) {
+      font-size: 3rem;
+    }
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: color.adjust($dark-text, $lightness: 15%);
+    margin: 15px 0 30px 0;
+
+    @media (max-width: $breakpoint-mobile) {
+      font-size: 1rem;
+    }
+  }
+
+  a {
+    display: inline-block;
+    padding: 12px 28px;
+    background-color: $dark-text;
+    color: $body-background;
+    border: 2px solid $dark-text;
+    border-radius: $radius-md;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all $transition-base;
+    box-shadow: $shadow-sm;
+
+    &:hover {
+      background-color: $logo-background;
+      border-color: $logo-background;
+      transform: translateY(-2px);
+      box-shadow: $shadow-md;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
