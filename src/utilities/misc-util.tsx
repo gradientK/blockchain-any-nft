@@ -113,3 +113,41 @@ export function RemoveZeros(array: readonly bigint[]): bigint[] {
   }
   return removed
 }
+
+/**
+ * Creates a shuffled array of page indices for randomizing marketplace display order
+ * while maintaining consecutive groups. All pages are shuffled except the last page,
+ * which always remains last (to handle cases where it has fewer items).
+ * 
+ * @param totalPages - Total number of pages
+ * @returns Array of shuffled page indices (1-based)
+ * 
+ * @example
+ * GetShuffledPageIndices(5) might return [3, 1, 4, 2, 5]
+ * Pages 1-4 are shuffled, page 5 always stays last.
+ * All items are shown exactly once across all pages.
+ */
+export function GetShuffledPageIndices(totalPages: number): number[] {
+  if (totalPages <= 0) {
+    return []
+  }
+  
+  if (totalPages === 1) {
+    return [1]
+  }
+  
+  // Create array of page numbers starting from 1
+  const pageIndices: number[] = []
+  for (let i = 1; i <= totalPages; i++) {
+    pageIndices.push(i)
+  }
+  
+  // Fisher-Yates shuffle all pages EXCEPT the last one
+  // The last page stays at the end to handle partial page sizes
+  for (let i = pageIndices.length - 2; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pageIndices[i], pageIndices[j]] = [pageIndices[j], pageIndices[i]]
+  }
+  
+  return pageIndices
+}

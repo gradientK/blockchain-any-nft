@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import PreviewMarket from "../components/ui/preview-market.tsx"
 import Pagination from "../components/ui/pagination.tsx"
 import { GetTotalForSale, GetForSaleList } from "../utilities/contract-interface.tsx"
-import { RemoveZeros } from "../utilities/misc-util.tsx"
+import { RemoveZeros, GetShuffledPageIndices } from "../utilities/misc-util.tsx"
 
 let totalForSale: bigint = BigInt(-1)
 let groupForSale: readonly bigint[] = [BigInt(-1)]
+let shuffledPageMap: number[] = []
 
 export default function MarketplaceMain() {
   totalForSale = GetTotalForSale()
@@ -43,8 +44,17 @@ function MarketPlace() {
   const nftsPerPage: number = 12
   const [currentPage, setCurrentPage] = useState(1)
 
-  let startIndex: bigint = BigInt(currentPage * nftsPerPage - nftsPerPage + 1)
-  let endIndex: bigint = BigInt(currentPage * nftsPerPage)
+  // Initialize shuffled page map on first render
+  if (shuffledPageMap.length === 0) {
+    const totalPages = Math.ceil(Number(totalForSale) / nftsPerPage)
+    shuffledPageMap = GetShuffledPageIndices(totalPages)
+  }
+
+  // Get the actual page index from the shuffled map
+  const actualPageIndex = shuffledPageMap[currentPage - 1]
+  
+  let startIndex: bigint = BigInt(actualPageIndex * nftsPerPage - nftsPerPage + 1)
+  let endIndex: bigint = BigInt(actualPageIndex * nftsPerPage)
   if (endIndex > totalForSale) {
     endIndex = totalForSale
   }
